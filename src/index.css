@@ -1,0 +1,9 @@
+@import 'tailwindcss';
+
+/*
+  Tokens de solaris-ds.
+  Aquí se definirán los colores, tipografía, espaciado, etc. del sistema
+  con @theme, para usarlos como clases de Tailwind (por ejemplo, bg-primary).
+*/
+@theme {
+}
