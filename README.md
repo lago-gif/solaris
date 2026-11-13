@@ -42,6 +42,27 @@ La persona usuaria final de solaris-app no usa este repositorio, pero es para qu
 
 ## Qué vamos a construir
 
+solaris-ds se compone de cuatro piezas que funcionan juntas:
+
+1. **Librería de componentes en React + Vite.** Los componentes que usará solaris-app, empaquetados como una librería que la app instala con npm. Vite sirve el entorno de desarrollo y genera la versión publicable.
+2. **Documentación en Storybook.** Cada componente con sus variantes, estados, controles interactivos, guía de uso y comprobaciones de accesibilidad. Es la referencia común para diseño, desarrollo y producto.
+3. **Sistema de tokens.** Una única fuente de verdad para color, tipografía, espaciado, radios, sombras y movimiento. Se usa como variables CSS en el código y como variables en Figma, con tema claro y oscuro.
+4. **Conexión con Figma.** Los tokens se sincronizan con las variables de Figma y cada componente de Figma enlaza con su componente en código mediante Code Connect. Así quien diseña ve el código real y quien desarrolla parte del diseño real.
+
+### Stack
+
+| Capa | Herramienta | Para qué |
+|---|---|---|
+| Componentes | **React** | Construir los componentes de la librería |
+| Desarrollo y compilación | **Vite** (modo librería) | Entorno local rápido y paquete publicable para solaris-app |
+| Documentación | **Storybook** | Catálogo de componentes, variantes, estados y guías |
+| Accesibilidad | **Storybook a11y addon** (axe) | Detectar problemas de contraste, etiquetas y roles en cada componente |
+| Tokens | **Variables CSS** generadas desde un archivo de tokens (JSON) | Una sola fuente de verdad para el código y Figma |
+| Diseño | **Figma** (variables y librería de componentes) | Diseñar pantallas con los mismos tokens y componentes que el código |
+| Diseño ↔ código | **Figma Code Connect** | Enlazar cada componente de Figma con su implementación en React |
+| Control de versiones | **Git + GitHub** | Historial, revisiones y publicación |
+| Entorno | **Node.js LTS (22.12 o superior) + npm** | Instalar dependencias y ejecutar el proyecto |
+
 ### 1. Fundamentos
 - Tokens de color con contraste verificado, también para estados de salud (correcto, atención, urgente) que nunca dependan solo del color.
 - Escala tipográfica legible, preparada para el texto ampliado del sistema.
@@ -70,14 +91,7 @@ Botón, enlace, campo de texto, selector, fecha/hora, checkbox, switch, tarjeta,
 - Guías de accesibilidad, contenido y uso de la IA en la interfaz.
 - Conexión Figma ↔ código (Code Connect) para que cada componente de Figma enlace con su implementación.
 
-## Stack
-
-- **React** para los componentes.
-- **Vite** para el entorno de desarrollo y la compilación.
-- **Storybook** para la documentación y las pruebas visuales.
-- **Figma** como fuente del diseño.
-
-### Requisitos para trabajar en local
+## Requisitos para trabajar en local
 
 - **Git**
 - **Node.js 22.12 o superior** (versión LTS) y **npm**
