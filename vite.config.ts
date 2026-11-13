@@ -1,11 +1,12 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import tailwindcss from '@tailwindcss/vite'
 
 // La app se sirve siempre en http://localhost:3000.
 // strictPort: si el puerto 3000 está ocupado, Vite se detiene con un aviso
 // en lugar de cambiar a otro puerto.
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), tailwindcss()],
   server: {
     port: 3000,
     strictPort: true,
