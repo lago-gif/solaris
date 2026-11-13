@@ -1,6 +1,13 @@
 @import 'tailwindcss';
 
 /*
+  Página "Tailwind" (src/App.tsx): genera las clases de fondo de toda la paleta
+  por defecto, porque la página las construye por nombre y Tailwind no puede
+  detectarlas leyendo el código. Quitar cuando esa página desaparezca.
+*/
+@source inline("bg-{red,orange,amber,yellow,lime,green,emerald,teal,cyan,sky,blue,indigo,violet,purple,fuchsia,pink,rose,slate,gray,zinc,neutral,stone,mauve,olive,mist,taupe}-{50,{100..900..100},950}");
+
+/*
   Tokens de solaris-ds.
   Aquí se definirán los colores, tipografía, espaciado, etc. del sistema
   con @theme, para usarlos como clases de Tailwind (por ejemplo, bg-primary).
