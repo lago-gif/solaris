@@ -1,7 +1,7 @@
 @import 'tailwindcss';
 
 /*
-  Página "Tailwind" (src/App.tsx): genera las clases de fondo de toda la paleta
+  Página "Tailwind" (src/TailwindPage.tsx): genera las clases de fondo de toda la paleta
   por defecto, porque la página las construye por nombre y Tailwind no puede
   detectarlas leyendo el código. Quitar cuando esa página desaparezca.
 */
