@@ -32,7 +32,7 @@ export function Badge({ tone = 'neutral', size = 'md', icon: IconComponent, chil
   return (
     <span
       className={[
-        'inline-flex items-center rounded-full font-medium ring-1 ring-inset',
+        'inline-flex items-center rounded-md font-medium ring-1 ring-inset',
         toneClasses[tone],
         sizeClasses[size],
         className,

@@ -4,6 +4,9 @@ import { Button } from './Button'
 
 const meta = {
   title: 'Componentes/Button',
+  parameters: {
+    docs: { description: { component: 'Botón con forma de píldora (esquinas totalmente redondeadas, `rounded-full`).' } },
+  },
   component: Button,
   args: { children: 'Añadir cita' },
   argTypes: {
