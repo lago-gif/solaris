@@ -4,6 +4,9 @@ import { Badge } from './Badge'
 
 const meta = {
   title: 'Componentes/Badge',
+  parameters: {
+    docs: { description: { component: 'Etiqueta de estado con esquinas rectas, sin curva (`rounded-none`). Siempre lleva texto: el color nunca va solo.' } },
+  },
   component: Badge,
   args: { children: 'Tomada', tone: 'success' },
   argTypes: {
