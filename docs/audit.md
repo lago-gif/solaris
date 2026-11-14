@@ -154,3 +154,74 @@ Otras props comunes:
 | Button / Badge | Tamaños distintos: Button `sm`/`md`/`lg`, Badge solo `sm`/`md` | `<Badge size="lg">` | No existe `lg` en Badge |
 | Todos | Exportaciones con nombre desde `src/components/index.ts` | `import Button from './components/Button'` | No hay exportación por defecto: se usa `import { Button } from './components'` |
 | Todos | Valores en inglés, documentación en español | `variant="primario"` | Los valores de las props siempre van en inglés |
+
+---
+
+## 5. Prueba sin reglas
+
+Revisión de `src/screens/antes.tsx` (pantalla del asistente) sobre `main` en el commit `f822583`. La pantalla se pidió "usando los componentes del proyecto", sin más reglas, y la creó un agente (Claude). Esta sección recoge lo que salió mal para convertirlo en reglas.
+
+**Lo que salió bien:** se usan los cuatro componentes (Button, Input, Card y Badge), con sus props correctas:
+- `icon={IconTrash}` sin `< />`;
+- `type="submit"` en el botón del formulario;
+- `label` en el Input;
+- `tone="info"` en el Badge.
+
+### 5.1 Valores escritos a mano
+
+No hay colores hex, valores en `px` ni valores entre corchetes. Todo lo demás son colores, espaciados, radios y tamaños de Tailwind escritos directamente en la pantalla.
+
+| Archivo | Línea | Valor | Problema |
+|---|---|---|---|
+| `src/screens/antes.tsx` | 54 | `max-w-3xl` | Ancho de pantalla elegido a ojo. No hay una regla de ancho para pantallas |
+| `src/screens/antes.tsx` | 55 | `border-gray-200`, `px-4 py-4`, `gap-3` | Separador y márgenes de la cabecera |
+| `src/screens/antes.tsx` | 57 | `text-xl font-semibold text-gray-900` | **`text-xl` no lo usa ningún componente** (llegan hasta `text-lg`). Tamaño de título nuevo |
+| `src/screens/antes.tsx` | 69 | `bg-blue-50 text-blue-800`, `px-4 py-2`, `gap-2` | Colores del aviso, copiados del Badge `info` |
+| `src/screens/antes.tsx` | 70 | `size={18} stroke={2}`, `mt-0.5` | **Icono de 18 px: un sexto tamaño de icono** que no existe en los componentes (14, 16, 20, 22, 24) |
+| `src/screens/antes.tsx` | 74 | `px-4 py-6` | Márgenes del historial |
+| `src/screens/antes.tsx` | 80 | `max-w-md` | Ancho del estado vacío |
+| `src/screens/antes.tsx` | 88 | `gap-4` | Separación entre mensajes |
+| `src/screens/antes.tsx` | 92 | `gap-2` | Separación entre avatar y burbuja |
+| `src/screens/antes.tsx` | 94 | `size-8 rounded-full` | Avatar de 32 px. La caja de icono de Card mide `size-10` y usa `rounded-lg` |
+| `src/screens/antes.tsx` | 95 | `bg-gray-200 text-gray-700`, `bg-blue-50 text-blue-700` | **`bg-gray-200` como fondo y `text-gray-700` son valores nuevos**: ningún componente los usa así |
+| `src/screens/antes.tsx` | 99 | `size={18} stroke={1.75}` | Otra vez el tamaño de icono de 18 px |
+| `src/screens/antes.tsx` | 101 | `max-w-lg`, `gap-1` | Ancho máximo de la burbuja |
+| `src/screens/antes.tsx` | 104 | `rounded-2xl`, `px-4 py-2`, `text-base` | **`rounded-2xl` es un quinto radio** que no usa ningún componente (`md`, `lg`, `xl`, `full`) |
+| `src/screens/antes.tsx` | 105 | `bg-blue-700 text-white`, `border-gray-200 bg-white text-gray-900` | Colores de las burbujas copiados de Button `primary` y de Card |
+| `src/screens/antes.tsx` | 110 | `text-xs text-gray-600` | Estilo de la hora |
+| `src/screens/antes.tsx` | 120 | `border-gray-200 bg-white`, `px-4 py-4`, `gap-2` | Separador y márgenes del pie con el campo |
+
+### 5.2 Componentes copiados en vez de usados
+
+Son piezas que se han reconstruido a mano con clases de Tailwind, imitando a un componente que existe o que **debería existir** en solaris-ds.
+
+| Archivo | Líneas | Pieza | Copia de… | Qué falta |
+|---|---|---|---|---|
+| `src/screens/antes.tsx` | 69–72 | Aviso "Hablas con un asistente de IA…" | Los colores del Badge `info` (`Badge.tsx`, línea 20) más un icono | Un componente de **aviso** (Alert o Callout) con `tone` |
+| `src/screens/antes.tsx` | 93–100 | Avatar redondo con icono | La caja de icono de Card (`Card.tsx`, línea 28), pero con otro tamaño y otro radio | Un componente **Avatar** |
+| `src/screens/antes.tsx` | 103–109 | Burbuja de mensaje | Los colores de Button `primary` (`Button.tsx`, línea 21) para tus mensajes y la superficie de Card (`Card.tsx`, línea 22) para los del asistente | Un componente de **mensaje de chat**. El README ya lo prevé como `AIChatMessage` |
+| `src/screens/antes.tsx` | 91–112 | Fila de mensaje con avatar, burbuja y hora | Composición nueva, sin equivalente | Forma parte del mismo componente de mensaje de chat |
+| `src/screens/antes.tsx` | 55–67 y 120 | Cabecera y pie de pantalla con borde | El borde `gray-200` de Card | Una regla de **estructura de pantalla** (cabecera, contenido, pie) |
+| `src/screens/antes.tsx` | 57 | Título de pantalla | El título de Card (`Card.tsx`, línea 33), con otro tamaño (`text-xl` frente a `text-lg`) | Una **escala tipográfica** con nombres (título de pantalla, título de tarjeta…) |
+
+### 5.3 Nombres distintos de los de mis componentes
+
+| Archivo | Línea | En la pantalla | En los componentes | Problema |
+|---|---|---|---|---|
+| `src/screens/antes.tsx` | 11 | `author: 'user' \| 'assistant'` | Los componentes usan `variant` (Button) y `tone` (Badge) para cambiar el aspecto | Aparece un **tercer nombre**, `author`, para decidir colores y posición. Un componente de mensaje tendría que elegir uno de los existentes |
+| `src/screens/antes.tsx` | 58 y 69 | Badge `tone="info"` en la línea 58 y aviso azul hecho a mano en la línea 69 | `tone="info"` | **El mismo significado, "información", escrito de dos formas** en la misma pantalla |
+| `src/screens/antes.tsx` | 63 | `variant="ghost"` con icono de papelera para "Borrar conversación" | Existe `variant="danger"` para acciones que borran | La variante no comunica que la acción borra algo. Falta una regla de cuándo usar `danger` |
+| `src/screens/antes.tsx` | 94 | `size-8` (32 px) para el avatar | Los tamaños se llaman `sm`, `md` y `lg` | Tamaño en clase de Tailwind, no en la escala con nombre de los componentes |
+| `src/screens/antes.tsx` | 7 | `export const title` (nombre en el menú) | `title` en Card es el título visible de la tarjeta | La misma palabra con dos significados distintos en el proyecto |
+| `src/screens/antes.tsx` | 76–86 | "Estado vacío" montado con Card y `description` | Card no tiene un uso de estado vacío | Se usa Card para algo que no es una tarjeta de datos. Falta un componente o un patrón **EmptyState** |
+| `src/screens/antes.tsx` | 127 | `className="flex-1"` en Input | En Input, `className` se aplica al contenedor (etiqueta, campo y ayuda), no al campo | Funciona por casualidad: un agente podría pensar que estila la caja de texto |
+
+### 5.4 Qué nos enseña
+
+1. **Sin tokens, cada pantalla inventa valores.** Han aparecido un tamaño de texto (`text-xl`), un radio (`rounded-2xl`), un tamaño de icono (18 px) y dos grises nuevos que no estaban en los componentes.
+2. **Lo que no existe como componente se copia.** Aviso, avatar y burbuja de chat se han hecho a mano tomando colores de Badge, Card y Button. Son los siguientes componentes candidatos.
+3. **Sin nombres comunes, cada pieza nueva inventa el suyo** (`author`, `size-8`). Hace falta decidir una sola palabra para "aspecto según significado" (`variant` o `tone`) y una sola escala de tamaños.
+4. **Reglas para AGENTS.md que habrían evitado estos fallos:**
+   - no escribir colores, radios ni tamaños de texto fuera de los componentes;
+   - si falta un componente, crearlo en `src/components/` con su historia antes de usarlo en una pantalla;
+   - usar `danger` en las acciones que borran.
