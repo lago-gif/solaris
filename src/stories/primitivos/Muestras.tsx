@@ -1,47 +1,10 @@
 import type { CSSProperties, ReactNode } from 'react'
-import tokens from '../../tokens/tokens.json'
+import { css, cssColor, entries, fontStack, label, px, sansStack, tokens } from './tokens'
+import type { ColorValue, Dimension, Group, Token } from './tokens'
 
-// Componentes de documentación para la página Fundamentos/Primitivos.
-// Leen tokens/tokens.json (formato DTCG) y pintan cada grupo.
-// Los estilos de las muestras se calculan a partir del valor del token,
+// Muestras visuales de la página Fundamentos/Primitivos.
+// Los estilos de las muestras se calculan a partir del valor de cada token,
 // por eso usan `style` en lugar de clases de Tailwind.
-
-type Dimension = { value: number; unit: 'px' | 'rem' }
-type ColorValue = { colorSpace: string; components: number[]; alpha?: number; hex: string }
-type Token<T> = { $value: T; $description?: string }
-type Group<T> = Record<string, Token<T> | string>
-
-// Ordena los pasos por su valor numérico (0, 050, 100…). JavaScript pone primero
-// las claves que parecen números enteros, así que "050" quedaría al final.
-function order(key: string) {
-  const n = Number(key)
-  return Number.isNaN(n) ? Infinity : n
-}
-
-function entries<T>(group: Group<T>): [string, Token<T>][] {
-  return (Object.entries(group).filter(([key]) => !key.startsWith('$')) as [string, Token<T>][]).sort(
-    ([a], [b]) => order(a) - order(b),
-  )
-}
-
-function css(d: Dimension) {
-  return `${d.value}${d.unit}`
-}
-
-function px(d: Dimension) {
-  return d.unit === 'rem' ? d.value * 16 : d.value
-}
-
-function label(d: Dimension) {
-  return d.unit === 'rem' ? `${d.value}rem · ${px(d)}px` : `${d.value}px`
-}
-
-function cssColor(c: ColorValue) {
-  const [a, b, h] = c.components
-  const alpha = c.alpha !== undefined ? ` / ${c.alpha}` : ''
-  if (c.colorSpace === 'oklch') return `oklch(${a} ${b} ${h}${alpha})`
-  return `rgb(${a * 255} ${b * 255} ${h * 255}${alpha})`
-}
 
 function Name({ children }: { children: ReactNode }) {
   return <code className="text-sm font-medium text-gray-900">{children}</code>
@@ -55,7 +18,6 @@ function Rows({ children }: { children: ReactNode }) {
   return <ul className="not-prose m-0 flex list-none flex-col gap-3 p-0">{children}</ul>
 }
 
-const sansStack = (tokens['font-family'].sans.$value as string[]).map((f) => (f.includes(' ') ? `'${f}'` : f)).join(', ')
 
 export function ColorScales() {
   const groups = entries(tokens.color as unknown as Group<Group<ColorValue>>) as unknown as [string, Group<ColorValue>][]
@@ -153,7 +115,7 @@ export function FontFamilies() {
       {entries(tokens['font-family'] as unknown as Group<string[]>).map(([name, token]) => (
         <li key={name} className="flex flex-col gap-1">
           <Name>{name}</Name>
-          <p className="m-0 text-2xl text-gray-900" style={{ fontFamily: token.$value.map((f) => (f.includes(' ') ? `'${f}'` : f)).join(', ') }}>
+          <p className="m-0 text-2xl text-gray-900" style={{ fontFamily: fontStack(token.$value) }}>
             Próxima cita: dentista, martes 18 a las 10:30
           </p>
           <Value>{token.$value.join(', ')}</Value>

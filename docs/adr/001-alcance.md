@@ -13,6 +13,8 @@
 
 Esta decisión se aplica a todo el trabajo nuevo en solaris-ds. Para cambiarla, se escribe un ADR nuevo que la sustituya; este archivo no se edita para cambiar lo decidido.
 
+> **Corrección puntual (15 de noviembre de 2026):** al crear `tokens/tokens.json`, se actualiza este ADR para nombrarlo como la fuente de los tokens, en lugar de `@theme` (`src/index.css`). Es una excepción a la regla anterior, aprobada por lago-gif, porque no cambia ninguna decisión: solo dice dónde viven los tokens. Cualquier otro cambio requiere un ADR nuevo.
+
 ## Contexto
 
 **solaris-ds** es el design system de **solaris-app**, una app de salud personal:
@@ -53,8 +55,10 @@ Se sigue el modelo de dos niveles que usan la mayoría de design systems y el fo
 
 | Nivel | Qué es | Ejemplo | Quién lo puede usar |
 |---|---|---|---|
-| **Primitivo** | El valor bruto: la paleta y las escalas por defecto de Tailwind | `blue-700`, `rounded-lg`, `text-sm` | **Solo** la definición de tokens semánticos en `@theme` (`src/index.css`) |
+| **Primitivo** | El valor bruto: la paleta y las escalas de Tailwind, más la escala de marca y la tipografía. Viven en `tokens/tokens.json` (formato DTCG) | `color.gray.700`, `radius.200`, `font-size.sm` | **Solo** la definición de tokens semánticos |
 | **Semántico** | El valor con significado, por su uso | `primary`, `danger`, `surface`, `border`, `text-muted` | Componentes y pantallas |
+
+**`tokens/tokens.json` es la única fuente de los tokens.** El bloque `@theme` de `src/index.css` se genera a partir de él para que Tailwind pueda usarlos; no se escriben valores a mano en `@theme`.
 
 Los nombres exactos de los tokens semánticos se fijarán en un ADR posterior.
 
@@ -103,7 +107,7 @@ Reglas:
 ### Lo que ganamos
 
 - **Coherencia:** el mismo significado tiene siempre el mismo valor, por ejemplo un único rojo de peligro.
-- **Un solo sitio para cambiar:** cambiar un color o un radio se hace en `@theme` y llega a toda la app.
+- **Un solo sitio para cambiar:** cambiar un color o un radio se hace en `tokens/tokens.json` y llega a toda la app.
 - **Agentes más fiables:** con nombres estándar y tokens con significado, un agente (Claude, Dust…) acierta más sin necesidad de explicaciones.
 - **Comprobable:** los cinco principios se pueden revisar en cada PR, y más adelante con evals automáticos.
 
@@ -115,7 +119,7 @@ Reglas:
 
 ### Próximos pasos
 
-1. **ADR-002 · Tokens:** definir los tokens semánticos (color, espaciado, radio, tipografía, sombra e iconos) en `@theme`.
+1. **ADR-002 · Tokens:** definir los tokens semánticos (color, espaciado, radio, tipografía, sombra e iconos) en `tokens/tokens.json`, y generar a partir de él el bloque `@theme` que usa Tailwind.
 2. **Migrar los cuatro componentes** (Button, Input, Card y Badge) a los tokens semánticos y unificar los tamaños de icono.
 3. **Crear los componentes que faltan** según la auditoría: aviso (Alert), Avatar y mensaje de chat.
 4. **Añadir la revisión de accesibilidad automática** en Storybook (el complemento a11y), para comprobar el principio 4.
