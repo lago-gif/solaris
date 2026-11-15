@@ -1,0 +1,8 @@
+/*
+  Páginas de documentación de Storybook (Fundamentos, Status…):
+  más ancho que los 1000px de serie, para que las tablas de tokens
+  se lean de izquierda a derecha sin partir las columnas.
+*/
+.sbdocs.sbdocs-content {
+  max-width: 1440px;
+}

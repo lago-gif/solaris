@@ -6,6 +6,8 @@ import '@fontsource/atkinson-hyperlegible-next/600.css'
 import '@fontsource/atkinson-hyperlegible-next/700.css'
 // Carga Tailwind y los estilos del proyecto en todas las historias.
 import '../src/index.css'
+// Páginas de documentación más anchas, para las tablas de tokens.
+import '../src/stories/docs.css'
 
 const preview: Preview = {
   tags: ['autodocs'],
