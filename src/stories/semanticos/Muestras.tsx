@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import { IconAlertCircle, IconCircleCheck, IconHeartbeat, IconPill } from '@tabler/icons-react'
+import { classFor } from '../../../scripts/token-names.mjs'
 import { TokenList, TokenRow } from '../primitivos/Muestras'
 import { css, label, sansStack } from '../primitivos/tokens'
 import type { Dimension } from '../primitivos/tokens'
@@ -30,12 +31,29 @@ type Node = { [key: string]: unknown }
 const group = (path: string) => path.split('.').reduce<Node>((n, k) => n[k] as Node, semantic)
 
 /** Columna derecha: nombre del token semantic, alias al primitivo y valor resuelto. */
-function SemanticInfo({ name, alias, value, extra }: { name: string; alias: string; value: string; extra?: string }) {
+function SemanticInfo({
+  name,
+  alias,
+  value,
+  extra,
+  cls,
+}: {
+  name: string
+  alias: string
+  value: string
+  extra?: string
+  cls?: string
+}) {
   return (
     <div className="flex flex-col gap-0.5">
       <code className="text-sm font-semibold text-gray-900">{name}</code>
       <span className="font-mono text-xs text-gray-700">→ {alias}</span>
       <span className="font-mono text-xs text-gray-600">{value}</span>
+      {cls && (
+        <span className="text-xs text-gray-600">
+          Tailwind: <code className="font-mono font-semibold text-gray-900">{cls}</code>
+        </span>
+      )}
       {extra && <span className="text-xs text-gray-600">{extra}</span>}
     </div>
   )
@@ -72,7 +90,14 @@ export function BackgroundColors() {
       {flatten(group('color.background'), 'color.background').map(([name, token]) => (
         <TokenRow
           key={name}
-          info={<SemanticInfo name={name} alias={aliasPath(token.$value as string)} value={hexOf(token)} />}
+          info={
+            <SemanticInfo
+              name={name}
+              alias={aliasPath(token.$value as string)}
+              value={hexOf(token)}
+              cls={classFor(`semantic.${name}`, 'color')}
+            />
+          }
         >
           <div className="h-16 rounded-lg border border-gray-200" style={{ background: colorOf(token) }} />
           <Description token={token} />
@@ -96,6 +121,7 @@ function ForegroundRows({ prefix, render }: { prefix: string; render: (color: st
                 alias={aliasPath(token.$value as string)}
                 value={hexOf(token)}
                 extra={`Sobre ${backgroundNameFor(name)}: contraste ${ratio(token, bg)}:1`}
+                cls={classFor(`semantic.${name}`, 'color')}
               />
             }
           >
@@ -154,6 +180,7 @@ export function BorderColors() {
                 alias={aliasPath(token.$value as string)}
                 value={hexOf(token)}
                 extra={`Sobre color.background.neutral: contraste ${ratio(token, pageBg)}:1`}
+                cls={classFor(`semantic.${name}`, 'color')}
               />
             }
           >
@@ -202,6 +229,10 @@ export function TypographyStyles() {
             info={
               <div className="flex flex-col gap-1">
                 <code className="text-sm font-semibold text-gray-900">typography.{name}</code>
+                <span className="text-xs text-gray-600">
+                  Tailwind: <code className="font-mono font-semibold text-gray-900">{classFor(`semantic.typography.${name}.font-size`, 'dimension')}</code>{' '}
+                  (tamaño, interlineado y peso a la vez)
+                </span>
                 {[
                   ['font-size', size, label(dimensionOf(size))],
                   ['line-height', lineHeight, label(dimensionOf(lineHeight))],
@@ -241,7 +272,17 @@ function DimensionRows({ prefix, sample }: { prefix: string; sample: (d: Dimensi
       {flatten(group(prefix), prefix).map(([name, token]) => {
         const d = dimensionOf(token)
         return (
-          <TokenRow key={name} info={<SemanticInfo name={name} alias={aliasPath(token.$value as string)} value={label(d)} />}>
+          <TokenRow
+            key={name}
+            info={
+              <SemanticInfo
+                name={name}
+                alias={aliasPath(token.$value as string)}
+                value={label(d)}
+                cls={classFor(`semantic.${name}`, 'dimension')}
+              />
+            }
+          >
             {sample(d)}
             <Description token={token} />
           </TokenRow>
@@ -296,6 +337,9 @@ export function Elevations() {
             info={
               <div className="flex flex-col gap-1">
                 <code className="text-sm font-semibold text-gray-900">{name}</code>
+                <span className="text-xs text-gray-600">
+                  Tailwind: <code className="font-mono font-semibold text-gray-900">{classFor(`semantic.${name}`, 'shadow')}</code>
+                </span>
                 {(['offsetY', 'blur', 'color'] as const).map((piece) => (
                   <span key={piece} className="font-mono text-xs text-gray-700">
                     {piece} → {aliasPath(v[piece])}
@@ -379,7 +423,14 @@ export function ComponentTokens({ name }: { name: 'button' | 'input' | 'card' | 
         return (
           <TokenRow
             key={tokenName}
-            info={<SemanticInfo name={tokenName} alias={displayName(token.$value as string)} value={value} />}
+            info={
+              <SemanticInfo
+                name={tokenName}
+                alias={displayName(token.$value as string)}
+                value={value}
+                cls={classFor(`component.${tokenName}`, token.$type)}
+              />
+            }
           >
             {sample}
             <Description token={token} />

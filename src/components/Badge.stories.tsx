@@ -5,7 +5,7 @@ import { Badge } from './Badge'
 const meta = {
   title: 'Componentes/Badge',
   parameters: {
-    docs: { description: { component: 'Etiqueta de estado con esquinas ligeramente redondeadas (`rounded-md`, 6 px). Siempre lleva texto: el color nunca va solo.' } },
+    docs: { description: { component: 'Etiqueta de estado con esquinas ligeramente redondeadas (`badge.radius` → `radius.sm`, 4 px). Siempre lleva texto: el color nunca va solo.' } },
   },
   component: Badge,
   args: { children: 'Tomada', tone: 'success' },

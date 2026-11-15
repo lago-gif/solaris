@@ -21,26 +21,33 @@ export function Input({ label, hint, error, icon: IconComponent, id, required, c
   const errorId = `${inputId}-error`
   const describedBy = [hint ? hintId : null, error ? errorId : null].filter(Boolean).join(' ') || undefined
 
+  // Cada clase es un token de componente (tokens/tokens.json → component.input).
   return (
-    <div className={`flex flex-col gap-1.5 ${className}`}>
-      <label htmlFor={inputId} className="text-sm font-medium text-gray-900">
+    <div className={`flex flex-col gap-input-gap ${className}`}>
+      <label
+        htmlFor={inputId}
+        className="text-input-label-font-size font-input-label-font-weight text-input-label-text"
+      >
         {label}
         {required && (
-          <span className="text-red-700" aria-hidden="true">
+          <span className="text-input-label-required" aria-hidden="true">
             {' '}
             *
           </span>
         )}
       </label>
 
-      <div className="relative">
+      {/* La caja del campo: borde, fondo y foco. El icono y el texto van dentro, uno junto al otro. */}
+      <div
+        className={[
+          'flex items-center gap-input-icon-gap rounded-input-radius border-width-input-border-width bg-input-background px-input-padding-x',
+          'focus-within:outline-width-input-border-width-focus focus-within:outline-input-border-focus',
+          'has-[:disabled]:cursor-not-allowed has-[:disabled]:bg-input-background-disabled',
+          error ? 'border-input-border-danger' : 'border-input-border',
+        ].join(' ')}
+      >
         {IconComponent && (
-          <IconComponent
-            size={20}
-            stroke={1.75}
-            aria-hidden="true"
-            className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-gray-500"
-          />
+          <IconComponent size={20} stroke={1.75} aria-hidden="true" className="pointer-events-none shrink-0 text-input-icon" />
         )}
         <input
           id={inputId}
@@ -48,24 +55,22 @@ export function Input({ label, hint, error, icon: IconComponent, id, required, c
           aria-invalid={error ? true : undefined}
           aria-describedby={describedBy}
           className={[
-            'h-10 w-full rounded-lg border bg-white px-3 text-base text-gray-900 placeholder:text-gray-500',
-            'focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-blue-600',
-            'disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-500',
-            IconComponent ? 'pl-10' : '',
-            error ? 'border-red-700' : 'border-gray-500',
+            'min-w-0 flex-1 bg-transparent py-input-padding-y outline-none',
+            'text-input-font-size leading-input-line-height text-input-text placeholder:text-input-text-placeholder',
+            'disabled:cursor-not-allowed disabled:text-input-text-disabled',
           ].join(' ')}
           {...rest}
         />
       </div>
 
       {hint && (
-        <p id={hintId} className="text-sm text-gray-600">
+        <p id={hintId} className="text-input-hint-font-size text-input-hint-text">
           {hint}
         </p>
       )}
       {error && (
-        <p id={errorId} className="flex items-center gap-1.5 text-sm text-red-700">
-          <IconAlertCircle size={16} stroke={2} aria-hidden="true" />
+        <p id={errorId} className="flex items-center gap-input-gap text-input-hint-font-size text-input-error-text">
+          <IconAlertCircle size={16} stroke={2} aria-hidden="true" className="shrink-0 text-input-error-icon" />
           {error}
         </p>
       )}

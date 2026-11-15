@@ -17,17 +17,26 @@ export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   fullWidth?: boolean
 }
 
+// Cada clase es un token de componente (tokens/tokens.json → component.button).
 const variantClasses: Record<ButtonVariant, string> = {
-  primary: 'bg-blue-700 text-white hover:bg-blue-800 active:bg-blue-900',
-  secondary: 'border border-gray-300 bg-white text-gray-900 hover:bg-gray-50 active:bg-gray-100',
-  ghost: 'bg-transparent text-blue-700 hover:bg-blue-50 active:bg-blue-100',
-  danger: 'bg-red-700 text-white hover:bg-red-800 active:bg-red-900',
+  primary: 'bg-button-background-brand text-button-text-brand-inverted hover:bg-button-background-brand-hover',
+  secondary:
+    'border-width-button-border-width border-button-border-neutral bg-button-background-neutral text-button-text-neutral hover:bg-button-background-neutral-hover',
+  ghost: 'bg-transparent text-button-text-brand hover:bg-button-background-brand-subtle-hover',
+  danger: 'bg-button-background-danger text-button-text-danger-inverted hover:bg-button-background-danger-hover',
+}
+
+const iconClasses: Record<ButtonVariant, string> = {
+  primary: 'text-button-icon-brand-inverted',
+  secondary: 'text-button-icon-neutral',
+  ghost: 'text-button-icon-brand',
+  danger: 'text-button-icon-danger-inverted',
 }
 
 const sizeClasses: Record<ButtonSize, string> = {
-  sm: 'h-8 gap-1.5 px-3 text-sm',
-  md: 'h-10 gap-2 px-4 text-base',
-  lg: 'h-12 gap-2 px-6 text-lg',
+  sm: 'gap-button-gap-sm px-button-padding-x-sm py-button-padding-y-sm text-button-font-size-sm leading-button-line-height-sm',
+  md: 'gap-button-gap-md px-button-padding-x-md py-button-padding-y-md text-button-font-size-md leading-button-line-height-md',
+  lg: 'gap-button-gap-md px-button-padding-x-lg py-button-padding-y-lg text-button-font-size-lg leading-button-line-height-lg',
 }
 
 const iconSizes: Record<ButtonSize, number> = { sm: 16, md: 20, lg: 24 }
@@ -43,15 +52,22 @@ export function Button({
   children,
   ...rest
 }: ButtonProps) {
-  const icon = IconComponent ? <IconComponent size={iconSizes[size]} stroke={2} aria-hidden="true" /> : null
+  const icon = IconComponent ? (
+    <IconComponent
+      size={iconSizes[size]}
+      stroke={2}
+      aria-hidden="true"
+      className={`${iconClasses[variant]} group-disabled:text-button-icon-disabled`}
+    />
+  ) : null
 
   return (
     <button
       type={type}
       className={[
-        'inline-flex items-center justify-center rounded-full font-medium transition-colors',
-        'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600',
-        'disabled:cursor-not-allowed disabled:opacity-50',
+        'group inline-flex items-center justify-center rounded-button-radius font-button-font-weight transition-colors',
+        'focus-visible:outline-width-button-border-width-focus focus-visible:outline-button-border-focus focus-visible:outline-offset-button-focus-offset',
+        'disabled:cursor-not-allowed disabled:bg-button-background-disabled disabled:text-button-text-disabled',
         variantClasses[variant],
         sizeClasses[size],
         fullWidth ? 'w-full' : '',

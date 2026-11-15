@@ -217,7 +217,41 @@ Todos los tokens de componente están en `tokens.json` (capa `component`) y se v
 
 ---
 
-## 4. Lista de comprobación antes de abrir la PR
+## 4. De tokens.json al código
+
+`tokens.json` no lo lee el navegador. Para usar los tokens hay que **generar** los archivos CSS:
+
+```bash
+npm run tokens
+```
+
+| Archivo generado | Qué es |
+|---|---|
+| `src/styles/tokens.css` | Una variable CSS por token: `--semantic-color-background-brand`, `--component-button-radius`… |
+| `src/styles/theme.css` | Convierte los tokens semantic y component en **clases de Tailwind**: `bg-background-brand`, `p-space-md`, `bg-button-background-brand`… |
+| `docs/tokens.md` | La tabla de cada token con su clase de Tailwind |
+
+**Después de cambiar `tokens.json`, ejecuta siempre `npm run tokens`** y sube los archivos generados en la misma PR. Para comprobar que están al día sin escribir nada: `npm run tokens -- --check`.
+
+**Cómo se forma la clase:** la utilidad de Tailwind + el nombre del token sin el nivel. En los semánticos de color se quita también `color`:
+
+| Token | Clase |
+|---|---|
+| `semantic.color.background.brand` | `bg-background-brand` |
+| `semantic.color.icon.neutral` | `text-icon-neutral` |
+| `semantic.space.md` | `p-space-md`, `gap-space-md`, `m-space-md`… |
+| `semantic.radius.md` | `rounded-radius-md` |
+| `semantic.border-width.default` | `border-width-default` |
+| `semantic.elevation.md` | `shadow-elevation-md` |
+| `semantic.typography.heading` | `text-heading` (tamaño, interlineado y peso a la vez) |
+| `component.button.background.brand` | `bg-button-background-brand` |
+| `component.button.padding-x.md` | `px-button-padding-x-md` |
+
+Ninguna clase se llama igual que una de Tailwind, y las escalas de Tailwind no cambian: `bg-gray-500` o `p-4` siguen existiendo, pero **en los componentes solo se usan las clases de los tokens**.
+
+---
+
+## 5. Lista de comprobación antes de abrir la PR
 
 Repasa cada token nuevo o cambiado:
 
@@ -230,4 +264,5 @@ Repasa cada token nuevo o cambiado:
 - [ ] **Los alias usan llaves y la ruta completa**, empezando por el nivel: `{primitive.color.gray.900}`.
 - [ ] **El alias existe:** la ruta apunta a un token real de `tokens.json`.
 - [ ] **No duplica otro token:** si ya existe uno con el mismo significado, se usa ese.
+- [ ] **Has ejecutado `npm run tokens`** y subes los archivos generados.
 - [ ] **Contraste:** si es un color de texto o de borde, cumple WCAG 2.2 AA con su fondo (4,5:1 en texto, 3:1 en bordes e iconos), como pide el ADR-001.
