@@ -1,9 +1,10 @@
-import tokens from '../../../tokens/tokens.json'
+import allTokens from '../../../tokens/tokens.json'
 
 // Lectura de tokens/tokens.json (formato DTCG) para la página Fundamentos/Primitivos:
 // tipos de los valores y utilidades para ordenarlos y convertirlos a CSS.
 
-export { tokens }
+/** Capa primitive de tokens.json. */
+export const tokens = allTokens.primitive
 
 export type Dimension = { value: number; unit: 'px' | 'rem' }
 export type ColorValue = { colorSpace: string; components: number[]; alpha?: number; hex: string }

@@ -39,7 +39,7 @@ function TokenInfo({ name, value, tailwind }: { name: string; value: string; tai
 }
 
 /** Fila de un token: muestra a la izquierda, información a la derecha. */
-function TokenRow({ children, info }: { children: ReactNode; info: ReactNode }) {
+export function TokenRow({ children, info }: { children: ReactNode; info: ReactNode }) {
   return (
     <li className="flex flex-col gap-3 border-b border-gray-200 py-4 sm:flex-row sm:items-center sm:gap-8">
       <div className="min-w-0 flex-1">{children}</div>
@@ -48,7 +48,7 @@ function TokenRow({ children, info }: { children: ReactNode; info: ReactNode }) 
   )
 }
 
-function TokenList({ children }: { children: ReactNode }) {
+export function TokenList({ children }: { children: ReactNode }) {
   return (
     <Unstyled>
       <ul className="m-0 list-none border-t border-gray-200 p-0 font-sans">{children}</ul>
