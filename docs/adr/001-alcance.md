@@ -9,7 +9,9 @@
 
 ## Estado
 
-**Aceptado.** Esta decisión se aplica a todo el trabajo nuevo en solaris-ds desde su fusión en `main`. Para cambiarla, se escribe un ADR nuevo que la sustituya. Este archivo no se edita para cambiar lo decidido.
+**Aceptado** el 15 de noviembre de 2026, una vez comprobado que los cinco principios se pueden verificar revisando el código o mirándolo en Storybook (ver "Cómo se comprobará cada principio").
+
+Esta decisión se aplica a todo el trabajo nuevo en solaris-ds. Para cambiarla, se escribe un ADR nuevo que la sustituya; este archivo no se edita para cambiar lo decidido.
 
 ## Contexto
 
@@ -78,15 +80,23 @@ Reglas:
 
 ### Principios
 
-Cada principio se puede comprobar con una prueba concreta.
+| # | Principio |
+|---|---|
+| **1** | **Todo valor visual sale de un token semántico.** Ningún archivo de `src/components/` ni de `src/screens/` contiene colores de la paleta de Tailwind (`blue-700`, `gray-200`…), colores hex (`#1d4ed8`), medidas escritas en píxeles (`13px`) ni valores entre corchetes en las clases (`max-w-[80%]`). Los tamaños de icono también salen de la escala de tokens |
+| **2** | **Toda pieza visual de una pantalla es un componente de `src/components/`.** Cada componente tiene su archivo `.stories.tsx`, aparece en Storybook bajo **Componentes** y tiene su fila ✅ en `docs/componentes.md`. Los archivos de `src/screens/` solo usan clases de distribución (`flex`, `grid`, `gap`, `p`, `m`, `w`, `h` con tokens de espaciado) y ninguna de aspecto (`bg-`, `text-` de color o tamaño, `border-` de color, `rounded-`, `shadow-`, `font-`) |
+| **3** | **Solo tres props cambian el aspecto de un componente: `variant`, `tone` y `size`.** `tone` solo admite `neutral`, `info`, `success`, `warning` y `danger`. `size` solo admite `sm`, `md` y `lg`. Ninguna prop ni valor se llama `color`, `status`, `kind`, `appearance`, `intent`, `error` (como tono), `critical` ni `destructive` |
+| **4** | **Accesibilidad (criterios de WCAG 2.2 AA):** (a) todo elemento interactivo se alcanza y se usa con el teclado (Tab, Enter y Espacio); (b) al recibir el foco muestra un contorno visible; (c) todo campo de formulario tiene una etiqueta visible; (d) el texto tiene un contraste de al menos 4,5:1 con su fondo, y los bordes de campos e iconos con significado, de al menos 3:1 |
+| **5** | **Seguridad en salud:** (a) todo `tone` lleva texto, y el componente no se puede usar sin él; (b) toda pantalla con respuestas de IA muestra de forma permanente el aviso de que es una IA y no sustituye al personal sanitario; (c) todo botón que borra datos usa `variant="danger"`; (d) grabar, compartir o borrar datos de salud pide confirmación antes de hacerlo, y mientras se graba hay un indicador visible |
 
-| # | Principio | Cómo se comprueba |
-|---|---|---|
-| **1** | **Todo valor visual sale de un token semántico.** Ningún componente ni pantalla escribe colores, radios, tamaños de texto, sombras ni tamaños de icono a mano | Buscar en `src/components/` y `src/screens/` colores de la paleta (`blue-700`, `gray-200`…), hex (`#1d4ed8`), `px` y valores entre corchetes (`[80%]`). **Resultado esperado: 0** |
-| **2** | **Toda pieza visual de una pantalla es un componente de `src/components/`**, con su historia en Storybook y su fila ✅ en `docs/componentes.md`. Las pantallas solo colocan componentes: usan clases de distribución (flex, grid y espaciado con tokens) y nunca de aspecto (color, radio, tipografía o borde) | Cada `.tsx` de `src/components/` tiene su `.stories.tsx` y su fila en `docs/componentes.md`. Las pantallas no contienen clases de aspecto. **Resultado esperado: 0 piezas sin componente** |
-| **3** | **Una sola convención de nombres**: `variant` para el estilo, `tone` para el significado, `size` con `sm`/`md`/`lg`, y `danger` para peligro | Revisar las props de cada componente nuevo en la PR. **Resultado esperado: ningún sinónimo** (`color`, `status`, `kind`, `error` como tono, `destructive`…) |
-| **4** | **Todo componente cumple WCAG 2.2 AA**: contraste de 4,5:1 en texto y 3:1 en bordes e iconos, foco visible, uso completo con teclado y etiqueta en cada campo | Revisión de accesibilidad de cada historia en Storybook. **Resultado esperado: 0 fallos** |
-| **5** | **Seguridad en salud**: el color nunca va solo (todo `tone` lleva texto o icono), la IA siempre se identifica y avisa de que no sustituye al personal sanitario, las acciones que borran usan `danger`, y grabar o compartir datos siempre se muestra y se confirma | Revisión de la PR. Ningún `tone` sin texto, toda pantalla con IA muestra el aviso y ningún botón de borrar usa otra variante que `danger`. **Resultado esperado: 0 excepciones** |
+### Cómo se comprobará cada principio
+
+| # | Principio | Cómo se comprueba | Qué mirar | Resultado esperado |
+|---|---|---|---|---|
+| **1** | Todo valor visual sale de un token | **Revisando el código** | Buscar en `src/components/` y `src/screens/` nombres de la paleta (`red-`, `blue-`, `gray-`…), `#` seguido de un color, un número seguido de `px` (`13px`) y `-[` (valor entre corchetes en una clase). Comprobar que los `size=` de los iconos usan la escala | **0 resultados** |
+| **2** | Toda pieza visual es un componente | **Revisando el código** y **mirándolo en Storybook** | Código: cada `X.tsx` de `src/components/` tiene su `X.stories.tsx`, y las pantallas no tienen clases de aspecto. Storybook: el componente aparece en **Componentes**, y la página **Status** lo muestra con ✅ | **0 componentes sin historia, 0 clases de aspecto en pantallas** |
+| **3** | Solo `variant`, `tone` y `size` | **Revisando el código** | Los tipos de las props de cada componente: nombres permitidos y valores de `tone` y `size` | **0 props o valores fuera de la lista** |
+| **4** | Accesibilidad | **Mirándolo en Storybook** (a, b, d) y **revisando el código** (c) | Storybook: recorrer cada historia solo con el teclado y comprobar el foco; medir con un comprobador de contraste los colores de cada variante y tono. Código: `label` es obligatoria en los campos | **0 elementos sin teclado o sin foco, 0 contrastes por debajo del mínimo, 0 campos sin etiqueta** |
+| **5** | Seguridad en salud | **Revisando el código** (a, c) y **mirándolo en Storybook** (b, d) | Código: `children` es obligatorio en los componentes con `tone`, y los botones de borrar usan `variant="danger"`. Storybook: las historias y pantallas con IA muestran el aviso; grabar, compartir y borrar abren una confirmación | **0 excepciones** |
 
 ## Consecuencias
 
