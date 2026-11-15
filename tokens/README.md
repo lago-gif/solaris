@@ -16,7 +16,7 @@ Cada token pertenece a uno de estos tres niveles. Piensa en ellos como capas: ca
 component   button.color.background.primary   ← para qué pieza
     │  alias
     ▼
-semantic    color.background.brand.strong     ← para qué sirve
+semantic    color.background.brand     ← para qué sirve
     │  alias
     ▼
 primitive   color.brand.700  =  #0e7c86       ← cómo es
@@ -25,8 +25,8 @@ primitive   color.brand.700  =  #0e7c86       ← cómo es
 | Nivel | Qué guarda | Su valor es… | Ejemplo | Quién lo usa |
 |---|---|---|---|---|
 | **primitive** | Los valores en bruto: la paleta, las escalas de medida, la tipografía. Dice **cómo es** | Un valor **literal** (un color, una medida, un número) | `primitive.color.brand.700` = #0e7c86 | Solo los tokens semantic |
-| **semantic** | El valor con **significado**: para qué sirve en la interfaz | Un **alias** a un primitive | `semantic.color.background.brand.strong` → `{primitive.color.brand.700}` | Los tokens component y, mientras no tengan los suyos, los componentes |
-| **component** | El valor de una **pieza concreta** de un componente | Un **alias** a un semantic | `component.button.color.background.primary` → `{semantic.color.background.brand.strong}` | Solo su componente |
+| **semantic** | El valor con **significado**: para qué sirve en la interfaz | Un **alias** a un primitive | `semantic.color.background.brand` → `{primitive.color.brand.700}` | Los tokens component y, mientras no tengan los suyos, los componentes |
+| **component** | El valor de una **pieza concreta** de un componente | Un **alias** a un semantic | `component.button.color.background.primary` → `{semantic.color.background.brand}` | Solo su componente |
 
 ### La regla de oro: cada nivel solo apunta al de abajo
 
@@ -36,7 +36,7 @@ primitive   color.brand.700  =  #0e7c86       ← cómo es
 | **semantic** | Un **primitive** | Otro semantic (de lado), un component (hacia arriba) |
 | **component** | Un **semantic** | Un primitive (se salta un nivel), otro component (de lado) |
 
-**Por qué.** Si un componente apuntara directamente a `primitive.color.brand.700`, para cambiar el color de acción tendrías que buscarlo componente a componente. Si apunta a `semantic.color.background.brand.strong`, lo cambias en un solo sitio.
+**Por qué.** Si un componente apuntara directamente a `primitive.color.brand.700`, para cambiar el color de acción tendrías que buscarlo componente a componente. Si apunta a `semantic.color.background.brand`, lo cambias en un solo sitio.
 
 **Solo los primitive tienen valores literales.** Si ves un hex o una medida en un token semantic o component, es un error.
 
@@ -72,26 +72,26 @@ Las dos primeras piezas son obligatorias, y casi siempre también la tercera. **
 | **category** | ¿Qué tipo de token es? | `color` |
 | **element** | ¿Qué parte pinta? | `background` (fondo), `text` (texto), `border` (borde), `icon` (icono) |
 | **role** | ¿Qué significa? | `neutral` (sin significado: la base de la interfaz), `brand` (marca y acción principal), `info`, `success`, `warning`, `danger` |
-| **modifier** | ¿Qué intensidad tiene? | `subtle` (más suave), `strong` (más intenso), `inverse` (para usar sobre un fondo oscuro). Sin modifier = intensidad normal |
+| **modifier** | ¿Qué intensidad tiene? | `subtle` (más suave), `strong` (más intenso), `inverted` (para usar sobre un fondo de color u oscuro, como `brand` o `danger`). Sin modifier = intensidad normal |
 | **state** | ¿En qué estado de interacción? | `hover` (pasar el ratón), `active` (pulsando), `focus` (seleccionado con teclado), `disabled` (desactivado). Sin state = reposo |
 
 Los roles `info`, `success`, `warning` y `danger` son los mismos valores que la prop `tone` de los componentes (ADR-001). Así, `tone="danger"` usará los tokens `…danger…`.
 
 **Ejemplos:**
 
-| Nombre | Se lee | Apuntaría a |
+| Nombre | Se lee | Apunta a |
 |---|---|---|
 | `color.background.neutral` | fondo · neutro | `{primitive.color.gray.50}` |
 | `color.text.neutral` | texto · neutro | `{primitive.color.gray.900}` |
 | `color.text.neutral.subtle` | texto · neutro · suave | `{primitive.color.gray.600}` |
 | `color.border.neutral` | borde · neutro | `{primitive.color.gray.300}` |
-| `color.background.brand.strong` | fondo · marca · intenso | `{primitive.color.brand.700}` |
-| `color.background.brand.strong.hover` | fondo · marca · intenso · al pasar el ratón | `{primitive.color.brand.800}` |
+| `color.background.brand` | fondo · marca (acción principal) | `{primitive.color.brand.700}` |
+| `color.background.brand.hover` | fondo · marca · al pasar el ratón | `{primitive.color.brand.800}` |
 | `color.text.danger` | texto · peligro | `{primitive.color.red.700}` |
-| `color.background.success.subtle` | fondo · éxito · suave | `{primitive.color.green.50}` |
-| `color.text.neutral.inverse` | texto · neutro · sobre fondo oscuro | `{primitive.color.gray.50}` |
+| `color.text.success` | texto · éxito | `{primitive.color.green.800}` |
+| `color.text.brand.inverted` | texto · marca · sobre el fondo brand | `{primitive.color.gray.50}` |
 
-> Los valores de la columna "Apuntaría a" son ejemplos de cómo se construye un alias. Los valores definitivos se decidirán al crear los tokens semantic.
+> Todos estos tokens existen en `tokens.json` (capa `semantic`), y la columna "Apunta a" muestra su alias real. La página **Fundamentos → Semánticos** de Storybook los enseña con su contraste.
 
 ### Component
 
@@ -103,10 +103,10 @@ Va **delante el nombre del componente**, y en el lugar del `role` va **su `varia
 
 | Nombre | Se lee | Apunta a |
 |---|---|---|
-| `button.color.background.primary` | botón · fondo · variante primary | `{semantic.color.background.brand.strong}` |
-| `button.color.background.primary.hover` | botón · fondo · primary · al pasar el ratón | `{semantic.color.background.brand.strong.hover}` |
-| `button.color.background.danger` | botón · fondo · variante danger | `{semantic.color.background.danger.strong}` |
-| `input.color.border.default` | campo · borde · estado normal | `{semantic.color.border.neutral}` |
+| `button.color.background.primary` | botón · fondo · variante primary | `{semantic.color.background.brand}` |
+| `button.color.background.primary.hover` | botón · fondo · primary · al pasar el ratón | `{semantic.color.background.brand.hover}` |
+| `button.color.background.danger` | botón · fondo · variante danger | `{semantic.color.background.danger}` |
+| `input.color.border.default` | campo · borde · estado normal | `{semantic.color.border.neutral.strong}` |
 
 ---
 
@@ -119,9 +119,21 @@ Va **delante el nombre del componente**, y en el lugar del `role` va **su `varia
 1. **Cada token lleva `$value` y `$description`.**
    - `$value`: el valor (literal en primitive, alias en semantic y component).
    - `$description`: para qué sirve, en una frase en español. Es lo que lee una persona o un agente para saber si es el token correcto.
-2. **El `$type` va en el grupo**, no en cada token. Todos los tokens de dentro lo heredan. Tipos que usamos: `color`, `dimension`, `fontFamily`, `fontWeight`.
+2. **El `$type` va en el grupo**, no en cada token. Todos los tokens de dentro lo heredan. Tipos que usamos: `color`, `dimension`, `fontFamily`, `fontWeight` y `shadow`.
+   - **Excepción:** si un grupo mezcla tipos, el `$type` va en cada token. Pasa en los estilos de texto (`semantic.typography.body`), que juntan un tamaño (`dimension`), un interlineado (`dimension`) y un peso (`fontWeight`).
 3. **Los alias se escriben entre llaves con la ruta completa del token**: `{primitive.color.gray.900}`. La ruta empieza siempre por el nivel (`primitive`, `semantic` o `component`).
 4. **Los nombres de grupo y de token no pueden empezar por `$`** ni contener `{`, `}` o `.`. El punto solo separa niveles en la ruta.
+5. **Un token no puede tener otros tokens dentro.** Cuando un nombre es a la vez un token y el comienzo de otros (`color.background.neutral` y `color.background.neutral.subtle`), el valor principal va en un token llamado **`$root`** dentro del grupo. Es la solución oficial de DTCG:
+
+   ```json
+   "neutral": {
+     "$root":  { "$value": "{primitive.color.gray.50}",  "$description": "Fondo principal de la app." },
+     "subtle": { "$value": "{primitive.color.gray.100}", "$description": "Fondo de zonas secundarias." }
+   }
+   ```
+
+   El token se sigue llamando `color.background.neutral`; `$root` solo dice dónde se guarda su valor.
+6. **Las sombras se montan con piezas.** Un token de `$type` `shadow` tiene como `$value` un objeto con `color`, `offsetX`, `offsetY`, `blur` y `spread`, y cada pieza es un alias a `primitive.shadow`.
 
 ### Cómo se ve cada nivel en el archivo
 
@@ -143,9 +155,13 @@ Va **delante el nombre del componente**, y en el lugar del `role` va **su `varia
       "$type": "color",
       "background": {
         "brand": {
-          "strong": {
+          "$root": {
             "$value": "{primitive.color.brand.700}",
-            "$description": "Fondo de la acción principal, por ejemplo el botón primario."
+            "$description": "Fondo de la acción principal, como el botón primary."
+          },
+          "hover": {
+            "$value": "{primitive.color.brand.800}",
+            "$description": "Fondo de la acción principal al pasar el ratón."
           }
         }
       }
@@ -157,7 +173,7 @@ Va **delante el nombre del componente**, y en el lugar del `role` va **su `varia
         "$type": "color",
         "background": {
           "primary": {
-            "$value": "{semantic.color.background.brand.strong}",
+            "$value": "{semantic.color.background.brand}",
             "$description": "Fondo del botón primary en reposo."
           }
         }
@@ -178,11 +194,11 @@ Va **delante el nombre del componente**, y en el lugar del `role` va **su `varia
 
 ### Estado actual de `tokens.json`
 
-Hoy `tokens.json` solo tiene el nivel primitive, y todavía no sigue del todo este manual:
-- **Los primitivos están en la raíz** (`color.gray.900`), no dentro de un grupo `primitive`. Se moverán a `primitive.…` cuando se añadan los niveles semantic y component.
-- **La mayoría de tokens no tiene `$description` propia**: la explicación está en su grupo. Se añadirá token a token.
-
-Cuando se cambie `tokens.json`, se aplicará este manual completo.
+| Nivel | Estado |
+|---|---|
+| **primitive** | ✅ Dentro del grupo `primitive`. La mayoría de tokens tiene la explicación en su grupo y no una `$description` propia; se añadirá token a token |
+| **semantic** | ✅ Dentro del grupo `semantic`: color, tipografía, espaciado (`space`), radio, grosor de borde y elevación. Todos son alias a primitivos y tienen su `$description` |
+| **component** | ⏳ Pendiente del ADR-002 |
 
 ---
 

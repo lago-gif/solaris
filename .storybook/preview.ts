@@ -12,7 +12,7 @@ const preview: Preview = {
   parameters: {
     controls: { expanded: true },
     options: {
-      storySort: { order: ['Status', 'Fundamentos', 'Componentes'] },
+      storySort: { order: ['Status', 'Fundamentos', ['Primitivos', 'Semánticos'], 'Componentes'] },
     },
   },
 }

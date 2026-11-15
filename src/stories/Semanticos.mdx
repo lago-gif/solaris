@@ -1,0 +1,106 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+import {
+  BackgroundColors,
+  TextColors,
+  IconColors,
+  BorderColors,
+  TypographyStyles,
+  SpaceScale,
+  RadiusScale,
+  BorderWidths,
+  Elevations,
+} from './semanticos/Muestras'
+
+<Meta title="Fundamentos/Semánticos" />
+
+# Semánticos
+
+Esta página enseña los **tokens semánticos** de solaris-ds, leídos de la capa `semantic` de `tokens/tokens.json`.
+
+## Antes de empezar
+
+**Qué es un token semántico.** Un nombre que dice **para qué sirve** un valor, no cómo es. `color.text.danger` significa "texto de error o peligro". No dice "rojo 700".
+
+**Cómo funciona.** Un semántico **no tiene valor propio**: es un **alias** que apunta a un primitivo. `color.text.danger` apunta a `{primitive.color.red.700}`. Si mañana el rojo de peligro cambia, se cambia el alias y todo lo que use `color.text.danger` cambia a la vez.
+
+**Por qué importa.** Los componentes usarán estos nombres, nunca los primitivos. Un botón no "es azul 700": es `color.background.brand`. Así el diseño se entiende y se cambia desde un solo sitio.
+
+**Cómo leer cada fila.** A la izquierda, **cómo se ve**. A la derecha:
+- el **nombre** del token semántico;
+- **→ el primitivo** al que apunta;
+- su **valor real**;
+- en los colores, el **contraste** con su fondo (WCAG 2.2 AA pide 4,5:1 en texto y 3:1 en bordes e iconos).
+
+**Cómo leer el nombre de un color.** Sigue la fórmula `color.[element].[role].[modifier].[state]`, explicada en `tokens/README.md`:
+- **element:** qué pinta. `background` (fondo), `text` (texto), `icon` (icono), `border` (borde).
+- **role:** qué significa. `neutral`, `brand` (marca y acción principal), `danger` (error o peligro), `success` (éxito).
+- **modifier:** su intensidad. `subtle` (más suave), `strong` (más intenso), `inverted` (para usar sobre un fondo de color u oscuro).
+- **state:** su estado. `hover` (al pasar el ratón).
+
+Por ejemplo, `color.text.danger.inverted` es "texto de peligro para usar sobre el fondo de peligro".
+
+## Color · fondos
+
+Dónde se pinta todo lo demás. `neutral` es el fondo de la app; `brand` y `danger` son fondos de acciones, como botones.
+
+<BackgroundColors />
+
+## Color · texto
+
+Cada texto se enseña **sobre el fondo con el que se usa**. Los `inverted` van sobre su fondo de color: `brand.inverted` sobre `background.brand` y `danger.inverted` sobre `background.danger`.
+
+<TextColors />
+
+## Color · iconos
+
+Los mismos roles que el texto, para que un icono acompañe a su texto con el mismo significado. Un icono necesita al menos 3:1 de contraste. Por eso `icon.success` puede ser un tono más claro que `text.success`.
+
+<IconColors />
+
+## Color · bordes
+
+- `border.neutral` es **decorativo**: separadores y líneas que no hace falta ver para usar la interfaz.
+- `border.neutral.strong` **delimita lo que se usa**, como un campo de texto. Necesita 3:1.
+- `border.focus` marca **dónde está el teclado**, con el grosor `border-width.focus`.
+
+<BorderColors />
+
+## Tipografía
+
+Seis estilos de texto. Cada uno junta tres decisiones: **tamaño** (`font-size`), **interlineado** (`line-height`) y **peso** (`font-weight`). El interlineado siempre es un alias a la escala de `line-height` en píxeles, nunca una proporción, porque Figma solo acepta píxeles.
+
+De mayor a menor: `display` (un dato destacado), `heading` (título de pantalla), `title` (título de tarjeta o sección), `body` (texto normal), `label` (etiquetas y botones) y `caption` (fechas y notas).
+
+<TypographyStyles />
+
+## Espaciado
+
+Las distancias, en **tallas de ropa**: de `none` a `4xl`. Es más fácil decidir "relleno `lg`" que "relleno 16px". Y si un día todo necesita más aire, se cambian los alias, no cada componente.
+
+<SpaceScale />
+
+## Radio
+
+Lo redondeadas que son las esquinas, en tallas. `full` hace una píldora o un círculo.
+
+<RadiusScale />
+
+## Grosor de borde
+
+- `default` es el borde normal.
+- `strong` destaca algo seleccionado.
+- `focus` es el contorno del teclado.
+
+`strong` y `focus` valen lo mismo hoy (2px), pero se nombran por separado porque **significan cosas distintas** y podrían cambiar por separado.
+
+<BorderWidths />
+
+## Elevación
+
+Cuánto "flota" un elemento sobre el fondo. Cada elevación es una **sombra montada con las piezas de `shadow`**: desplazamiento vertical (`offsetY`), difuminado (`blur`) y color. Cuanto más alta, más separada del fondo parece.
+
+- `sm`: tarjetas.
+- `md`: menús que flotan sobre el contenido.
+- `lg`: ventanas modales.
+
+<Elevations />
