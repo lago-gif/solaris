@@ -6,6 +6,10 @@ import type { Dimension } from '../primitivos/tokens'
 import {
   aliasPath,
   colorOf,
+  component,
+  displayName,
+  flattenTyped,
+  resolveDeep,
   contrast,
   dimensionOf,
   flatten,
@@ -16,6 +20,8 @@ import {
   shadowOf,
 } from './tokens'
 import type { SemanticToken, ShadowValue } from './tokens'
+import { cssColor } from '../primitivos/tokens'
+import type { ColorValue } from '../primitivos/tokens'
 
 // Muestras visuales de la página Fundamentos/Semánticos.
 // Cada fila enseña el token, su nombre, el primitivo al que apunta y su valor real.
@@ -304,6 +310,78 @@ export function Elevations() {
                 Tarjeta
               </div>
             </div>
+            <Description token={token} />
+          </TokenRow>
+        )
+      })}
+    </TokenList>
+  )
+}
+
+/* ---------- Tokens de componente ---------- */
+
+function shadowCss(v: { color: ColorValue; offsetX: Dimension; offsetY: Dimension; blur: Dimension; spread: Dimension }) {
+  return `${css(v.offsetX)} ${css(v.offsetY)} ${css(v.blur)} ${css(v.spread)} ${cssColor(v.color)}`
+}
+
+/** Muestra visual según el tipo de token y texto con su valor real. */
+function componentSample(name: string, type: string, value: unknown): [ReactNode, string] {
+  if (type === 'color') {
+    const c = value as ColorValue
+    return [<div className="h-10 w-full rounded-lg border border-gray-200" style={{ background: cssColor(c) }} />, c.hex]
+  }
+  if (type === 'dimension' && name.includes('radius')) {
+    const d = value as Dimension
+    return [<div className="h-12 w-40 border-2 border-solid" style={{ borderRadius: css(d), borderColor: brand(), background: brandSoft() }} />, label(d)]
+  }
+  if (type === 'dimension' && name.includes('font-size')) {
+    const d = value as Dimension
+    return [<span className="text-gray-900" style={{ fontSize: css(d), fontFamily: sansStack, lineHeight: 1.25 }}>Añadir cita</span>, label(d)]
+  }
+  if (type === 'dimension' && name.includes('line-height')) {
+    const d = value as Dimension
+    return [
+      <span className="block max-w-xs text-sm text-gray-900" style={{ lineHeight: css(d), fontFamily: sansStack, background: brandSoft() }}>
+        Recuerda tomar la medicación de la mañana.
+      </span>,
+      label(d),
+    ]
+  }
+  if (type === 'dimension' && name.includes('border-width')) {
+    const d = value as Dimension
+    return [<div className="h-12 w-40 rounded-lg border-solid bg-white" style={{ borderWidth: css(d), borderColor: brand() }} />, label(d)]
+  }
+  if (type === 'dimension') {
+    const d = value as Dimension
+    return [<div className="h-4 rounded-xs" style={{ width: css(d), minWidth: '2px', background: brand() }} />, label(d)]
+  }
+  if (type === 'fontWeight') {
+    return [<span className="text-lg text-gray-900" style={{ fontWeight: value as number, fontFamily: sansStack }}>Añadir cita</span>, String(value)]
+  }
+  if (type === 'shadow') {
+    const v = value as Parameters<typeof shadowCss>[0]
+    return [
+      <div className="flex h-14 w-40 items-center justify-center rounded-lg bg-white text-xs text-gray-600" style={{ boxShadow: shadowCss(v) }}>
+        Tarjeta
+      </div>,
+      shadowCss(v),
+    ]
+  }
+  return [null, '']
+}
+
+export function ComponentTokens({ name }: { name: 'button' | 'input' | 'card' | 'badge' }) {
+  const group = (component as Node)[name] as Node
+  return (
+    <TokenList>
+      {flattenTyped(group, name).map(([tokenName, token]) => {
+        const [sample, value] = componentSample(tokenName, token.$type, resolveDeep(token.$value))
+        return (
+          <TokenRow
+            key={tokenName}
+            info={<SemanticInfo name={tokenName} alias={displayName(token.$value as string)} value={value} />}
+          >
+            {sample}
             <Description token={token} />
           </TokenRow>
         )

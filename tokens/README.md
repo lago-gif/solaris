@@ -13,7 +13,7 @@ Todos los tokens viven en un único archivo, [`tokens.json`](./tokens.json), tal
 Cada token pertenece a uno de estos tres niveles. Piensa en ellos como capas: cada una se apoya en la de abajo.
 
 ```
-component   button.color.background.primary   ← para qué pieza
+component   button.background.brand    ← para qué pieza
     │  alias
     ▼
 semantic    color.background.brand     ← para qué sirve
@@ -26,7 +26,7 @@ primitive   color.brand.700  =  #0e7c86       ← cómo es
 |---|---|---|---|---|
 | **primitive** | Los valores en bruto: la paleta, las escalas de medida, la tipografía. Dice **cómo es** | Un valor **literal** (un color, una medida, un número) | `primitive.color.brand.700` = #0e7c86 | Solo los tokens semantic |
 | **semantic** | El valor con **significado**: para qué sirve en la interfaz | Un **alias** a un primitive | `semantic.color.background.brand` → `{primitive.color.brand.700}` | Los tokens component y, mientras no tengan los suyos, los componentes |
-| **component** | El valor de una **pieza concreta** de un componente | Un **alias** a un semantic | `component.button.color.background.primary` → `{semantic.color.background.brand}` | Solo su componente |
+| **component** | El valor de una **pieza concreta** de un componente | Un **alias** a un semantic | `component.button.background.brand` → `{semantic.color.background.brand.$root}` | Solo su componente |
 
 ### La regla de oro: cada nivel solo apunta al de abajo
 
@@ -95,18 +95,29 @@ Los roles `info`, `success`, `warning` y `danger` son los mismos valores que la 
 
 ### Component
 
-Va **delante el nombre del componente**, y en el lugar del `role` va **su `variant`** (los mismos valores que la prop del componente):
+**Mismo orden que los semánticos, con el componente delante** y sin la categoría `color`:
 
 ```
-[component].[category].[element].[variant].[modifier].[state]
+[component].[element].[role].[modifier].[state]
 ```
+
+- **element** y **role** son los mismos que en los semánticos: `button.background.brand` es el fondo de marca del botón (su variante primary).
+- **Lo que no depende de la variante** lleva directamente el estado: `button.background.disabled`.
+- **Las piezas sin color** usan el nombre de la propiedad: `padding-x`, `padding-y`, `gap`, `radius`, `border-width`, `font-size`, `line-height`, `font-weight`, `elevation`.
+- **Si una pieza cambia con el tamaño** del componente, la talla va al final: `button.padding-x.sm`.
+- **Si una pieza es una parte interna** del componente, la parte va después del componente: `card.title.font-size`, `input.label.text`.
 
 | Nombre | Se lee | Apunta a |
 |---|---|---|
-| `button.color.background.primary` | botón · fondo · variante primary | `{semantic.color.background.brand}` |
-| `button.color.background.primary.hover` | botón · fondo · primary · al pasar el ratón | `{semantic.color.background.brand.hover}` |
-| `button.color.background.danger` | botón · fondo · variante danger | `{semantic.color.background.danger}` |
-| `input.color.border.default` | campo · borde · estado normal | `{semantic.color.border.neutral.strong}` |
+| `button.background.brand` | botón · fondo · marca (variante primary) | `{semantic.color.background.brand.$root}` |
+| `button.background.brand.hover` | botón · fondo · marca · al pasar el ratón | `{semantic.color.background.brand.hover}` |
+| `button.icon.brand.inverted` | botón · icono · sobre fondo de marca | `{semantic.color.icon.brand.inverted}` |
+| `button.padding-x.md` | botón · relleno horizontal · talla md | `{semantic.space.lg}` |
+| `button.radius` | botón · esquinas | `{semantic.radius.full}` |
+| `input.border.danger` | campo · borde · con error | `{semantic.color.border.danger}` |
+| `card.elevation` | tarjeta · sombra | `{semantic.elevation.sm}` |
+
+Todos los tokens de componente están en `tokens.json` (capa `component`) y se ven en Storybook, en **Fundamentos → Semánticos → Tokens de componente**.
 
 ---
 
@@ -132,7 +143,7 @@ Va **delante el nombre del componente**, y en el lugar del `role` va **su `varia
    }
    ```
 
-   El token se sigue llamando `color.background.neutral`; `$root` solo dice dónde se guarda su valor.
+   El token se sigue llamando `color.background.neutral`; `$root` solo dice dónde se guarda su valor. **Para apuntar a él con un alias se escribe `$root` explícitamente**: `{semantic.color.background.neutral.$root}`.
 6. **Las sombras se montan con piezas.** Un token de `$type` `shadow` tiene como `$value` un objeto con `color`, `offsetX`, `offsetY`, `blur` y `spread`, y cada pieza es un alias a `primitive.shadow`.
 
 ### Cómo se ve cada nivel en el archivo
@@ -169,12 +180,16 @@ Va **delante el nombre del componente**, y en el lugar del `role` va **su `varia
   },
   "component": {
     "button": {
-      "color": {
+      "background": {
         "$type": "color",
-        "background": {
-          "primary": {
-            "$value": "{semantic.color.background.brand}",
-            "$description": "Fondo del botón primary en reposo."
+        "brand": {
+          "$root": {
+            "$value": "{semantic.color.background.brand.$root}",
+            "$description": "Fondo del botón primary."
+          },
+          "hover": {
+            "$value": "{semantic.color.background.brand.hover}",
+            "$description": "Fondo del botón primary al pasar el ratón."
           }
         }
       }
@@ -198,7 +213,7 @@ Va **delante el nombre del componente**, y en el lugar del `role` va **su `varia
 |---|---|
 | **primitive** | ✅ Dentro del grupo `primitive`. La mayoría de tokens tiene la explicación en su grupo y no una `$description` propia; se añadirá token a token |
 | **semantic** | ✅ Dentro del grupo `semantic`: color, tipografía, espaciado (`space`), radio, grosor de borde y elevación. Todos son alias a primitivos y tienen su `$description` |
-| **component** | ⏳ Pendiente del ADR-002 |
+| **component** | ✅ Dentro del grupo `component`: Button, Input, Card y Badge. Todos son alias a semánticos y tienen su `$description`. Su existencia como nivel está pendiente de formalizar en el ADR-002 |
 
 ---
 

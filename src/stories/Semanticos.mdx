@@ -9,6 +9,7 @@ import {
   RadiusScale,
   BorderWidths,
   Elevations,
+  ComponentTokens,
 } from './semanticos/Muestras'
 
 <Meta title="Fundamentos/Semánticos" />
@@ -104,3 +105,33 @@ Cuánto "flota" un elemento sobre el fondo. Cada elevación es una **sombra mont
 - `lg`: ventanas modales.
 
 <Elevations />
+
+## Tokens de componente
+
+**Qué son.** El tercer nivel. Cada componente tiene sus propios tokens, uno por cada parte que tiene color, espaciado, borde, radio, tipografía o sombra, y por cada variante y estado que cambia algo (hover, desactivado…).
+
+**Cómo funcionan.** Un token de componente **solo apunta a un semántico**, nunca a un primitivo. La cadena siempre es:
+
+`button.background.brand` → `color.background.brand` → `primitive.color.brand.700` = #0e7c86
+
+**Por qué existen.** Dicen **qué semántico usa cada pieza**. Si un día el botón primary debe usar otro fondo, se cambia `button.background.brand` y solo cambia el botón, no el resto de la app.
+
+**Cómo se leen.** Mismo orden que los semánticos, con el componente delante: `button.background.brand.hover` es "botón · fondo · marca · al pasar el ratón". Las piezas sin color usan el nombre de la propiedad: `padding-x`, `gap`, `radius`, `font-size`… Si cambian con el tamaño del componente, llevan la talla al final: `button.padding-x.sm`.
+
+**Cómo leer cada fila.** A la derecha está el nombre del token, **→ el semántico** al que apunta y el **valor real** al final de la cadena.
+
+### Button
+
+<ComponentTokens name="button" />
+
+### Input
+
+<ComponentTokens name="input" />
+
+### Card
+
+<ComponentTokens name="card" />
+
+### Badge
+
+<ComponentTokens name="badge" />

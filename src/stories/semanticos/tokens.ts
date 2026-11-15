@@ -75,3 +75,37 @@ export function contrast(a: string, b: string) {
   const [hi, lo] = [lum(a), lum(b)].sort((x, y) => y - x)
   return (hi + 0.05) / (lo + 0.05)
 }
+
+/* ---------- Capa component ---------- */
+
+export const component = (allTokens as unknown as { component: Node }).component
+
+/** Nombre legible de una ruta: quita el nivel y "$root". */
+export function displayName(path: string) {
+  return aliasPath(path).replace(/^(primitive|semantic|component)\./, '').replace(/\.\$root$/, '')
+}
+
+/** Sigue la cadena de alias hasta el valor real (component → semantic → primitive). */
+export function resolveDeep(value: unknown): unknown {
+  if (typeof value === 'string' && value.startsWith('{')) return resolveDeep(resolve(value))
+  if (value && typeof value === 'object' && !Array.isArray(value) && !('colorSpace' in value) && !('unit' in value)) {
+    return Object.fromEntries(Object.entries(value).map(([k, v]) => [k, resolveDeep(v)]))
+  }
+  return value
+}
+
+export type TypedToken = SemanticToken & { $type: string }
+
+/** Lista los tokens de un componente con su nombre legible y su $type (heredado del grupo si hace falta). */
+export function flattenTyped(group: Node, prefix: string, inherited?: string): [string, TypedToken][] {
+  const type = (group.$type as string | undefined) ?? inherited
+  const out: [string, TypedToken][] = []
+  for (const [key, value] of Object.entries(group)) {
+    if (key.startsWith('$') && key !== '$root') continue
+    const v = value as Node
+    const name = key === '$root' ? prefix : `${prefix}.${key}`
+    if (v.$value !== undefined) out.push([name, { ...(v as SemanticToken), $type: (v.$type as string) ?? type ?? '' }])
+    else out.push(...flattenTyped(v, name, type))
+  }
+  return out
+}
