@@ -14,7 +14,7 @@ const preview: Preview = {
   parameters: {
     controls: { expanded: true },
     options: {
-      storySort: { order: ['Status', 'Fundamentos', ['Primitivos', 'Semánticos'], 'Componentes'] },
+      storySort: { order: ['Cómo funciona', 'Status', 'Fundamentos', ['Primitivos', 'Semánticos'], 'Componentes'] },
     },
   },
 }

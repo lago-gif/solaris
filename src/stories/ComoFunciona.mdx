@@ -1,0 +1,134 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+import { TokenChain, SimpleTable, C } from './como-funciona/Piezas'
+
+<Meta title="Cómo funciona" />
+
+# Cómo funciona solaris-ds
+
+Esta página explica **qué piezas tiene solaris-ds, para qué sirve cada una y cómo encajan**. Léela antes que el resto de páginas: todo lo demás son detalles de lo que se cuenta aquí.
+
+## El mapa en una línea
+
+Un design system con tokens funciona como una cadena. Primero se **decide** cómo debe ser todo, luego se **define** en un archivo, se **traduce** al idioma del código, se **usa** en los componentes y se **ve** en este catálogo:
+
+<SimpleTable
+  head={['Paso', 'Qué es', 'Dónde vive', 'En Figma sería…']}
+  rows={[
+    ['1 · Decidir', 'Las reglas y por qué se tomaron: alcance, nombres, accesibilidad, salud', <><C>docs/adr/</C>, <C>AGENTS.md</C></>, 'El documento de principios que se acuerda antes de montar la librería'],
+    ['2 · Definir', 'Todos los valores de diseño con nombre: los tokens', <C>tokens/tokens.json</C>, 'Las colecciones de variables'],
+    ['3 · Traducir', 'Un script convierte los tokens en CSS y en clases de Tailwind', <><C>npm run tokens</C> → <C>src/styles/</C></>, 'Publicar la librería para que otros archivos la usen'],
+    ['4 · Usar', 'Los componentes solo usan las clases de sus tokens', <C>src/components/</C>, 'Componentes conectados a variables, sin colores sueltos'],
+    ['5 · Ver', 'Este catálogo, con el código real funcionando', 'Storybook', 'El archivo de librería publicado'],
+  ]}
+/>
+
+**Por qué en este orden.** La auditoría (`docs/audit.md`) demostró lo que pasa sin él: la pantalla "antes" se hizo sin reglas e inventó colores, radios y tamaños que ningún componente usaba. Cada paso de la cadena existe para evitar eso.
+
+## Los tres niveles de tokens
+
+Un **token** es un valor de diseño con nombre: en lugar de escribir `#0e7c86`, se escribe `color.brand.700`. Los tokens de solaris-ds están en tres niveles, y **cada nivel solo apunta al de abajo**:
+
+<SimpleTable
+  head={['Nivel', 'Qué dice', 'Ejemplo', 'En Figma sería…']}
+  rows={[
+    ['primitive', <><b>Cómo es</b> un valor. No tiene significado</>, <><C>color.brand.700</C> = #0e7c86</>, 'La paleta base: todos los colores y medidas posibles'],
+    ['semantic', <><b>Para qué sirve</b> un valor en la interfaz</>, <><C>color.background.brand</C> → <C>color.brand.700</C></>, 'Una variable que referencia a la paleta: "Fondo/Acción principal"'],
+    ['component', <><b>Qué usa cada pieza</b> de un componente</>, <><C>button.background.brand</C> → <C>color.background.brand</C></>, 'Las variables con las que se construye un componente concreto'],
+  ]}
+/>
+
+**Por qué tres niveles y no uno.** Para poder cambiar cosas **sin romper nada y desde un solo sitio**:
+
+- **Cambiar la marca:** se cambia `color.brand.700` (primitive) y cambia en toda la app.
+- **Cambiar un significado** ("el texto de error, más oscuro"): se cambia el alias de `color.text.danger` (semantic). Cambian todos los errores y nada más.
+- **Cambiar un componente** ("el botón primary, más oscuro"): se cambia `button.background.brand` (component). Solo cambia el botón.
+
+Un **alias** es eso: un token que, en lugar de un valor, dice "vale lo mismo que este otro". Se escribe entre llaves: `{semantic.color.background.brand}`.
+
+## Sigue un token de principio a fin
+
+Así viaja un valor desde el componente hasta el color real. Estas cadenas se leen en vivo de `tokens.json`: si cambia un token, cambian aquí.
+
+**El fondo del botón primary:**
+
+<TokenChain path="button.background.brand" type="color" />
+
+**El borde de un campo con error:**
+
+<TokenChain path="input.border.danger" type="color" />
+
+**El relleno de una tarjeta:**
+
+<TokenChain path="card.padding" type="dimension" />
+
+La última caja, **"En código"**, es la clase que se escribe en el componente. Por ejemplo, el botón tiene `className="bg-button-background-brand …"`. Esa clase la crea `npm run tokens` a partir del token.
+
+## Cómo leer las páginas de Fundamentos
+
+En **Fundamentos → Primitivos** y **Fundamentos → Semánticos**, cada token es una fila. Se lee de izquierda a derecha como una frase:
+
+> El token **`button.background.brand`** apunta a **`color.background.brand`**, vale **#0e7c86**, en código se escribe **`bg-button-background-brand`** y sirve para el **fondo del botón primary**.
+
+<SimpleTable
+  head={['Columna', 'Qué responde']}
+  rows={[
+    ['Muestra', '¿Cómo se ve?'],
+    ['Token', '¿Cómo se llama? Es el nombre que usarás en Figma, en el JSON y al hablar con el equipo'],
+    ['Apunta a', '¿De qué otro token sale? (solo semánticos y de componente)'],
+    ['Valor', '¿Cuánto vale de verdad, al final de la cadena?'],
+    ['Clase Tailwind', '¿Qué se escribe en el código para usarlo?'],
+    ['Contraste', '¿Se lee bien sobre su fondo? WCAG 2.2 AA pide 4,5:1 en texto y 3:1 en bordes e iconos'],
+    ['Para qué sirve', '¿Cuándo debo usarlo?'],
+  ]}
+/>
+
+## Qué hacer cuando…
+
+<SimpleTable
+  head={['Quieres…', 'Qué se toca', 'Qué pasa después']}
+  rows={[
+    ['Cambiar el color de la marca', <>El primitivo en <C>tokens/tokens.json</C></>, <>Se ejecuta <C>npm run tokens</C>. Todo lo que apunte a la marca cambia solo</>],
+    ['Cambiar qué color usa un componente', <>Su token de componente en <C>tokens.json</C></>, <><C>npm run tokens</C>. Solo cambia ese componente</>],
+    ['Añadir un componente nuevo', <>El componente en <C>src/components/</C>, sus tokens, su historia y su fila en <C>docs/componentes.md</C></>, 'Aparece en Storybook y en la página Status'],
+    ['Cambiar una regla (alcance, nombres, niveles)', <>Un ADR nuevo en <C>docs/adr/</C></>, <>Se apunta en <C>AGENTS.md</C> para que la IA lo respete</>],
+    ['Que la IA haga algo', 'Un prompt', 'Claude lee AGENTS.md y los ADR, trabaja en una rama y abre una PR para que la revises'],
+  ]}
+/>
+
+## Glosario
+
+<SimpleTable
+  head={['Término', 'Qué es']}
+  rows={[
+    ['Design system', 'El conjunto de reglas, tokens y componentes con los que se construye un producto de forma coherente'],
+    ['Token', 'Un valor de diseño con nombre (un color, una medida, un tamaño de texto)'],
+    ['Primitivo', 'Token con el valor en bruto, sin significado: color.gray.900'],
+    ['Semántico', 'Token con significado, que apunta a un primitivo: color.text.neutral'],
+    ['De componente', 'Token de una pieza de un componente, que apunta a un semántico: button.background.brand'],
+    ['Alias', 'Un token que vale lo mismo que otro. Se escribe {ruta.del.token}'],
+    ['DTCG', 'El estándar del W3C para escribir tokens en JSON. Lo entienden Figma, Tokens Studio o Style Dictionary'],
+    ['$value, $type, $description', 'Las tres propiedades de un token en DTCG: su valor, su tipo (color, dimension…) y para qué sirve'],
+    ['$root', 'Donde se guarda el valor de un token que además es el comienzo de otros (color.background.neutral y …neutral.subtle)'],
+    ['Variable CSS', 'Cómo entiende un token el navegador: --semantic-color-background-brand. Están en src/styles/tokens.css'],
+    ['Tailwind', 'La herramienta de estilos del proyecto: se aplican estilos con clases como bg-… o p-…'],
+    ['Clase de token', 'Una clase de Tailwind creada para un token: bg-button-background-brand. Están en src/styles/theme.css'],
+    ['Storybook', 'Este catálogo: enseña los componentes y los tokens funcionando con el código real'],
+    ['Historia', 'Un ejemplo guardado de un componente en un estado concreto: "Button desactivado"'],
+    ['ADR', 'Registro de una decisión importante: qué se decidió, por qué y qué implica'],
+    ['AGENTS.md', 'El manual que lee la IA antes de cada tarea en este proyecto'],
+    ['Rama y PR', 'Una rama es una copia aparte para hacer cambios. La PR (pull request) es la propuesta para llevarlos a main, que tú revisas y aceptas'],
+    ['main', 'La versión oficial del proyecto'],
+    ['Contraste (WCAG)', 'La diferencia de luminosidad entre un texto y su fondo. WCAG 2.2 AA pide al menos 4,5:1 para que se lea bien'],
+  ]}
+/>
+
+## Ejercicio: comprueba que lo entiendes
+
+Sigue `button.background.danger` por todo el sistema, solo con Storybook:
+
+1. **Fundamentos → Semánticos → Tokens de componente → Button.** Busca `button.background.danger`. ¿A qué semántico apunta?
+2. **Fundamentos → Semánticos → Color · fondos.** Busca ese semántico. ¿A qué primitivo apunta?
+3. **Fundamentos → Primitivos → color.red.** Busca ese primitivo. ¿Qué hex tiene?
+4. **Componentes → Button → Variantes.** Mira el botón Danger: ese es el color que has seguido.
+
+Si puedes recorrer la cadena sin ayuda, has entendido el núcleo de un design system con tokens.
