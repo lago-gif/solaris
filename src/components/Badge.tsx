@@ -15,31 +15,42 @@ export type BadgeProps = HTMLAttributes<HTMLSpanElement> & {
   children: ReactNode
 }
 
+// Cada clase es un token de componente (tokens/tokens.json → component.badge).
 const toneClasses: Record<BadgeTone, string> = {
-  neutral: 'bg-gray-100 text-gray-800 ring-gray-300',
-  info: 'bg-blue-50 text-blue-800 ring-blue-200',
-  success: 'bg-green-50 text-green-800 ring-green-200',
-  warning: 'bg-amber-50 text-amber-800 ring-amber-200',
-  danger: 'bg-red-50 text-red-800 ring-red-200',
+  neutral: 'bg-badge-background-neutral text-badge-text-neutral',
+  info: 'bg-badge-background-info text-badge-text-info',
+  success: 'bg-badge-background-success text-badge-text-success',
+  warning: 'bg-badge-background-warning text-badge-text-warning',
+  danger: 'bg-badge-background-danger text-badge-text-danger',
+}
+
+const iconToneClasses: Record<BadgeTone, string> = {
+  neutral: 'text-badge-icon-neutral',
+  info: 'text-badge-icon-info',
+  success: 'text-badge-icon-success',
+  warning: 'text-badge-icon-warning',
+  danger: 'text-badge-icon-danger',
 }
 
 const sizeClasses: Record<BadgeSize, string> = {
-  sm: 'gap-1 px-2 py-0.5 text-xs',
-  md: 'gap-1.5 px-2.5 py-1 text-sm',
+  sm: 'px-badge-padding-x-sm py-badge-padding-y-sm text-badge-font-size-sm',
+  md: 'px-badge-padding-x-md py-badge-padding-y-md text-badge-font-size-md',
 }
 
 export function Badge({ tone = 'neutral', size = 'md', icon: IconComponent, children, className = '', ...rest }: BadgeProps) {
   return (
     <span
       className={[
-        'inline-flex items-center rounded-md font-medium ring-1 ring-inset',
+        'inline-flex items-center gap-badge-gap rounded-badge-radius border-width-badge-border-width border-badge-border font-badge-font-weight',
         toneClasses[tone],
         sizeClasses[size],
         className,
       ].join(' ')}
       {...rest}
     >
-      {IconComponent && <IconComponent size={size === 'sm' ? 14 : 16} stroke={2} aria-hidden="true" />}
+      {IconComponent && (
+        <IconComponent size={size === 'sm' ? 14 : 16} stroke={2} aria-hidden="true" className={iconToneClasses[tone]} />
+      )}
       {children}
     </span>
   )

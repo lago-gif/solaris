@@ -1,0 +1,274 @@
+/* Archivo generado por `npm run tokens` a partir de tokens/tokens.json. No lo edites a mano. */
+
+/*
+  Convierte los tokens semantic y component en clases de Tailwind.
+  "inline" hace que cada clase use directamente la variable de tokens.css.
+  Solo se añaden nombres nuevos: las escalas de Tailwind (gray-500, p-4, text-sm…) no cambian.
+*/
+@theme inline {
+  --color-background-neutral: var(--semantic-color-background-neutral);
+  --color-background-neutral-subtle: var(--semantic-color-background-neutral-subtle);
+  --color-background-neutral-strong: var(--semantic-color-background-neutral-strong);
+  --color-background-neutral-inverted: var(--semantic-color-background-neutral-inverted);
+  --color-background-brand: var(--semantic-color-background-brand);
+  --color-background-brand-hover: var(--semantic-color-background-brand-hover);
+  --color-background-brand-subtle: var(--semantic-color-background-brand-subtle);
+  --color-background-danger: var(--semantic-color-background-danger);
+  --color-background-danger-hover: var(--semantic-color-background-danger-hover);
+  --color-background-danger-subtle: var(--semantic-color-background-danger-subtle);
+  --color-background-success-subtle: var(--semantic-color-background-success-subtle);
+  --color-background-warning-subtle: var(--semantic-color-background-warning-subtle);
+  --color-background-info-subtle: var(--semantic-color-background-info-subtle);
+  --color-text-neutral: var(--semantic-color-text-neutral);
+  --color-text-neutral-subtle: var(--semantic-color-text-neutral-subtle);
+  --color-text-brand: var(--semantic-color-text-brand);
+  --color-text-brand-inverted: var(--semantic-color-text-brand-inverted);
+  --color-text-danger: var(--semantic-color-text-danger);
+  --color-text-danger-inverted: var(--semantic-color-text-danger-inverted);
+  --color-text-success: var(--semantic-color-text-success);
+  --color-text-info: var(--semantic-color-text-info);
+  --color-text-warning: var(--semantic-color-text-warning);
+  --color-icon-neutral: var(--semantic-color-icon-neutral);
+  --color-icon-neutral-subtle: var(--semantic-color-icon-neutral-subtle);
+  --color-icon-brand: var(--semantic-color-icon-brand);
+  --color-icon-brand-inverted: var(--semantic-color-icon-brand-inverted);
+  --color-icon-danger: var(--semantic-color-icon-danger);
+  --color-icon-danger-inverted: var(--semantic-color-icon-danger-inverted);
+  --color-icon-success: var(--semantic-color-icon-success);
+  --color-icon-info: var(--semantic-color-icon-info);
+  --color-icon-warning: var(--semantic-color-icon-warning);
+  --color-border-neutral: var(--semantic-color-border-neutral);
+  --color-border-neutral-strong: var(--semantic-color-border-neutral-strong);
+  --color-border-focus: var(--semantic-color-border-focus);
+  --color-border-danger: var(--semantic-color-border-danger);
+  --text-display: var(--semantic-typography-display-font-size);
+  --text-display--line-height: var(--semantic-typography-display-line-height);
+  --text-display--font-weight: var(--semantic-typography-display-font-weight);
+  --text-heading: var(--semantic-typography-heading-font-size);
+  --text-heading--line-height: var(--semantic-typography-heading-line-height);
+  --text-heading--font-weight: var(--semantic-typography-heading-font-weight);
+  --text-title: var(--semantic-typography-title-font-size);
+  --text-title--line-height: var(--semantic-typography-title-line-height);
+  --text-title--font-weight: var(--semantic-typography-title-font-weight);
+  --text-body: var(--semantic-typography-body-font-size);
+  --text-body--line-height: var(--semantic-typography-body-line-height);
+  --text-body--font-weight: var(--semantic-typography-body-font-weight);
+  --text-label: var(--semantic-typography-label-font-size);
+  --text-label--line-height: var(--semantic-typography-label-line-height);
+  --text-label--font-weight: var(--semantic-typography-label-font-weight);
+  --text-caption: var(--semantic-typography-caption-font-size);
+  --text-caption--line-height: var(--semantic-typography-caption-line-height);
+  --text-caption--font-weight: var(--semantic-typography-caption-font-weight);
+  --spacing-space-none: var(--semantic-space-none);
+  --spacing-space-2xs: var(--semantic-space-2xs);
+  --spacing-space-xs: var(--semantic-space-xs);
+  --spacing-space-sm: var(--semantic-space-sm);
+  --spacing-space-md: var(--semantic-space-md);
+  --spacing-space-lg: var(--semantic-space-lg);
+  --spacing-space-xl: var(--semantic-space-xl);
+  --spacing-space-2xl: var(--semantic-space-2xl);
+  --spacing-space-3xl: var(--semantic-space-3xl);
+  --spacing-space-4xl: var(--semantic-space-4xl);
+  --radius-radius-none: var(--semantic-radius-none);
+  --radius-radius-sm: var(--semantic-radius-sm);
+  --radius-radius-md: var(--semantic-radius-md);
+  --radius-radius-lg: var(--semantic-radius-lg);
+  --radius-radius-xl: var(--semantic-radius-xl);
+  --radius-radius-full: var(--semantic-radius-full);
+  --shadow-elevation-sm: var(--semantic-elevation-sm);
+  --shadow-elevation-md: var(--semantic-elevation-md);
+  --shadow-elevation-lg: var(--semantic-elevation-lg);
+  --color-button-background-brand: var(--component-button-background-brand);
+  --color-button-background-brand-hover: var(--component-button-background-brand-hover);
+  --color-button-background-brand-subtle-hover: var(--component-button-background-brand-subtle-hover);
+  --color-button-background-neutral: var(--component-button-background-neutral);
+  --color-button-background-neutral-hover: var(--component-button-background-neutral-hover);
+  --color-button-background-danger: var(--component-button-background-danger);
+  --color-button-background-danger-hover: var(--component-button-background-danger-hover);
+  --color-button-background-disabled: var(--component-button-background-disabled);
+  --color-button-text-brand: var(--component-button-text-brand);
+  --color-button-text-brand-inverted: var(--component-button-text-brand-inverted);
+  --color-button-text-neutral: var(--component-button-text-neutral);
+  --color-button-text-danger-inverted: var(--component-button-text-danger-inverted);
+  --color-button-text-disabled: var(--component-button-text-disabled);
+  --color-button-icon-brand: var(--component-button-icon-brand);
+  --color-button-icon-brand-inverted: var(--component-button-icon-brand-inverted);
+  --color-button-icon-neutral: var(--component-button-icon-neutral);
+  --color-button-icon-danger-inverted: var(--component-button-icon-danger-inverted);
+  --color-button-icon-disabled: var(--component-button-icon-disabled);
+  --color-button-border-neutral: var(--component-button-border-neutral);
+  --color-button-border-focus: var(--component-button-border-focus);
+  --radius-button-radius: var(--component-button-radius);
+  --spacing-button-padding-x-sm: var(--component-button-padding-x-sm);
+  --spacing-button-padding-x-md: var(--component-button-padding-x-md);
+  --spacing-button-padding-x-lg: var(--component-button-padding-x-lg);
+  --spacing-button-gap-sm: var(--component-button-gap-sm);
+  --spacing-button-gap-md: var(--component-button-gap-md);
+  --text-button-font-size-sm: var(--component-button-font-size-sm);
+  --text-button-font-size-md: var(--component-button-font-size-md);
+  --text-button-font-size-lg: var(--component-button-font-size-lg);
+  --leading-button-line-height-sm: var(--component-button-line-height-sm);
+  --leading-button-line-height-md: var(--component-button-line-height-md);
+  --leading-button-line-height-lg: var(--component-button-line-height-lg);
+  --font-weight-button-font-weight: var(--component-button-font-weight);
+  --spacing-button-padding-y-sm: var(--component-button-padding-y-sm);
+  --spacing-button-padding-y-md: var(--component-button-padding-y-md);
+  --spacing-button-padding-y-lg: var(--component-button-padding-y-lg);
+  --color-input-background: var(--component-input-background);
+  --color-input-background-disabled: var(--component-input-background-disabled);
+  --color-input-text: var(--component-input-text);
+  --color-input-text-placeholder: var(--component-input-text-placeholder);
+  --color-input-text-disabled: var(--component-input-text-disabled);
+  --color-input-label-text: var(--component-input-label-text);
+  --color-input-label-required: var(--component-input-label-required);
+  --text-input-label-font-size: var(--component-input-label-font-size);
+  --font-weight-input-label-font-weight: var(--component-input-label-font-weight);
+  --color-input-hint-text: var(--component-input-hint-text);
+  --text-input-hint-font-size: var(--component-input-hint-font-size);
+  --color-input-error-text: var(--component-input-error-text);
+  --color-input-error-icon: var(--component-input-error-icon);
+  --color-input-icon: var(--component-input-icon);
+  --color-input-border: var(--component-input-border);
+  --color-input-border-danger: var(--component-input-border-danger);
+  --color-input-border-focus: var(--component-input-border-focus);
+  --radius-input-radius: var(--component-input-radius);
+  --spacing-input-padding-x: var(--component-input-padding-x);
+  --spacing-input-gap: var(--component-input-gap);
+  --text-input-font-size: var(--component-input-font-size);
+  --leading-input-line-height: var(--component-input-line-height);
+  --spacing-input-padding-y: var(--component-input-padding-y);
+  --spacing-input-icon-gap: var(--component-input-icon-gap);
+  --color-card-background: var(--component-card-background);
+  --color-card-border: var(--component-card-border);
+  --radius-card-radius: var(--component-card-radius);
+  --spacing-card-padding: var(--component-card-padding);
+  --spacing-card-gap: var(--component-card-gap);
+  --spacing-card-header-gap: var(--component-card-header-gap);
+  --spacing-card-header-text-gap: var(--component-card-header-text-gap);
+  --shadow-card-elevation: var(--component-card-elevation);
+  --color-card-title-text: var(--component-card-title-text);
+  --text-card-title-font-size: var(--component-card-title-font-size);
+  --leading-card-title-line-height: var(--component-card-title-line-height);
+  --font-weight-card-title-font-weight: var(--component-card-title-font-weight);
+  --color-card-description-text: var(--component-card-description-text);
+  --text-card-description-font-size: var(--component-card-description-font-size);
+  --color-card-body-text: var(--component-card-body-text);
+  --text-card-body-font-size: var(--component-card-body-font-size);
+  --color-card-icon: var(--component-card-icon);
+  --color-card-icon-background: var(--component-card-icon-background);
+  --radius-card-icon-radius: var(--component-card-icon-radius);
+  --spacing-card-icon-padding: var(--component-card-icon-padding);
+  --spacing-card-footer-gap: var(--component-card-footer-gap);
+  --spacing-card-footer-padding-top: var(--component-card-footer-padding-top);
+  --color-badge-background-neutral: var(--component-badge-background-neutral);
+  --color-badge-background-info: var(--component-badge-background-info);
+  --color-badge-background-success: var(--component-badge-background-success);
+  --color-badge-background-warning: var(--component-badge-background-warning);
+  --color-badge-background-danger: var(--component-badge-background-danger);
+  --color-badge-text-neutral: var(--component-badge-text-neutral);
+  --color-badge-text-info: var(--component-badge-text-info);
+  --color-badge-text-success: var(--component-badge-text-success);
+  --color-badge-text-warning: var(--component-badge-text-warning);
+  --color-badge-text-danger: var(--component-badge-text-danger);
+  --color-badge-icon-neutral: var(--component-badge-icon-neutral);
+  --color-badge-icon-info: var(--component-badge-icon-info);
+  --color-badge-icon-success: var(--component-badge-icon-success);
+  --color-badge-icon-warning: var(--component-badge-icon-warning);
+  --color-badge-icon-danger: var(--component-badge-icon-danger);
+  --color-badge-border: var(--component-badge-border);
+  --radius-badge-radius: var(--component-badge-radius);
+  --spacing-badge-padding-x-sm: var(--component-badge-padding-x-sm);
+  --spacing-badge-padding-x-md: var(--component-badge-padding-x-md);
+  --spacing-badge-padding-y-sm: var(--component-badge-padding-y-sm);
+  --spacing-badge-padding-y-md: var(--component-badge-padding-y-md);
+  --spacing-badge-gap: var(--component-badge-gap);
+  --text-badge-font-size-sm: var(--component-badge-font-size-sm);
+  --text-badge-font-size-md: var(--component-badge-font-size-md);
+  --font-weight-badge-font-weight: var(--component-badge-font-weight);
+}
+
+/* Grosores de borde y separación del foco: Tailwind no tiene variables de tema para ellos. */
+@utility border-width-default {
+  border-style: solid; border-width: var(--semantic-border-width-default);
+}
+@utility border-t-width-default {
+  border-top-style: solid; border-top-width: var(--semantic-border-width-default);
+}
+@utility outline-width-default {
+  outline-style: solid; outline-width: var(--semantic-border-width-default);
+}
+@utility border-width-strong {
+  border-style: solid; border-width: var(--semantic-border-width-strong);
+}
+@utility border-t-width-strong {
+  border-top-style: solid; border-top-width: var(--semantic-border-width-strong);
+}
+@utility outline-width-strong {
+  outline-style: solid; outline-width: var(--semantic-border-width-strong);
+}
+@utility border-width-focus {
+  border-style: solid; border-width: var(--semantic-border-width-focus);
+}
+@utility border-t-width-focus {
+  border-top-style: solid; border-top-width: var(--semantic-border-width-focus);
+}
+@utility outline-width-focus {
+  outline-style: solid; outline-width: var(--semantic-border-width-focus);
+}
+@utility border-width-button-border-width {
+  border-style: solid; border-width: var(--component-button-border-width);
+}
+@utility border-t-width-button-border-width {
+  border-top-style: solid; border-top-width: var(--component-button-border-width);
+}
+@utility outline-width-button-border-width {
+  outline-style: solid; outline-width: var(--component-button-border-width);
+}
+@utility border-width-button-border-width-focus {
+  border-style: solid; border-width: var(--component-button-border-width-focus);
+}
+@utility border-t-width-button-border-width-focus {
+  border-top-style: solid; border-top-width: var(--component-button-border-width-focus);
+}
+@utility outline-width-button-border-width-focus {
+  outline-style: solid; outline-width: var(--component-button-border-width-focus);
+}
+@utility outline-offset-button-focus-offset {
+  outline-offset: var(--component-button-focus-offset);
+}
+@utility border-width-input-border-width {
+  border-style: solid; border-width: var(--component-input-border-width);
+}
+@utility border-t-width-input-border-width {
+  border-top-style: solid; border-top-width: var(--component-input-border-width);
+}
+@utility outline-width-input-border-width {
+  outline-style: solid; outline-width: var(--component-input-border-width);
+}
+@utility border-width-input-border-width-focus {
+  border-style: solid; border-width: var(--component-input-border-width-focus);
+}
+@utility border-t-width-input-border-width-focus {
+  border-top-style: solid; border-top-width: var(--component-input-border-width-focus);
+}
+@utility outline-width-input-border-width-focus {
+  outline-style: solid; outline-width: var(--component-input-border-width-focus);
+}
+@utility border-width-card-border-width {
+  border-style: solid; border-width: var(--component-card-border-width);
+}
+@utility border-t-width-card-border-width {
+  border-top-style: solid; border-top-width: var(--component-card-border-width);
+}
+@utility outline-width-card-border-width {
+  outline-style: solid; outline-width: var(--component-card-border-width);
+}
+@utility border-width-badge-border-width {
+  border-style: solid; border-width: var(--component-badge-border-width);
+}
+@utility border-t-width-badge-border-width {
+  border-top-style: solid; border-top-width: var(--component-badge-border-width);
+}
+@utility outline-width-badge-border-width {
+  outline-style: solid; outline-width: var(--component-badge-border-width);
+}
