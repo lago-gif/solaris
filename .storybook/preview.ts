@@ -7,7 +7,7 @@ const preview: Preview = {
   parameters: {
     controls: { expanded: true },
     options: {
-      storySort: { order: ['Status', 'Componentes'] },
+      storySort: { order: ['Status', 'Fundamentos', 'Componentes'] },
     },
   },
 }

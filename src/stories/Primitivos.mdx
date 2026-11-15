@@ -1,0 +1,67 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+import {
+  ColorScales,
+  SpacingScale,
+  RadiusScale,
+  BorderWidths,
+  FontFamilies,
+  FontSizes,
+  FontWeights,
+  LineHeights,
+  ShadowPieces,
+  Breakpoints,
+} from './PrimitiveTokens'
+
+<Meta title="Fundamentos/Primitivos" />
+
+# Primitivos
+
+Capa **primitive** de solaris-ds, leída de `tokens/tokens.json` (formato DTCG). Son los valores en bruto: Tailwind más la escala de marca y la tipografía Inter. Los componentes no los usan directamente: servirán para definir los tokens semánticos.
+
+## Color
+
+<ColorScales />
+
+## Espaciado
+
+Escala numérica: `100` = 4px.
+
+<SpacingScale />
+
+## Radios
+
+Misma escala que el espaciado.
+
+<RadiusScale />
+
+## Grosor de borde
+
+<BorderWidths />
+
+## Familia tipográfica
+
+<FontFamilies />
+
+## Tamaño de texto
+
+<FontSizes />
+
+## Peso de texto
+
+<FontWeights />
+
+## Interlineado
+
+En valor absoluto (Figma solo acepta interlineado en píxeles). Misma escala que el espaciado.
+
+<LineHeights />
+
+## Sombra
+
+<ShadowPieces />
+
+## Breakpoints
+
+Anchos de pantalla. Barras a 1/4 de su tamaño real.
+
+<Breakpoints />
