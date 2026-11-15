@@ -1,6 +1,6 @@
 import { Meta } from '@storybook/addon-docs/blocks'
 import {
-  ColorScales,
+  ColorScale,
   SpacingScale,
   RadiusScale,
   BorderWidths,
@@ -8,7 +8,9 @@ import {
   FontSizes,
   FontWeights,
   LineHeights,
-  ShadowPieces,
+  ShadowOffsets,
+  ShadowBlurs,
+  ShadowColors,
   Breakpoints,
 } from './primitivos/Muestras'
 
@@ -16,52 +18,156 @@ import {
 
 # Primitivos
 
-Capa **primitive** de solaris-ds, leída de `tokens/tokens.json` (formato DTCG). Son los valores en bruto: Tailwind más la escala de marca y la tipografía Atkinson Hyperlegible Next. Los componentes no los usan directamente: servirán para definir los tokens semánticos.
+Esta página enseña los **tokens primitivos** de solaris-ds: todos los valores de color, medida y tipografía que puede usar el sistema. Se leen de `tokens/tokens.json`, así que si cambia un token, esta página cambia sola.
+
+## Antes de empezar
+
+**Qué es un token.** Un valor de diseño con nombre: en lugar de escribir `#0e7c86` o `16px`, se escribe `color.brand.700` o `spacing.400`. Si mañana cambia el valor, se cambia en un solo sitio y llega a todas partes.
+
+**Qué es un token primitivo.** El valor en bruto, sin significado: "el verde azulado 700" o "16 píxeles". Dice **cómo es**, no **para qué sirve**.
+
+**Qué viene después.** Los **tokens semánticos** darán significado a estos valores: `primary` usará `color.brand.700` y `danger` usará un rojo de esta página. Como dice el [ADR-001](https://github.com/lago-gif/solaris/blob/main/docs/adr/001-alcance.md), **los componentes y las pantallas solo usarán los semánticos**. Los primitivos son la caja de pinturas de la que salen.
+
+**Cómo leer un nombre.** Siempre es `grupo.paso`, y en los colores, `grupo.escala.paso`:
+
+- `color.brand.700` → color · escala de la marca · tono 700 = **#0e7c86**
+- `spacing.400` → espaciado · paso 400 = **16px**
+- `line-height.600` → interlineado · paso 600 = **24px**
+
+**Cómo leer cada fila.** A la izquierda, **cómo se ve**. A la derecha, el **nombre completo** del token, su **valor** y la **clase de Tailwind equivalente**, para que sepas de dónde sale.
+
+**De dónde salen los valores.** Casi todos son los de Tailwind con otro nombre. Lo único propio de solaris es la **escala de la marca**, la **tipografía Atkinson Hyperlegible Next** y las **piezas de sombra**.
 
 ## Color
 
-<ColorScales />
+**Qué es.** Escalas de color de **50 (casi blanco) a 950 (casi negro)**. Cuanto más alto el número, más oscuro el tono.
+
+**Para qué sirve cada escala:**
+- **gray:** textos, fondos, bordes y separadores. La base de casi toda la interfaz.
+- **red:** errores, peligro y acciones que borran.
+- **orange:** avisos y cosas pendientes.
+- **green:** éxito y confirmaciones (por ejemplo, "medicación tomada").
+- **brand:** el color de la marca solaris. El **700 es exactamente #0E7C86**.
+
+**Una regla práctica de contraste.** Para que un texto se lea bien, necesita suficiente diferencia con su fondo (WCAG 2.2 AA pide 4,5:1):
+- **texto de color sobre fondo blanco o 50:** usa el tono **700 o más**, que cumple en todas las escalas. El 600 solo cumple en gray (7,6:1) y red (4,8:1); en orange, green y brand se queda corto (3,2–3,8:1);
+- **texto blanco sobre un fondo de color:** usa el fondo **700 o más**. Por ejemplo, el blanco sobre `color.brand.700` da 4,95:1.
+
+**Hex y oklch.** Cada color guarda dos valores. **oklch** es el exacto, el que usa Tailwind. **hex** es el que entienden Figma y la mayoría de herramientas. Algunos rojos y verdes muy vivos no caben exactos en hex: en esos el hex es el más parecido posible.
+
+### color.gray
+
+<ColorScale scale="gray" />
+
+### color.red
+
+<ColorScale scale="red" />
+
+### color.orange
+
+<ColorScale scale="orange" />
+
+### color.green
+
+<ColorScale scale="green" />
+
+### color.brand
+
+<ColorScale scale="brand" />
 
 ## Espaciado
 
-Escala numérica: `100` = 4px.
+**Qué es.** Las distancias del sistema: el relleno dentro de un botón, el hueco entre dos tarjetas, el margen de una pantalla.
+
+**Cómo se lee el número.** **100 son 4px**, así que divide entre 25 para saber los píxeles: `spacing.400` = 16px y `spacing.050` = 2px. Usar siempre múltiplos de 4px hace que todo encaje en una cuadrícula, igual que en Figma con el nudge de 4 u 8.
+
+**En Tailwind** es el número entre 100: `spacing.400` es el `4` de `p-4`, `m-4` o `gap-4`.
 
 <SpacingScale />
 
 ## Radios
 
-Misma escala que el espaciado.
+**Qué es.** Lo redondeadas que son las esquinas. Usa **la misma escala que el espaciado** (100 = 4px). `radius.full` hace una píldora o un círculo.
+
+**Para qué sirve.** Las esquinas transmiten personalidad: radios pequeños se ven más técnicos y serios, y radios grandes, más amables. Hoy los botones de solaris usan `radius.full` y los badges, `radius.150`.
 
 <RadiusScale />
 
 ## Grosor de borde
 
+**Qué es.** El ancho de las líneas que rodean un elemento. **Usa los nombres de Tailwind: el número son los píxeles** (`border-width.1` = 1px).
+
+**Para qué sirve.** 1px para bordes normales y separadores, 2px para el contorno de foco o algo seleccionado, y 4–8px casi nunca, solo para resaltar mucho.
+
 <BorderWidths />
 
 ## Familia tipográfica
+
+**Qué es.** La letra que se usa.
+- **sans** es la de toda la interfaz: **Atkinson Hyperlegible Next**, diseñada para leerse bien con baja visión. Si no carga, se usa la del sistema.
+- **mono** tiene todas las letras del mismo ancho. Sirve para código o para números que deben alinearse en columnas.
 
 <FontFamilies />
 
 ## Tamaño de texto
 
+**Qué es.** Las tallas de letra, con los nombres de Tailwind: de `xs` (12px) a `5xl` (48px).
+
+**Para qué sirve.** `base` (16px) es el tamaño del texto normal, y no conviene usar menos en textos largos. `xs` y `sm` quedan para etiquetas y textos secundarios. De `xl` en adelante, para títulos.
+
 <FontSizes />
 
 ## Peso de texto
+
+**Qué es.** Lo gruesa que es la letra.
+
+**Para qué sirve:**
+- **400:** texto normal.
+- **500:** etiquetas y botones.
+- **600:** títulos.
+- **700:** énfasis fuerte, con moderación.
 
 <FontWeights />
 
 ## Interlineado
 
-En valor absoluto (Figma solo acepta interlineado en píxeles). Misma escala que el espaciado.
+**Qué es.** La altura de cada línea de texto: la franja de color de cada ejemplo marca la primera línea.
+
+**Por qué en píxeles.** En CSS se suele escribir como proporción (por ejemplo 1.5), pero **Figma solo acepta el interlineado en píxeles**. Por eso se guarda como medida, con la misma escala que el espaciado (100 = 4px).
+
+**Cómo combinarlo.** El interlineado va con un tamaño de texto. Para texto normal, WCAG recomienda al menos 1,5 veces el tamaño:
+- `font-size.base` (16px) + `line-height.600` (24px) = 1,5;
+- `font-size.sm` (14px) + `line-height.500` (20px) ≈ 1,4, para textos cortos.
 
 <LineHeights />
 
 ## Sombra
 
-<ShadowPieces />
+**Qué es.** Una sombra está hecha de **tres piezas**:
+- **desplazamiento** (offset): cuánto baja la sombra;
+- **difuminado** (blur): cuánto se emborrona;
+- **color**: negro con algo de transparencia.
+
+**Por qué por piezas.** Así se combinan en Figma y en código sin inventar valores. Por ejemplo, una sombra suave de tarjeta = `shadow.offset.200` + `shadow.blur.400` + `shadow.color.10`.
+
+**Cómo leer las muestras.** Cada lista cambia una sola pieza y deja las otras en ese valor medio (offset 200, blur 400, color 10), para que veas qué hace cada una. En offset y blur, 100 = 1px.
+
+### shadow.offset
+
+<ShadowOffsets />
+
+### shadow.blur
+
+<ShadowBlurs />
+
+### shadow.color
+
+<ShadowColors />
 
 ## Breakpoints
 
-Anchos de pantalla. Barras a 1/4 de su tamaño real.
+**Qué es.** Los anchos de pantalla a partir de los cuales cambia la maquetación. Por ejemplo, de una columna en móvil a dos en tablet.
+
+**Cómo se usa.** Cada breakpoint es un **ancho mínimo**: "a partir de 768px, pon dos columnas". Por debajo de `breakpoint.100` (640px) se considera móvil. Las barras son proporcionales a la más ancha.
 
 <Breakpoints />

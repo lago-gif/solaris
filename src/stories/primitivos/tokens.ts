@@ -48,3 +48,50 @@ export function fontStack(families: string[]) {
 }
 
 export const sansStack = fontStack(tokens['font-family'].sans.$value as string[])
+
+/** Clases de Tailwind equivalentes a cada token, para entender de dónde sale. */
+const radiusTw: Record<string, string> = {
+  '0': 'rounded-none',
+  '050': 'rounded-xs',
+  '100': 'rounded-sm',
+  '150': 'rounded-md',
+  '200': 'rounded-lg',
+  '300': 'rounded-xl',
+  '400': 'rounded-2xl',
+  '600': 'rounded-3xl',
+  full: 'rounded-full',
+}
+const weightTw: Record<string, string> = { '400': 'font-normal', '500': 'font-medium', '600': 'font-semibold', '700': 'font-bold' }
+const breakpointTw: Record<string, string> = { '100': 'sm:', '200': 'md:', '300': 'lg:', '400': 'xl:', '500': '2xl:' }
+
+export function tailwindEquivalent(group: string, step: string, scale?: string): string {
+  const n = Number(step) / 100
+  switch (group) {
+    case 'color':
+      return scale === 'brand' ? 'Propio de solaris (no existe en Tailwind)' : `bg-${scale}-${step} · text-${scale}-${step}`
+    case 'spacing':
+      return `p-${n} · m-${n} · gap-${n}`
+    case 'radius':
+      return radiusTw[step] ?? '—'
+    case 'border-width':
+      return step === '1' ? 'border' : `border-${step}`
+    case 'font-family':
+      return step === 'sans' ? 'font-sans (con la fuente de marca delante)' : 'font-mono'
+    case 'font-size':
+      return `text-${step}`
+    case 'font-weight':
+      return weightTw[step] ?? '—'
+    case 'line-height':
+      return `leading-${n}`
+    case 'breakpoint':
+      return `prefijo ${breakpointTw[step] ?? '—'}`
+    default:
+      return 'Pieza propia de solaris (Tailwind las usa ya combinadas)'
+  }
+}
+
+/** Colores de la marca usados para pintar las muestras de la página. */
+const brand = tokens.color.brand as unknown as Record<string, Token<ColorValue>>
+export const accent = cssColor(brand['700'].$value)
+export const accentSoft = cssColor(brand['50'].$value)
+export const accentLight = cssColor(brand['100'].$value)
