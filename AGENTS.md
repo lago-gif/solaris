@@ -42,3 +42,15 @@ Reglas:
 - **Siempre en una rama con PR.** No subas cambios directamente a `main`. Crea una rama, haz los commits ahí y abre una pull request.
 - **Explica los cambios sin jerga**, tanto en la descripción de la PR como al resumir el trabajo: qué ha cambiado, por qué y cómo se nota (por ejemplo, "el botón ahora se ve con foco al navegar con teclado"). Si un término técnico es inevitable, explícalo en una frase.
 - **Si cambias `package.json`, actualiza `package-lock.json` en la misma PR.** Instala o actualiza dependencias con `npm install` para que el lock se regenere, y sube los dos archivos juntos.
+
+## Decisiones
+
+Las decisiones del design system viven en `docs/adr/`, una por archivo (ADR: registro de una decisión, con su contexto y sus consecuencias).
+
+- **Léelas antes de proponer cualquier cambio que afecte al alcance o a los principios**: qué entra en solaris-ds, tokens, nombres de props, accesibilidad o reglas de salud.
+- **Nunca las contradigas sin escribir un ADR nuevo.** Si una tarea choca con un ADR, no la hagas por tu cuenta. Explica el conflicto y propón un ADR nuevo que sustituya al anterior.
+- **Cada ADR nuevo se apunta en esta lista en la misma PR** en la que se crea.
+
+| ADR | Decisión | Estado |
+|---|---|---|
+| [ADR-001 · Alcance y principios](docs/adr/001-alcance.md) | Alcance (web React, una marca, tema claro), tokens semánticos, nombres `variant`/`tone`/`size` y 5 principios comprobables | Aceptado |
