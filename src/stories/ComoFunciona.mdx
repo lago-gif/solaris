@@ -95,6 +95,68 @@ En **Fundamentos → Primitivos** y **Fundamentos → Semánticos**, cada token 
   ]}
 />
 
+## El recorrido del curso
+
+Qué se construyó en cada clase, **qué concepto enseña** y **dónde encaja en el mapa**. Esta sección se amplía con cada clase nueva.
+
+**El hilo hasta ahora:**
+- **Clases 1 a 3:** se vio el problema.
+- **Clase 4:** se decidió cómo resolverlo.
+- **Clases 5 y 6:** se construyó la solución.
+
+### 1 · Repo desde cero · *Prepara y audita*
+
+- **Qué se hizo:** el proyecto vacío (React, TypeScript y Vite), el README, `AGENTS.md` y `CLAUDE.md`.
+- **Concepto:** un design system es **un producto con su propio repositorio**, no una carpeta dentro de la app.
+- **Por qué importa:**
+  - `AGENTS.md` es la pieza clave al trabajar con IA: el agente lo lee antes de cada tarea, así que las reglas se cumplen sin repetirlas en cada prompt.
+  - Trabajar con ramas y PR da control: nada llega a `main` sin revisarlo.
+- **En el mapa:** los cimientos, antes del paso 1.
+
+### 2 · Primeros componentes + Storybook · *Prepara y audita*
+
+- **Qué se hizo:** Button, Input, Card y Badge, sus historias, Storybook publicado y `docs/componentes.md`.
+- **Concepto:** un componente es **una pieza reutilizable con variantes y estados**, como en Figma, y **Storybook es su catálogo vivo**.
+- **Por qué importa:**
+  - Cada historia demuestra que un estado existe y funciona.
+  - `docs/componentes.md` es la **única fuente** del estado de los componentes; Storybook solo la muestra, para que no haya dos versiones que se contradigan.
+- **En el mapa:** paso 5 · Ver. En esta clase los componentes aún usaban valores sueltos.
+
+### 3 · Auditoría inicial · *Prepara y audita*
+
+- **Qué se hizo:** `docs/audit.md`, la pantalla "antes" hecha sin reglas y la rama `antes` congelada.
+- **Concepto:** **no puedes mejorar lo que no has medido.**
+- **Por qué importa:**
+  - La auditoría mostró valores escritos a mano, piezas copiadas y nombres distintos para lo mismo: el problema que resuelve todo lo demás.
+  - La rama `antes` servirá en la clase 15 para comparar con datos.
+- **En el mapa:** el punto de partida, el "por qué" de toda la cadena.
+
+### 4 · Decidir tu DS con ADRs · *Prepara y audita*
+
+- **Qué se hizo:** el ADR-001 (alcance y 5 principios comprobables) y la sección Decisiones de `AGENTS.md`.
+- **Concepto:** **las decisiones se escriben y se pueden comprobar.** Un principio sin prueba es una opinión.
+- **Por qué importa:** cuando algo choca con una decisión (como `error` frente a `danger`, o tres niveles de tokens frente a dos), se ve y se decide conscientemente, en lugar de que cada persona o agente haga lo suyo.
+- **En el mapa:** paso 1 · Decidir.
+
+### 5 · Primitivos · *Construye la base*
+
+- **Qué se hizo:** `tokens/tokens.json` con la paleta de Tailwind, la marca #0E7C86 y la tipografía Atkinson Hyperlegible Next, en formato DTCG, y la página Fundamentos → Primitivos.
+- **Concepto:** los primitivos son **la caja de pinturas**: todos los valores posibles, sin significado.
+- **Por qué importa:**
+  - Partir de Tailwind da escalas ya probadas.
+  - El formato DTCG es el estándar que entienden Figma y otras herramientas, así que los tokens no quedan atados al código.
+- **En el mapa:** paso 2 · Definir, primer nivel.
+
+### 6 · Semánticos · *Construye la base*
+
+- **Qué se hizo:** los niveles semantic y component, el manual `tokens/README.md`, `npm run tokens` (que genera `tokens.css`, `theme.css` y `docs/tokens.md`) y los componentes conectados a sus tokens.
+- **Concepto:** **los alias dan significado.** `color.background.brand` no es "teal 700", es "fondo de acción principal". Y cada componente dice qué significado usa cada una de sus piezas.
+- **Por qué importa:**
+  - La marca, un significado o un componente se cambian tocando una sola línea.
+  - El script traduce el JSON al código sin copiar valores a mano.
+  - Los componentes ya no tienen ningún valor suelto: justo lo contrario de lo que encontró la auditoría.
+- **En el mapa:** pasos 2, 3 y 4 · Definir, traducir y usar. Con esta clase la cadena queda completa.
+
 ## Glosario
 
 <SimpleTable
