@@ -8,6 +8,7 @@ Cada token semantic y component tiene una **clase de Tailwind** con su nombre. S
 - **Variable CSS:** el valor real, definido en `src/styles/tokens.css`.
 - **Los estilos de texto** (`typography.*`) se usan con una sola clase que aplica tamaño, interlineado y peso a la vez: `text-heading`.
 - **Los primitivos no tienen clase:** solo los usan los semánticos (ADR-001).
+- **Anillo de foco doble:** `focus-ring-button`, `focus-ring-input`. Junta el color del foco, el anillo claro exterior y el grosor del componente (docs/accesibilidad.md, regla 2).
 
 ## Semánticos
 
@@ -49,6 +50,7 @@ Para pantallas y para definir los tokens de componente.
 | `color.border.neutral` | `color.gray.300` | `border-border-neutral` | `--semantic-color-border-neutral` | Borde decorativo y separadores. No sirve para delimitar campos: no llega a 3:1 de contraste. |
 | `color.border.neutral.strong` | `color.gray.500` | `border-border-neutral-strong` | `--semantic-color-border-neutral-strong` | Borde que delimita elementos con los que se interactúa, como un campo de texto (contraste de 3:1 o más). |
 | `color.border.focus` | `color.brand.700` | `outline-border-focus` | `--semantic-color-border-focus` | Contorno de foco al navegar con el teclado. |
+| `color.border.focus.inverted` | `color.gray.50` | `outline-border-focus-inverted` | `--semantic-color-border-focus-inverted` | Anillo exterior claro del foco. Rodea a color.border.focus para que el foco pase 3:1 sobre cualquier fondo, también oscuro o de color. |
 | `color.border.danger` | `color.red.700` | `border-border-danger` | `--semantic-color-border-danger` | Borde de un campo con error. |
 | `typography.display.font-size` | `font-size.5xl` | `text-display` | `--semantic-typography-display-font-size` | Tamaño del estilo display. |
 | `typography.display.line-height` | `line-height.1200` | `text-display` | `--semantic-typography-display-line-height` | Interlineado del estilo display. |
@@ -117,6 +119,7 @@ Solo para su componente.
 | `button.icon.disabled` | `color.icon.neutral.subtle` | `text-button-icon-disabled` | `--component-button-icon-disabled` | Icono de cualquier botón desactivado. |
 | `button.border.neutral` | `color.border.neutral` | `border-button-border-neutral` | `--component-button-border-neutral` | Borde del botón secondary. |
 | `button.border.focus` | `color.border.focus` | `outline-button-border-focus` | `--component-button-border-focus` | Contorno del botón al recibir el foco del teclado. |
+| `button.border.focus.inverted` | `color.border.focus.inverted` | `outline-button-border-focus-inverted` | `--component-button-border-focus-inverted` | Anillo exterior claro del foco del botón. |
 | `button.border-width` | `border-width.default` | `border-width-button-border-width` · `outline-width-button-border-width` | `--component-button-border-width` | Grosor del borde del botón secondary. |
 | `button.border-width.focus` | `border-width.focus` | `border-width-button-border-width-focus` · `outline-width-button-border-width-focus` | `--component-button-border-width-focus` | Grosor del contorno de foco del botón. |
 | `button.radius` | `radius.full` | `rounded-button-radius` | `--component-button-radius` | Esquinas del botón: forma de píldora. |
@@ -153,6 +156,7 @@ Solo para su componente.
 | `input.border` | `color.border.neutral.strong` | `border-input-border` | `--component-input-border` | Borde del campo en reposo. |
 | `input.border.danger` | `color.border.danger` | `border-input-border-danger` | `--component-input-border-danger` | Borde del campo con error. |
 | `input.border.focus` | `color.border.focus` | `outline-input-border-focus` | `--component-input-border-focus` | Contorno del campo al recibir el foco del teclado. |
+| `input.border.focus.inverted` | `color.border.focus.inverted` | `outline-input-border-focus-inverted` | `--component-input-border-focus-inverted` | Anillo exterior claro del foco del campo. |
 | `input.border-width` | `border-width.default` | `border-width-input-border-width` · `outline-width-input-border-width` | `--component-input-border-width` | Grosor del borde del campo. |
 | `input.border-width.focus` | `border-width.focus` | `border-width-input-border-width-focus` · `outline-width-input-border-width-focus` | `--component-input-border-width-focus` | Grosor del contorno de foco del campo. |
 | `input.radius` | `radius.md` | `rounded-input-radius` | `--component-input-radius` | Esquinas del campo. |

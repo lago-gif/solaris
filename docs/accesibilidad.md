@@ -1,8 +1,8 @@
 # Accesibilidad en solaris-ds
 
-La accesibilidad engloba muchos criterios (las pautas WCAG 2.2 tienen más de 80). **solaris-ds cubre estos cuatro**, que son los que más afectan a una app de salud usada por personas de cualquier edad y con distintas capacidades: **contraste, navegación por teclado, nombre accesible y lectura con lector de pantalla**. Al final hay una tabla con lo que no se cubre.
+La accesibilidad engloba muchos criterios (las pautas WCAG 2.2 tienen más de 80). **solaris-ds cubre estos seis**, que son los que más afectan a una app de salud usada por personas de cualquier edad y con distintas capacidades: **contraste, navegación por teclado, nombre accesible, lectura con lector de pantalla, el color nunca va solo y texto ampliable al 200 %**. Al final hay una tabla con lo que no se cubre.
 
-Estas cuatro reglas desarrollan el principio 4 del [ADR-001](./adr/001-alcance.md). Los ejemplos usan los tokens y componentes de solaris-ds.
+Las reglas 1 a 4 desarrollan el principio 4 del [ADR-001](./adr/001-alcance.md), la regla 5 su principio 5 ("el color nunca va solo") y la regla 6 el "texto ampliado" que pide `AGENTS.md`. Los ejemplos usan los tokens y componentes de solaris-ds.
 
 ---
 
@@ -54,7 +54,7 @@ Los bordes puramente decorativos (separadores, el borde de una tarjeta) no tiene
 - **El orden es lógico:** el foco recorre la pantalla en el mismo orden en que se lee, de arriba abajo y de izquierda a derecha.
 - **El foco siempre se ve**, con un **anillo doble**:
   - **por dentro, un anillo de color** (`color.border.focus`);
-  - **por fuera, un anillo blanco.**
+  - **por fuera, un anillo claro** (`color.border.focus.inverted`).
 
   Así pasa 3:1 sobre cualquier fondo. En fondos claros destaca el anillo de color (4,7:1 sobre gray.50), y en fondos oscuros o de color destaca el blanco (17,8:1 sobre gray.900).
 
@@ -65,13 +65,10 @@ Los bordes puramente decorativos (separadores, el borde de una tarjeta) no tiene
 <Button onClick={guardar}>Guardar cita</Button>
 ```
 
-```css
-/* Anillo doble: color por dentro y blanco por fuera. */
-:focus-visible {
-  outline: 2px solid var(--semantic-color-border-focus);
-  outline-offset: 2px;
-  box-shadow: 0 0 0 6px white;
-}
+```tsx
+// En solaris-ds el anillo doble es una clase generada desde los tokens: focus-ring-button, focus-ring-input…
+// Junta el color del foco, el anillo claro exterior y el grosor del componente.
+<button className="… focus-visible:focus-ring-button">Guardar cita</button>
 ```
 
 **❌ Incorrecto**
@@ -140,7 +137,7 @@ button:focus { outline: none; }
 **Qué es.** Un lector de pantalla (VoiceOver en Mac e iPhone, TalkBack en Android, NVDA en Windows) lee la página en voz alta. Muchas personas navegan **saltando de encabezado en encabezado**, como quien ojea un índice. Y como no ven las imágenes ni los iconos, necesitan su texto.
 
 **La regla:**
-- **Los encabezados van en orden:** un `h1` por pantalla, `h2` para las secciones y `h3` dentro de ellas, sin saltarse niveles. El nivel lo marca la estructura, no el tamaño de letra.
+- **Los encabezados van en orden:** un `h1` por pantalla, `h2` para las secciones y `h3` dentro de ellas, sin saltarse niveles. El nivel lo marca la estructura, no el tamaño de letra. Por eso `Card` tiene la prop `headingLevel`: su título es un `h3` por defecto, pero se cambia según dónde esté la tarjeta, sin que cambie su aspecto.
 - **Cada icono o imagen con significado tiene texto alternativo.**
 - **Los decorativos se ocultan**, para que el lector no los lea:
   - iconos con `aria-hidden="true"`;
@@ -151,7 +148,10 @@ button:focus { outline: none; }
 ```tsx
 <h1>Mi medicación</h1>
   <h2>Tomas de hoy</h2>
-    <Card title="Ibuprofeno 600 mg" />        {/* Card usa h3 */}
+    <Card title="Ibuprofeno 600 mg" />                   {/* h3, el nivel por defecto */}
+
+<h1>Mi medicación</h1>
+  <Card title="Ibuprofeno 600 mg" headingLevel={2} />    {/* directamente bajo el h1: h2 */}
 
 <Button icon={IconPlus}>Añadir cita</Button>   {/* el icono es decorativo: el componente lo oculta solo */}
 <img src="radiografia.png" alt="Radiografía de tórax del 12 de marzo, sin hallazgos" />
@@ -163,6 +163,8 @@ button:focus { outline: none; }
 ```tsx
 <h1>Mi medicación</h1>
 <h3>Tomas de hoy</h3>                          {/* salta del h1 al h3 */}
+<h1>Mi medicación</h1>
+<Card title="Ibuprofeno 600 mg" />             {/* bajo un h1, el título queda en h3: falta headingLevel={2} */}
 <p className="text-heading">Citas</p>          {/* parece un título, pero el lector no lo encuentra como tal */}
 
 <IconAlertCircle />                            {/* icono de aviso sin texto: el lector no dice nada, o dice "imagen" */}
@@ -172,21 +174,83 @@ button:focus { outline: none; }
 **☑️ Checklist**
 - [ ] Hay un solo `h1` por pantalla y los niveles no se saltan.
 - [ ] Lo que parece un título es un encabezado (`h1`–`h3`), no solo un texto grande.
+- [ ] Cada `Card` con título tiene el `headingLevel` que le toca según dónde está.
 - [ ] Cada icono o imagen con significado tiene texto alternativo (o un texto visible al lado que dice lo mismo).
 - [ ] Los iconos decorativos llevan `aria-hidden="true"` y las imágenes decorativas, `alt=""`.
 - [ ] Al escucharla con VoiceOver (`Cmd + F5` en Mac), la pantalla se entiende sin verla.
 
 ---
 
+## 5. El color nunca va solo
+
+**Qué es.** Una de cada doce personas ve mal algunos colores (sobre todo rojo y verde), y nadie distingue colores en una pantalla con reflejos o en blanco y negro. Si la información solo está en el color, esas personas no la reciben. En una app de salud eso puede significar no ver que un análisis está fuera de rango.
+
+**La regla:** todo lo que comunica un estado o un significado con color lo dice también **con texto o con un icono**. Es el principio 5 del ADR-001.
+
+**✅ Correcto**
+
+```tsx
+<Badge tone="danger" icon={IconX}>Fuera de rango</Badge>            // color + icono + texto
+<Input label="Correo" error="Escribe un correo válido" />           // borde rojo + icono + mensaje
+<Badge tone="success" icon={IconCheck}>Tomada</Badge>
+```
+
+**❌ Incorrecto**
+
+```tsx
+<span className="size-2 rounded-full bg-background-danger" />       // un punto rojo sin texto: ¿qué significa?
+<input className="border-input-border-danger" />                     // solo el borde en rojo, sin mensaje
+<p className="text-text-success">Ibuprofeno</p>                      // verde "porque está tomado": nadie lo sabe si no ve el verde
+```
+
+**☑️ Checklist**
+- [ ] Cada estado (error, aviso, éxito, información) tiene texto o icono además del color.
+- [ ] `Badge` siempre lleva texto (el componente lo exige: `children` es obligatorio).
+- [ ] Los errores de un campo tienen mensaje, no solo borde rojo.
+- [ ] En las gráficas del panel de métricas, cada serie se distingue también por etiqueta, forma o patrón.
+- [ ] Si quito el color (pantalla en grises), la pantalla sigue diciendo lo mismo.
+
+---
+
+## 6. Texto ampliable al 200 %
+
+**Qué es.** Muchas personas, sobre todo mayores, agrandan el texto en el navegador o en el sistema. Si el diseño no está preparado, al agrandarlo el texto se corta, se solapa o los botones dejan de verse enteros.
+
+**La regla:** con el texto al **200 %** todo se sigue leyendo y usando: nada se corta, nada se solapa y no se pierde ninguna función. Para conseguirlo:
+- **Los tamaños van en `rem`**, que crecen con el tamaño de letra elegido. Los tokens de solaris-ds ya están en `rem`.
+- **Nada tiene una altura fija si contiene texto.** La altura sale del relleno y del interlineado, como en `Button` e `Input`.
+- **Los textos pueden partirse en varias líneas** y los contenedores crecen con ellos.
+
+**✅ Correcto**
+
+```tsx
+// Altura = relleno vertical + interlineado: si el texto crece, el botón crece con él.
+<button className="py-button-padding-y-md text-button-font-size-md leading-button-line-height-md">Añadir cita</button>
+```
+
+**❌ Incorrecto**
+
+```tsx
+<button className="h-10 overflow-hidden text-[16px]">Añadir cita</button>   // altura fija + px: al ampliar, el texto se corta
+<p className="truncate">Tienes dos recetas activas…</p>                       // con el texto grande, se pierde casi todo el mensaje
+```
+
+**☑️ Checklist**
+- [ ] Con el zoom del navegador al 200 % (`Cmd +` varias veces) todo se lee y se usa.
+- [ ] Con el tamaño de texto del sistema al máximo, nada se corta ni se solapa.
+- [ ] Ningún contenedor con texto tiene altura fija ni `overflow: hidden`.
+- [ ] Los tamaños salen de tokens en `rem`, nunca en `px`.
+- [ ] Los textos importantes no se recortan con puntos suspensivos.
+
+---
+
 ## Lo que no se cubre
 
-Estos criterios de accesibilidad **no forman parte de las cuatro reglas de este documento**. Eso no significa que no importen: quedan fuera del alcance actual de solaris-ds y se pueden añadir más adelante con un ADR.
+Estos criterios de accesibilidad **no forman parte de las seis reglas de este documento**. Eso no significa que no importen: quedan fuera del alcance actual de solaris-ds y se pueden añadir más adelante con un ADR.
 
 | Criterio | Qué es | Nota |
 |---|---|---|
 | **Zona táctil mínima** | Que lo que se pulsa con el dedo tenga un área suficiente (WCAG pide 24 × 24 px) para no tocar lo de al lado por error | |
-| **No depender solo del color** | Que la información no se transmita solo con color (por ejemplo, un error marcado solo en rojo); se acompaña de texto o icono | ⚠️ **Sí es obligatorio en solaris-ds** por el ADR-001 (principio 5, "el color nunca va solo"), aunque no sea una de estas cuatro reglas |
-| **Texto ampliable al 200 %** | Que al agrandar el texto al doble no se corte, no se solape y todo siga funcionando | ⚠️ AGENTS.md lo menciona ("texto ampliado"); pendiente de alinear con este documento |
 | **Pantallas estrechas sin scroll horizontal** | Que en una pantalla de 320 px de ancho (o con zoom al 400 %) el contenido se reorganice en una columna sin desplazarse hacia el lado | |
 | **Movimiento reducido** | Respetar la opción del sistema "reducir movimiento": quitar animaciones y efectos para quien se marea con ellos | |
 | **Tiempo suficiente** | Que nada caduque deprisa (sesiones, avisos que desaparecen) sin poder pedir más tiempo | |

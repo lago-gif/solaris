@@ -117,19 +117,30 @@ export function IconColors() {
 export function BorderColors() {
   const focusWidth = css(dimensionOf(semanticToken('border-width.focus')))
   const strong = colorOf(semanticToken('color.border.neutral.strong'))
+  const focus = colorOf(semanticToken('color.border.focus'))
+  const darkBg = semanticToken('color.background.neutral.inverted')
+  // Anillo doble: color por dentro y claro por fuera (docs/accesibilidad.md, regla 2).
+  const doubleRing = (outer: string) => `0 0 0 2px ${outer}, 0 0 0 calc(2px + ${focusWidth}) ${focus}, 0 0 0 calc(2px + ${focusWidth} * 2) ${outer}`
   return (
     <TokenTable
       columns={[...colorColumns, 'Contraste con su fondo']}
       rows={flatten(group('color.border'), 'color.border').map(([name, token]) => {
         const isFocus = name.endsWith('focus')
+        const isFocusOuter = name.endsWith('focus.inverted')
+        // El anillo claro trabaja sobre fondos oscuros: se mide sobre background.neutral.inverted.
+        const bg = isFocusOuter ? darkBg : pageBg
         return {
           key: name,
-          sample: (
+          sample: isFocusOuter ? (
+            <div className="flex w-32 items-center justify-center rounded-md p-3" style={{ background: colorOf(darkBg) }}>
+              <div className="h-6 w-20 rounded-md" style={{ background: colorOf(darkBg), boxShadow: doubleRing(colorOf(token)) }} />
+            </div>
+          ) : (
             <div
               className="h-8 w-32 rounded-md"
               style={
                 isFocus
-                  ? { outline: `${focusWidth} solid ${colorOf(token)}`, outlineOffset: '2px', border: `1px solid ${strong}`, background: 'white' }
+                  ? { border: `1px solid ${strong}`, background: 'white', boxShadow: doubleRing(colorOf(semanticToken('color.border.focus.inverted'))) }
                   : { border: `1px solid ${colorOf(token)}`, background: 'white' }
               }
             />
@@ -139,7 +150,7 @@ export function BorderColors() {
             alias(token),
             hexOf(token),
             <Cls>{classFor(`semantic.${name}`, 'color')}</Cls>,
-            ratio(token, pageBg),
+            isFocusOuter ? `${ratio(token, bg)} sobre fondo oscuro` : ratio(token, bg),
           ],
           description: token.$description,
         }

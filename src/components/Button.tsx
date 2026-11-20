@@ -66,7 +66,8 @@ export function Button({
       type={type}
       className={[
         'group inline-flex items-center justify-center rounded-button-radius font-button-font-weight transition-colors',
-        'focus-visible:outline-width-button-border-width-focus focus-visible:outline-button-border-focus focus-visible:outline-offset-button-focus-offset',
+        // Anillo de foco doble: color por dentro y claro por fuera (docs/accesibilidad.md, regla 2).
+        'focus-visible:focus-ring-button',
         'disabled:cursor-not-allowed disabled:bg-button-background-disabled disabled:text-button-text-disabled',
         variantClasses[variant],
         sizeClasses[size],

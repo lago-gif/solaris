@@ -163,6 +163,7 @@
   --semantic-color-border-neutral: var(--primitive-color-gray-300);
   --semantic-color-border-neutral-strong: var(--primitive-color-gray-500);
   --semantic-color-border-focus: var(--primitive-color-brand-700);
+  --semantic-color-border-focus-inverted: var(--primitive-color-gray-50);
   --semantic-color-border-danger: var(--primitive-color-red-700);
   --semantic-typography-display-font-size: var(--primitive-font-size-5xl);
   --semantic-typography-display-line-height: var(--primitive-line-height-1200);
@@ -226,6 +227,7 @@
   --component-button-icon-disabled: var(--semantic-color-icon-neutral-subtle);
   --component-button-border-neutral: var(--semantic-color-border-neutral);
   --component-button-border-focus: var(--semantic-color-border-focus);
+  --component-button-border-focus-inverted: var(--semantic-color-border-focus-inverted);
   --component-button-border-width: var(--semantic-border-width-default);
   --component-button-border-width-focus: var(--semantic-border-width-focus);
   --component-button-radius: var(--semantic-radius-full);
@@ -262,6 +264,7 @@
   --component-input-border: var(--semantic-color-border-neutral-strong);
   --component-input-border-danger: var(--semantic-color-border-danger);
   --component-input-border-focus: var(--semantic-color-border-focus);
+  --component-input-border-focus-inverted: var(--semantic-color-border-focus-inverted);
   --component-input-border-width: var(--semantic-border-width-default);
   --component-input-border-width-focus: var(--semantic-border-width-focus);
   --component-input-radius: var(--semantic-radius-md);

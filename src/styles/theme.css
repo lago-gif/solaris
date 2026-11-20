@@ -40,6 +40,7 @@
   --color-border-neutral: var(--semantic-color-border-neutral);
   --color-border-neutral-strong: var(--semantic-color-border-neutral-strong);
   --color-border-focus: var(--semantic-color-border-focus);
+  --color-border-focus-inverted: var(--semantic-color-border-focus-inverted);
   --color-border-danger: var(--semantic-color-border-danger);
   --text-display: var(--semantic-typography-display-font-size);
   --text-display--line-height: var(--semantic-typography-display-line-height);
@@ -98,6 +99,7 @@
   --color-button-icon-disabled: var(--component-button-icon-disabled);
   --color-button-border-neutral: var(--component-button-border-neutral);
   --color-button-border-focus: var(--component-button-border-focus);
+  --color-button-border-focus-inverted: var(--component-button-border-focus-inverted);
   --radius-button-radius: var(--component-button-radius);
   --spacing-button-padding-x-sm: var(--component-button-padding-x-sm);
   --spacing-button-padding-x-md: var(--component-button-padding-x-md);
@@ -131,6 +133,7 @@
   --color-input-border: var(--component-input-border);
   --color-input-border-danger: var(--component-input-border-danger);
   --color-input-border-focus: var(--component-input-border-focus);
+  --color-input-border-focus-inverted: var(--component-input-border-focus-inverted);
   --radius-input-radius: var(--component-input-radius);
   --spacing-input-padding-x: var(--component-input-padding-x);
   --spacing-input-gap: var(--component-input-gap);
@@ -187,7 +190,7 @@
   --font-weight-badge-font-weight: var(--component-badge-font-weight);
 }
 
-/* Grosores de borde y separación del foco: Tailwind no tiene variables de tema para ellos. */
+/* Grosores de borde, separación del foco y anillo de foco doble: Tailwind no tiene variables de tema para ellos. */
 @utility border-width-default {
   border-style: solid; border-width: var(--semantic-border-width-default);
 }
@@ -271,4 +274,12 @@
 }
 @utility outline-width-badge-border-width {
   outline-style: solid; outline-width: var(--component-badge-border-width);
+}
+@utility focus-ring-button {
+  outline: 2px solid transparent;
+  box-shadow: 0 0 0 var(--component-button-focus-offset) var(--component-button-border-focus-inverted), 0 0 0 calc(var(--component-button-focus-offset) + var(--component-button-border-width-focus)) var(--component-button-border-focus), 0 0 0 calc(var(--component-button-focus-offset) + var(--component-button-border-width-focus) * 2) var(--component-button-border-focus-inverted);
+}
+@utility focus-ring-input {
+  outline: 2px solid transparent;
+  box-shadow: 0 0 0 0px var(--component-input-border-focus-inverted), 0 0 0 calc(0px + var(--component-input-border-width-focus)) var(--component-input-border-focus), 0 0 0 calc(0px + var(--component-input-border-width-focus) * 2) var(--component-input-border-focus-inverted);
 }

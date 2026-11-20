@@ -4,6 +4,12 @@ import type { Icon } from '@tabler/icons-react'
 export type CardProps = Omit<HTMLAttributes<HTMLElement>, 'title'> & {
   /** Título de la tarjeta, por ejemplo "Ibuprofeno 600 mg". */
   title?: string
+  /**
+   * Nivel del encabezado del título: 2 para h2, 3 para h3… Por defecto, 3.
+   * Elige el que siga el orden de la pantalla (docs/accesibilidad.md, regla 4):
+   * si la tarjeta va bajo un h2, su título es h3. No cambia el aspecto, solo cómo lo lee un lector de pantalla.
+   */
+  headingLevel?: 2 | 3 | 4 | 5 | 6
   /** Texto corto bajo el título, por ejemplo "1 comprimido cada 8 horas". */
   description?: string
   /** Icono de Tabler opcional junto al título. */
@@ -14,8 +20,18 @@ export type CardProps = Omit<HTMLAttributes<HTMLElement>, 'title'> & {
   children?: ReactNode
 }
 
-export function Card({ title, description, icon: IconComponent, footer, children, className = '', ...rest }: CardProps) {
+export function Card({
+  title,
+  headingLevel = 3,
+  description,
+  icon: IconComponent,
+  footer,
+  children,
+  className = '',
+  ...rest
+}: CardProps) {
   const hasHeader = Boolean(title || description || IconComponent)
+  const Heading = `h${headingLevel}` as const
 
   // Cada clase es un token de componente (tokens/tokens.json → component.card).
   return (
@@ -32,9 +48,9 @@ export function Card({ title, description, icon: IconComponent, footer, children
           )}
           <div className="flex flex-col gap-card-header-text-gap">
             {title && (
-              <h3 className="text-card-title-font-size leading-card-title-line-height font-card-title-font-weight text-card-title-text">
+              <Heading className="text-card-title-font-size leading-card-title-line-height font-card-title-font-weight text-card-title-text">
                 {title}
-              </h3>
+              </Heading>
             )}
             {description && <p className="text-card-description-font-size text-card-description-text">{description}</p>}
           </div>
