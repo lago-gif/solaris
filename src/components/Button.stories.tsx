@@ -65,6 +65,11 @@ export const Desactivado: Story = {
   ),
 }
 
+/** Botón de solo icono: lleva `aria-label`, que es lo que lee el lector de pantalla (docs/accesibilidad.md, regla 3). */
+export const SoloIcono: Story = {
+  args: { children: undefined, 'aria-label': 'Borrar nota', icon: IconTrash, variant: 'danger' },
+}
+
 export const AnchoCompleto: Story = {
   args: { fullWidth: true },
 }

@@ -142,6 +142,9 @@ button:focus { outline: none; }
 - [ ] Los botones de solo icono llevan `aria-label`.
 - [ ] El nombre dice qué hace el elemento ("Borrar nota"), no cómo se usa ("Haz clic aquí").
 - [ ] Si el texto visible y el `aria-label` existen a la vez, dicen lo mismo.
+- [ ] El panel **Accessibility** de Storybook no muestra fallos en las historias del componente (el complemento revisa cada historia con axe).
+
+En `Button`, la regla la impone el propio código: un botón sin texto y sin `aria-label` (o `aria-labelledby`) **no compila**.
 
 ---
 
