@@ -1,4 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { expect, userEvent } from 'storybook/test'
+import { active, expectFocusRingVisible } from '../stories/a11y/keyboard'
 import { IconAlertTriangle, IconCalendarEvent, IconCheck, IconPill } from '@tabler/icons-react'
 import { Badge } from './Badge'
 import { Button } from './Button'
@@ -66,4 +68,30 @@ export const NivelDeEncabezado: Story = {
 
 export const SoloContenido: Story = {
   args: { title: undefined, description: undefined, children: 'Una tarjeta sin cabecera, solo con contenido.' },
+}
+
+/**
+ * Prueba de teclado (docs/accesibilidad.md, regla 2).
+ * La tarjeta no es interactiva: el foco no se para en ella, sino en los botones de su pie, en orden.
+ */
+export const Teclado: Story = {
+  args: {
+    icon: IconPill,
+    footer: (
+      <>
+        <Button size="sm" icon={IconCheck}>Marcar tomada</Button>
+        <Button size="sm" variant="secondary">Detalles</Button>
+      </>
+    ),
+  },
+  play: async ({ canvasElement, step }) => {
+    await step('Tab se salta la tarjeta y llega a los botones del pie, en orden y con anillo de foco', async () => {
+      for (const label of ['Marcar tomada', 'Detalles']) {
+        await userEvent.tab()
+        await expect(active(canvasElement)?.tagName).toBe('BUTTON')
+        await expect(active(canvasElement)).toHaveTextContent(label)
+        await expectFocusRingVisible(active(canvasElement))
+      }
+    })
+  },
 }

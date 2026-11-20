@@ -257,6 +257,9 @@
 @utility outline-width-input-border-width-focus {
   outline-style: solid; outline-width: var(--component-input-border-width-focus);
 }
+@utility outline-offset-input-focus-offset {
+  outline-offset: var(--component-input-focus-offset);
+}
 @utility border-width-card-border-width {
   border-style: solid; border-width: var(--component-card-border-width);
 }
@@ -281,5 +284,5 @@
 }
 @utility focus-ring-input {
   outline: 2px solid transparent;
-  box-shadow: 0 0 0 0px var(--component-input-border-focus-inverted), 0 0 0 calc(0px + var(--component-input-border-width-focus)) var(--component-input-border-focus), 0 0 0 calc(0px + var(--component-input-border-width-focus) * 2) var(--component-input-border-focus-inverted);
+  box-shadow: 0 0 0 var(--component-input-focus-offset) var(--component-input-border-focus-inverted), 0 0 0 calc(var(--component-input-focus-offset) + var(--component-input-border-width-focus)) var(--component-input-border-focus), 0 0 0 calc(var(--component-input-focus-offset) + var(--component-input-border-width-focus) * 2) var(--component-input-border-focus-inverted);
 }
