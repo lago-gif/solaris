@@ -1,0 +1,258 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "contracts/contract.schema.json",
+  "title": "Contrato de un componente de solaris-ds",
+  "description": "La ficha técnica de un componente: qué es, para qué sirve y para qué no, qué props tiene, de qué partes está hecho, qué tokens usa, cómo es accesible y quién puede cambiarlo. Una persona o un agente la lee para usar el componente sin adivinar.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["name", "file", "import", "purpose", "neverUseFor", "props", "states", "anatomy", "tokens", "a11y", "usage", "governance"],
+  "properties": {
+    "$schema": {
+      "description": "Ruta a este esquema, para que los editores validen el contrato mientras se escribe.",
+      "type": "string"
+    },
+    "name": {
+      "description": "Nombre del componente, igual que en el código (PascalCase). Por ejemplo, Button.",
+      "type": "string",
+      "pattern": "^[A-Z][A-Za-z0-9]*$"
+    },
+    "file": {
+      "description": "Archivo donde vive el componente, desde la raíz del repositorio.",
+      "type": "string",
+      "pattern": "^src/components/[A-Za-z0-9/]+\\.tsx$"
+    },
+    "import": {
+      "description": "Cómo se importa el componente en el código. Por ejemplo, import { Button } from './components'.",
+      "type": "string",
+      "minLength": 1
+    },
+    "purpose": {
+      "description": "Para qué sirve, en una o dos frases.",
+      "type": "string",
+      "minLength": 1
+    },
+    "neverUseFor": {
+      "description": "Para qué no debe usarse nunca, y qué usar en su lugar si existe.",
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "props": {
+      "description": "Las props del componente: las propias y las heredadas de HTML que importan para usarlo.",
+      "type": "array",
+      "items": { "$ref": "#/$defs/prop" }
+    },
+    "states": {
+      "description": "Los estados del componente.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["intrinsic", "authored"],
+      "properties": {
+        "intrinsic": {
+          "description": "Estados que aparecen solos por la interacción de la persona o del navegador: hover, focus, active…",
+          "type": "array",
+          "items": { "$ref": "#/$defs/state" }
+        },
+        "authored": {
+          "description": "Estados que decide quien usa el componente, con una prop: disabled, error…",
+          "type": "array",
+          "items": { "$ref": "#/$defs/state" }
+        }
+      }
+    },
+    "anatomy": {
+      "description": "Las partes de las que está hecho el componente, en orden.",
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["part", "element", "optional", "description"],
+        "properties": {
+          "part": { "description": "Nombre de la parte. Por ejemplo, label, icon o footer.", "type": "string", "minLength": 1 },
+          "element": { "description": "Elemento HTML o componente que la pinta. Por ejemplo, button, svg o h3.", "type": "string", "minLength": 1 },
+          "optional": { "description": "true si la parte puede no aparecer.", "type": "boolean" },
+          "description": { "description": "Qué es la parte y cuándo aparece.", "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "tokens": {
+      "description": "Tokens que usa el componente, todos de la capa component de tokens/tokens.json. Ruta completa sin llaves: component.button.background.brand.",
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^component\\.[a-z][a-z0-9-]*(\\.[a-z0-9$][a-z0-9-]*)*$" }
+    },
+    "a11y": {
+      "description": "Cómo es accesible el componente (docs/accesibilidad.md).",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["role", "keyboard", "notes"],
+      "properties": {
+        "role": {
+          "description": "Rol que anuncia el lector de pantalla: button, textbox, article… o none si no es interactivo.",
+          "type": "string",
+          "minLength": 1
+        },
+        "keyboard": {
+          "description": "Teclas que funcionan con el componente y qué hace cada una. Vacío si no es interactivo.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["key", "action"],
+            "properties": {
+              "key": { "description": "Tecla o combinación. Por ejemplo, Tab, Enter o Espacio.", "type": "string", "minLength": 1 },
+              "action": { "description": "Qué hace esa tecla.", "type": "string", "minLength": 1 }
+            }
+          }
+        },
+        "notes": {
+          "description": "Lo que hay que saber para que siga siendo accesible: nombre, iconos, contraste…",
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "usage": {
+      "description": "Dónde se usa el componente.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["scope"],
+      "properties": {
+        "scope": {
+          "description": "general si sirve en cualquier pantalla; specific si solo tiene sentido en algunas.",
+          "enum": ["general", "specific"]
+        },
+        "where": {
+          "description": "Si es specific, dónde tiene sentido. Por ejemplo, la pantalla del asistente.",
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        }
+      },
+      "if": { "properties": { "scope": { "const": "specific" } } },
+      "then": { "required": ["where"], "properties": { "where": { "minItems": 1 } } }
+    },
+    "governance": {
+      "description": "Qué se puede cambiar al usar el componente y qué hay que pedir al design system.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mayExtendLocally", "mustEscalateToDS"],
+      "properties": {
+        "mayExtendLocally": {
+          "description": "Lo que una pantalla puede ajustar por su cuenta, sin tocar el componente. Por ejemplo, su ancho o su margen.",
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "mustEscalateToDS": {
+          "description": "Lo que no se cambia en una pantalla: se pide al design system con una PR. Por ejemplo, una variante o un color nuevos.",
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "composedOf": {
+      "description": "Opcional. Otros componentes de solaris-ds que usa por dentro.",
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[A-Z][A-Za-z0-9]*$" }
+    },
+    "exceptions": {
+      "description": "Opcional. Reglas del sistema que este componente no cumple a propósito, y por qué.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["rule", "reason"],
+        "properties": {
+          "rule": { "description": "Qué regla no se cumple, y dónde está escrita.", "type": "string", "minLength": 1 },
+          "reason": { "description": "Por qué, y quién lo decidió.", "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "guidelines": {
+      "description": "Opcional. Cómo se usa bien el componente y cómo se combina con otros.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "do": {
+          "description": "Buenas prácticas.",
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "dont": {
+          "description": "Errores habituales que hay que evitar.",
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "combinations": {
+          "description": "Cómo se combina con otros componentes.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["with", "how"],
+            "properties": {
+              "with": { "description": "Componente con el que se combina.", "type": "string", "pattern": "^[A-Z][A-Za-z0-9]*$" },
+              "how": { "description": "Cómo se combinan.", "type": "string", "minLength": 1 }
+            }
+          }
+        }
+      }
+    },
+    "content": {
+      "description": "Opcional. Cómo se escribe el texto del componente.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "rules": {
+          "description": "Reglas de redacción. Por ejemplo, empezar por un verbo.",
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "examples": {
+          "description": "Ejemplos de texto bien y mal escrito.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["do", "dont"],
+            "properties": {
+              "do": { "description": "Texto bien escrito.", "type": "string", "minLength": 1 },
+              "dont": { "description": "El mismo texto mal escrito.", "type": "string", "minLength": 1 }
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "prop": {
+      "description": "Una prop del componente.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "type", "default", "required", "description", "inherited"],
+      "properties": {
+        "name": { "description": "Nombre de la prop, igual que en el código.", "type": "string", "minLength": 1 },
+        "type": { "description": "Tipo de valor, como en TypeScript. Por ejemplo, 'primary' | 'secondary', boolean o string.", "type": "string", "minLength": 1 },
+        "default": {
+          "description": "Valor por defecto. null si no tiene.",
+          "type": ["string", "number", "boolean", "null"]
+        },
+        "required": { "description": "true si es obligatoria.", "type": "boolean" },
+        "description": { "description": "Para qué sirve.", "type": "string", "minLength": 1 },
+        "inherited": { "description": "true si la prop viene de HTML (disabled, onClick, aria-label…); false si es propia del componente.", "type": "boolean" }
+      }
+    },
+    "state": {
+      "description": "Un estado del componente.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "description"],
+      "properties": {
+        "name": { "description": "Nombre del estado. Por ejemplo, hover, focus o disabled.", "type": "string", "minLength": 1 },
+        "description": { "description": "Cómo se ve o qué cambia en ese estado.", "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}
