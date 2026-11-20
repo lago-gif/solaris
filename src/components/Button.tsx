@@ -1,10 +1,10 @@
-import type { ButtonHTMLAttributes } from 'react'
+import type { ButtonHTMLAttributes, ReactNode } from 'react'
 import type { Icon } from '@tabler/icons-react'
 
 type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger'
 type ButtonSize = 'sm' | 'md' | 'lg'
 
-export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+type ButtonBaseProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'children' | 'aria-label' | 'aria-labelledby'> & {
   /** Estilo del botón. Por defecto, `primary`. */
   variant?: ButtonVariant
   /** Tamaño del botón. Por defecto, `md`. */
@@ -16,6 +16,19 @@ export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   /** Si es `true`, el botón ocupa todo el ancho disponible. */
   fullWidth?: boolean
 }
+
+/**
+ * Nombre accesible (docs/accesibilidad.md, regla 3): todo botón tiene un nombre que lee el lector de pantalla.
+ * - Con texto: el texto es su nombre.
+ * - Solo con icono: `aria-label` es obligatorio (o `aria-labelledby`, si el nombre está en otro elemento).
+ * Si falta, TypeScript da error: un botón sin nombre no compila.
+ */
+type ButtonName =
+  | { /** Texto del botón: es también su nombre accesible. */ children: ReactNode; 'aria-label'?: string; 'aria-labelledby'?: string }
+  | { /** Botón de solo icono: describe la acción, por ejemplo "Borrar nota". */ 'aria-label': string; children?: never; 'aria-labelledby'?: never }
+  | { 'aria-labelledby': string; children?: never; 'aria-label'?: never }
+
+export type ButtonProps = ButtonBaseProps & ButtonName
 
 // Cada clase es un token de componente (tokens/tokens.json → component.button).
 const variantClasses: Record<ButtonVariant, string> = {

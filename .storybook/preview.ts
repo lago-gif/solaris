@@ -12,6 +12,9 @@ import '../src/stories/docs.css'
 const preview: Preview = {
   tags: ['autodocs'],
   parameters: {
+    // Complemento de accesibilidad: revisa cada historia con axe y enseña sus fallos en el panel "Accessibility".
+    // "error" marca la historia como fallida si hay algún problema (docs/accesibilidad.md).
+    a11y: { test: 'error' },
     controls: { expanded: true },
     options: {
       storySort: { order: ['Cómo funciona', 'Status', 'Fundamentos', ['Primitivos', 'Semánticos'], 'Componentes'] },
