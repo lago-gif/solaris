@@ -41,7 +41,8 @@ export function Input({ label, hint, error, icon: IconComponent, id, required, c
       <div
         className={[
           'flex items-center gap-input-icon-gap rounded-input-radius border-width-input-border-width bg-input-background px-input-padding-x',
-          'focus-within:outline-width-input-border-width-focus focus-within:outline-input-border-focus',
+          // Anillo de foco doble alrededor de la caja (docs/accesibilidad.md, regla 2).
+          'focus-within:focus-ring-input',
           'has-[:disabled]:cursor-not-allowed has-[:disabled]:bg-input-background-disabled',
           error ? 'border-input-border-danger' : 'border-input-border',
         ].join(' ')}

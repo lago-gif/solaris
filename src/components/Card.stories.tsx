@@ -17,6 +17,7 @@ const meta = {
       mapping: { Ninguno: undefined, IconPill, IconCalendarEvent },
       control: { type: 'select' },
     },
+    headingLevel: { control: { type: 'select' }, options: [2, 3, 4, 5, 6] },
     children: { control: false },
     footer: { control: false },
   },
@@ -56,6 +57,11 @@ export const Cita: Story = {
     description: 'Martes 18, 10:30 · Clínica Sol',
     children: 'Revisión anual.',
   },
+}
+
+// El título es un h2 porque la tarjeta va directamente bajo el título de la pantalla (h1).
+export const NivelDeEncabezado: Story = {
+  args: { icon: IconPill, headingLevel: 2 },
 }
 
 export const SoloContenido: Story = {

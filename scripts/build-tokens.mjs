@@ -111,6 +111,7 @@ function buildThemeCss() {
     theme.push(...tw.theme)
     if (tw.utility) utilities.push(...tw.utility)
   }
+  utilities.push(...focusRings())
   const clash = theme.map(([v]) => v).filter((v) => tailwindVars.has(v))
   if (clash.length) throw new Error(`Estas variables chocan con las de Tailwind: ${clash.join(', ')}`)
   const names = theme.map(([v]) => v)
@@ -129,10 +130,35 @@ function buildThemeCss() {
     ...theme.map(([k, v]) => `  ${k}: ${v};`),
     '}',
     '',
-    '/* Grosores de borde y separación del foco: Tailwind no tiene variables de tema para ellos. */',
+    '/* Grosores de borde, separación del foco y anillo de foco doble: Tailwind no tiene variables de tema para ellos. */',
     ...utilities.map(([name, css]) => `@utility ${name} {\n  ${css}\n}`),
     '',
   ].join('\n')
+}
+
+/**
+ * Anillo de foco doble (docs/accesibilidad.md, regla 2): por dentro el color del foco
+ * y por fuera un anillo claro, para que pase 3:1 sobre cualquier fondo.
+ * Se crea "focus-ring-<componente>" para cada componente que tenga
+ * border.focus, border.focus.inverted y border-width.focus. Si tiene focus-offset,
+ * deja ese hueco claro entre el componente y el anillo.
+ */
+function focusRings() {
+  const has = (p) => byPath.has(p)
+  const components = Object.keys(tokens.component).filter((k) => !k.startsWith('$'))
+  return components
+    .filter((c) => has(`component.${c}.border.focus`) && has(`component.${c}.border.focus.inverted`) && has(`component.${c}.border-width.focus`))
+    .map((c) => {
+      const v = (p) => `var(--component-${c}-${p})`
+      const offset = has(`component.${c}.focus-offset`) ? v('focus-offset') : '0px'
+      const width = v('border-width-focus')
+      const css = [
+        // En modo de alto contraste de Windows las sombras no se pintan: el contorno transparente se vuelve visible.
+        'outline: 2px solid transparent;',
+        `box-shadow: 0 0 0 ${offset} ${v('border-focus-inverted')}, 0 0 0 calc(${offset} + ${width}) ${v('border-focus')}, 0 0 0 calc(${offset} + ${width} * 2) ${v('border-focus-inverted')};`,
+      ].join('\n  ')
+      return [`focus-ring-${c}`, css]
+    })
 }
 
 /* ---------- 5. docs/tokens.md ---------- */
@@ -165,6 +191,7 @@ function buildDocs() {
     '- **Variable CSS:** el valor real, definido en `src/styles/tokens.css`.',
     '- **Los estilos de texto** (`typography.*`) se usan con una sola clase que aplica tamaño, interlineado y peso a la vez: `text-heading`.',
     '- **Los primitivos no tienen clase:** solo los usan los semánticos (ADR-001).',
+    `- **Anillo de foco doble:** ${focusRings().map(([n]) => `\`${n}\``).join(', ')}. Junta el color del foco, el anillo claro exterior y el grosor del componente (docs/accesibilidad.md, regla 2).`,
     '',
     ...table('semantic', 'Semánticos', 'Para pantallas y para definir los tokens de componente.'),
     ...table('component', 'De componente', 'Solo para su componente.'),
