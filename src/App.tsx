@@ -60,7 +60,15 @@ export default function App() {
         </ul>
       </nav>
 
-      <main className="min-h-0 flex-1 overflow-y-auto">
+      {/*
+        La zona principal tiene su propio scroll: tabIndex={0} permite enfocarla con Tab
+        y desplazarla con las flechas cuando la página no tiene nada más que reciba el foco
+        (docs/accesibilidad.md, regla 2). El anillo usa los tokens de foco.
+      */}
+      <main
+        tabIndex={0}
+        className="min-h-0 flex-1 overflow-y-auto focus-visible:outline-width-focus focus-visible:outline-border-focus focus-visible:-outline-offset-2"
+      >
         {current ? (
           <current.Component />
         ) : (

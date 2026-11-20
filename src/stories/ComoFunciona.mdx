@@ -197,13 +197,19 @@ Qué se construyó en cada clase, **qué concepto enseña** y **dónde encaja en
 
 ### 7 · Accesibilidad · *Construye la base*
 
-- **Qué se hizo:** `docs/accesibilidad.md` con 4 reglas (contraste, teclado, nombre accesible y lector de pantalla); el anillo de foco doble en Button e Input; la prop `headingLevel` en Card; `tokens/contrast-pairs.json` con reglas de contraste por grupos; y `npm run contrast`, que comprueba todas las parejas y escribe `docs/contraste.md`.
+- **Qué se hizo:**
+  - `docs/accesibilidad.md` con 4 reglas: contraste, teclado, nombre accesible y lector de pantalla.
+  - `tokens/contrast-pairs.json` con reglas de contraste por grupos, y `npm run contrast`, que comprueba todas las parejas y escribe `docs/contraste.md`.
+  - El anillo de foco doble, igual en todos los componentes, y una **prueba de teclado** (historia "Teclado") por componente.
+  - El **complemento de accesibilidad** de Storybook (panel Accessibility), y el nombre accesible obligatorio en Button: sin nombre, no compila.
+  - La prop `headingLevel` en Card, y la columna **Accesibilidad** en `docs/componentes.md`.
 - **Concepto:** **la accesibilidad se mide.** "Cumplir WCAG" son más de 80 criterios; 4 reglas con ejemplos y checklist se pueden auditar en cada PR, y el contraste lo comprueba un script.
 - **Por qué importa:**
   - Las reglas de contraste van **por grupos**, no pareja a pareja: un token nuevo entra solo en su regla por su nombre. Así sirven aunque el sistema llegue a cientos de tokens.
   - El script encontró 4 parejas que no pasaban (el texto de marca sobre grises suaves) y se arreglaron cambiando **un solo alias**: `color.text.brand` y `color.text.info` pasaron a brand.800. Es la cadena de tokens funcionando.
-  - El anillo de foco doble y el nivel de encabezado son ejemplos de reglas que pasan del documento al código.
-- **En el mapa:** pasos 1 y 2 · Decidir (las reglas) y Definir (los tokens que las cumplen), con una comprobación automática.
+  - Cada regla tiene su comprobación: el contraste, un script; el teclado, una prueba que recorre el componente con Tab; el nombre y la lectura, el panel Accessibility. Si alguien rompe una regla, algo se pone en rojo.
+  - **El mejor fallo es el que no se puede cometer:** un botón sin nombre ya no compila, igual que un campo sin `label` o un badge sin texto.
+- **En el mapa:** las cuatro reglas recorren toda la cadena: decidir (`docs/accesibilidad.md`) → definir (tokens que las cumplen) → usar (componentes) → ver y **comprobar** (Storybook y scripts).
 
 ## Glosario
 
