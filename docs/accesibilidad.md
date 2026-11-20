@@ -1,0 +1,197 @@
+# Accesibilidad en solaris-ds
+
+La accesibilidad engloba muchos criterios (las pautas WCAG 2.2 tienen más de 80). **solaris-ds cubre estos cuatro**, que son los que más afectan a una app de salud usada por personas de cualquier edad y con distintas capacidades: **contraste, navegación por teclado, nombre accesible y lectura con lector de pantalla**. Al final hay una tabla con lo que no se cubre.
+
+Estas cuatro reglas desarrollan el principio 4 del [ADR-001](./adr/001-alcance.md). Los ejemplos usan los tokens y componentes de solaris-ds.
+
+---
+
+## 1. Contraste
+
+**Qué es.** La diferencia de luminosidad entre un elemento y lo que tiene detrás. Si es poca, el texto o el icono "se pierde" para quien ve mal, tiene la pantalla con mucho brillo o está al sol. Se mide con una cifra: **1:1** es el mismo color y **21:1** es negro sobre blanco.
+
+**La regla:**
+- **Texto: al menos 4,5:1** con su fondo.
+- **Iconos con significado, bordes de campos y anillo de foco: al menos 3:1** con lo que tienen al lado.
+
+Los bordes puramente decorativos (separadores, el borde de una tarjeta) no tienen mínimo, porque no hace falta verlos para usar la interfaz.
+
+**✅ Correcto**
+
+| Elemento | Colores | Contraste |
+|---|---|---|
+| Texto secundario | `color.text.neutral.subtle` (gray.600) sobre `color.background.neutral` (gray.50) | 7,2:1 |
+| Texto del botón primary | `color.text.brand.inverted` (gray.50) sobre `color.background.brand` (brand.700) | 4,7:1 |
+| Borde de un campo | `color.border.neutral.strong` (gray.500) sobre gray.50 | 4,6:1 |
+| Icono de éxito | `color.icon.success` (green.700) sobre gray.50 | 4,7:1 |
+
+**❌ Incorrecto**
+
+| Elemento | Colores | Contraste | Por qué falla |
+|---|---|---|---|
+| Texto de ayuda en gris claro | gray.400 sobre gray.50 | 2,5:1 | Texto por debajo de 4,5:1: casi no se lee |
+| Borde de un campo con el gris de los separadores | `color.border.neutral` (gray.300) sobre gray.50 | 1,4:1 | Borde de campo por debajo de 3:1: no se ve dónde escribir |
+| Texto en un tono claro de la marca | brand.400 sobre gray.50 | 1,9:1 | Color bonito, pero ilegible como texto |
+
+**☑️ Checklist**
+- [ ] Todo texto tiene 4,5:1 o más con su fondo, también en hover, desactivado y error.
+- [ ] Los iconos con significado, los bordes de campos y el anillo de foco tienen 3:1 o más.
+- [ ] El contraste se comprueba con el fondo real donde se usa, no sobre blanco.
+- [ ] Los colores salen de tokens semánticos con contraste ya comprobado (página **Fundamentos → Semánticos** de Storybook, columna "Contraste").
+
+---
+
+## 2. Navegación por teclado
+
+**Qué es.** Muchas personas no usan ratón: personas con movilidad reducida, con temblores, que usan un lector de pantalla o que simplemente navegan más rápido con el teclado. Para ellas, **lo que no funciona con el teclado no existe**.
+
+**La regla:**
+- **Todo lo que se usa con el ratón se usa con el teclado:**
+  - **Tab** avanza al siguiente elemento (y **Mayús + Tab** retrocede);
+  - **Enter** activa botones y enlaces;
+  - **Espacio** activa botones y marca casillas;
+  - **Esc** cierra ventanas, menús y avisos.
+- **El orden es lógico:** el foco recorre la pantalla en el mismo orden en que se lee, de arriba abajo y de izquierda a derecha.
+- **El foco siempre se ve**, con un **anillo doble**:
+  - **por dentro, un anillo de color** (`color.border.focus`);
+  - **por fuera, un anillo blanco.**
+
+  Así pasa 3:1 sobre cualquier fondo. En fondos claros destaca el anillo de color (4,7:1 sobre gray.50), y en fondos oscuros o de color destaca el blanco (17,8:1 sobre gray.900).
+
+**✅ Correcto**
+
+```tsx
+// Un botón de verdad: recibe el foco con Tab y se activa con Enter y Espacio sin hacer nada más.
+<Button onClick={guardar}>Guardar cita</Button>
+```
+
+```css
+/* Anillo doble: color por dentro y blanco por fuera. */
+:focus-visible {
+  outline: 2px solid var(--semantic-color-border-focus);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 6px white;
+}
+```
+
+**❌ Incorrecto**
+
+```tsx
+// Un div que parece un botón: no recibe el foco con Tab ni responde a Enter.
+<div className="…" onClick={guardar}>Guardar cita</div>
+```
+
+```css
+/* Quitar el foco "porque queda feo": quien usa el teclado se queda a ciegas. */
+button:focus { outline: none; }
+```
+
+```tsx
+// Cambiar el orden con tabIndex positivo: el foco salta de forma imprevisible.
+<input tabIndex={3} /> <input tabIndex={1} />
+```
+
+**☑️ Checklist**
+- [ ] Puedo recorrer toda la pantalla solo con Tab y Mayús + Tab.
+- [ ] El orden del foco sigue el orden de lectura.
+- [ ] Siempre veo dónde está el foco, con el anillo doble, sobre cualquier fondo.
+- [ ] Enter y Espacio activan botones; Esc cierra lo que se abre encima (ventanas, menús).
+- [ ] Ningún elemento atrapa el foco (puedo salir de él con el teclado).
+- [ ] Uso elementos nativos (`button`, `a`, `input`) en lugar de `div` con `onClick`.
+
+---
+
+## 3. Nombre accesible
+
+**Qué es.** El nombre que **un lector de pantalla dice en voz alta** cuando llega a un elemento: "Guardar cita, botón" o "Correo, campo de texto". Sin nombre, solo dice "botón" o "campo de texto", y la persona no sabe para qué sirve.
+
+**La regla:** cada componente interactivo tiene un nombre, que sale de una de estas tres fuentes, por orden de preferencia:
+1. **Su texto visible:** el texto de un botón o de un enlace.
+2. **Su etiqueta:** el `label` de un campo. En `Input` es obligatorio.
+3. **Un `aria-label`**, solo cuando no hay texto visible, como en un botón que solo tiene un icono.
+
+**✅ Correcto**
+
+```tsx
+<Button icon={IconPlus}>Añadir cita</Button>                // nombre: "Añadir cita"
+<Input label="Correo" placeholder="nombre@correo.com" />    // nombre: "Correo"
+<Button icon={IconTrash} variant="danger" aria-label="Borrar nota" />  // solo icono: nombre "Borrar nota"
+```
+
+**❌ Incorrecto**
+
+```tsx
+<Button icon={IconTrash} variant="danger" />          // solo icono y sin aria-label: el lector dice "botón"
+<input placeholder="Correo" />                         // el placeholder desaparece al escribir y no es una etiqueta
+<Button>Haz clic aquí</Button>                         // tiene nombre, pero no dice qué hace
+```
+
+**☑️ Checklist**
+- [ ] Cada botón, enlace y campo tiene un nombre.
+- [ ] Los campos usan `label` (en `Input`, la prop `label`), nunca solo el placeholder.
+- [ ] Los botones de solo icono llevan `aria-label`.
+- [ ] El nombre dice qué hace el elemento ("Borrar nota"), no cómo se usa ("Haz clic aquí").
+- [ ] Si el texto visible y el `aria-label` existen a la vez, dicen lo mismo.
+
+---
+
+## 4. Lectura con lector de pantalla
+
+**Qué es.** Un lector de pantalla (VoiceOver en Mac e iPhone, TalkBack en Android, NVDA en Windows) lee la página en voz alta. Muchas personas navegan **saltando de encabezado en encabezado**, como quien ojea un índice. Y como no ven las imágenes ni los iconos, necesitan su texto.
+
+**La regla:**
+- **Los encabezados van en orden:** un `h1` por pantalla, `h2` para las secciones y `h3` dentro de ellas, sin saltarse niveles. El nivel lo marca la estructura, no el tamaño de letra.
+- **Cada icono o imagen con significado tiene texto alternativo.**
+- **Los decorativos se ocultan**, para que el lector no los lea:
+  - iconos con `aria-hidden="true"`;
+  - imágenes con `alt=""`.
+
+**✅ Correcto**
+
+```tsx
+<h1>Mi medicación</h1>
+  <h2>Tomas de hoy</h2>
+    <Card title="Ibuprofeno 600 mg" />        {/* Card usa h3 */}
+
+<Button icon={IconPlus}>Añadir cita</Button>   {/* el icono es decorativo: el componente lo oculta solo */}
+<img src="radiografia.png" alt="Radiografía de tórax del 12 de marzo, sin hallazgos" />
+<img src="adorno.svg" alt="" />                {/* decorativa */}
+```
+
+**❌ Incorrecto**
+
+```tsx
+<h1>Mi medicación</h1>
+<h3>Tomas de hoy</h3>                          {/* salta del h1 al h3 */}
+<p className="text-heading">Citas</p>          {/* parece un título, pero el lector no lo encuentra como tal */}
+
+<IconAlertCircle />                            {/* icono de aviso sin texto: el lector no dice nada, o dice "imagen" */}
+<img src="radiografia.png" />                  {/* sin alt: el lector lee el nombre del archivo */}
+```
+
+**☑️ Checklist**
+- [ ] Hay un solo `h1` por pantalla y los niveles no se saltan.
+- [ ] Lo que parece un título es un encabezado (`h1`–`h3`), no solo un texto grande.
+- [ ] Cada icono o imagen con significado tiene texto alternativo (o un texto visible al lado que dice lo mismo).
+- [ ] Los iconos decorativos llevan `aria-hidden="true"` y las imágenes decorativas, `alt=""`.
+- [ ] Al escucharla con VoiceOver (`Cmd + F5` en Mac), la pantalla se entiende sin verla.
+
+---
+
+## Lo que no se cubre
+
+Estos criterios de accesibilidad **no forman parte de las cuatro reglas de este documento**. Eso no significa que no importen: quedan fuera del alcance actual de solaris-ds y se pueden añadir más adelante con un ADR.
+
+| Criterio | Qué es | Nota |
+|---|---|---|
+| **Zona táctil mínima** | Que lo que se pulsa con el dedo tenga un área suficiente (WCAG pide 24 × 24 px) para no tocar lo de al lado por error | |
+| **No depender solo del color** | Que la información no se transmita solo con color (por ejemplo, un error marcado solo en rojo); se acompaña de texto o icono | ⚠️ **Sí es obligatorio en solaris-ds** por el ADR-001 (principio 5, "el color nunca va solo"), aunque no sea una de estas cuatro reglas |
+| **Texto ampliable al 200 %** | Que al agrandar el texto al doble no se corte, no se solape y todo siga funcionando | ⚠️ AGENTS.md lo menciona ("texto ampliado"); pendiente de alinear con este documento |
+| **Pantallas estrechas sin scroll horizontal** | Que en una pantalla de 320 px de ancho (o con zoom al 400 %) el contenido se reorganice en una columna sin desplazarse hacia el lado | |
+| **Movimiento reducido** | Respetar la opción del sistema "reducir movimiento": quitar animaciones y efectos para quien se marea con ellos | |
+| **Tiempo suficiente** | Que nada caduque deprisa (sesiones, avisos que desaparecen) sin poder pedir más tiempo | |
+| **Subtítulos y transcripciones** | Texto para el audio y el vídeo, por ejemplo en las consultas grabadas | |
+| **Idioma de la página** | Indicar el idioma para que el lector de pantalla pronuncie bien | `index.html` ya tiene `lang="es"` |
+| **Lenguaje sencillo** | Textos claros, frases cortas y sin jerga médica innecesaria | |
+| **Sin destellos** | Nada que parpadee más de tres veces por segundo, porque puede provocar crisis epilépticas | |
+| **Ayuda con los errores** | Explicar qué ha fallado y cómo arreglarlo, no solo marcar el error | `Input` ya muestra el mensaje con su prop `error`, pero no hay una regla para redactarlo |
