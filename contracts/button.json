@@ -1,0 +1,232 @@
+{
+  "$schema": "./contract.schema.json",
+  "name": "Button",
+  "file": "src/components/Button.tsx",
+  "import": "import { Button } from './components'",
+  "purpose": "Botón para lanzar una acción en la misma pantalla: guardar, añadir, enviar, borrar. Tiene cuatro variantes según la importancia y el riesgo de la acción, tres tamaños y un icono opcional.",
+  "neverUseFor": [
+    "Navegar a otra página o a una dirección: usa un enlace (<a>).",
+    "Mostrar un estado o una etiqueta que no se pulsa: usa Badge.",
+    "Agrupar varias opciones seleccionables (pestañas, filtros): todavía no hay un componente para eso; pídelo al design system."
+  ],
+  "props": [
+    {
+      "name": "variant",
+      "type": "'primary' | 'secondary' | 'ghost' | 'danger'",
+      "default": "primary",
+      "required": false,
+      "description": "Estilo según la importancia: primary para la acción principal, secondary y ghost para las secundarias, danger para las que borran o no tienen vuelta atrás.",
+      "inherited": false
+    },
+    {
+      "name": "size",
+      "type": "'sm' | 'md' | 'lg'",
+      "default": "md",
+      "required": false,
+      "description": "Tamaño: 28, 40 o 52 px de alto. La altura sale del relleno y del interlineado, así que crece si el texto se amplía.",
+      "inherited": false
+    },
+    {
+      "name": "icon",
+      "type": "Icon (de @tabler/icons-react)",
+      "default": null,
+      "required": false,
+      "description": "Icono opcional, por ejemplo IconPlus. Se pasa el componente, sin < />. Es decorativo: se oculta al lector de pantalla.",
+      "inherited": false
+    },
+    {
+      "name": "iconPosition",
+      "type": "'left' | 'right'",
+      "default": "left",
+      "required": false,
+      "description": "Lado en el que aparece el icono.",
+      "inherited": false
+    },
+    {
+      "name": "fullWidth",
+      "type": "boolean",
+      "default": false,
+      "required": false,
+      "description": "Si es true, el botón ocupa todo el ancho disponible.",
+      "inherited": false
+    },
+    {
+      "name": "children",
+      "type": "ReactNode",
+      "default": null,
+      "required": false,
+      "description": "Texto del botón; también es su nombre accesible. Si no hay texto, aria-label es obligatorio.",
+      "inherited": false
+    },
+    {
+      "name": "aria-label",
+      "type": "string",
+      "default": null,
+      "required": false,
+      "description": "Nombre accesible del botón de solo icono, por ejemplo \"Borrar nota\". Obligatorio si no hay children (si falta, no compila).",
+      "inherited": true
+    },
+    {
+      "name": "aria-labelledby",
+      "type": "string",
+      "default": null,
+      "required": false,
+      "description": "Alternativa a aria-label: id del elemento que da nombre al botón.",
+      "inherited": true
+    },
+    {
+      "name": "type",
+      "type": "'button' | 'submit' | 'reset'",
+      "default": "button",
+      "required": false,
+      "description": "Tipo de botón HTML. Por defecto no envía formularios: usa submit en un formulario.",
+      "inherited": true
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "default": false,
+      "required": false,
+      "description": "Desactiva el botón: no recibe el foco ni se pulsa, y se pinta en gris legible.",
+      "inherited": true
+    },
+    {
+      "name": "onClick",
+      "type": "(event) => void",
+      "default": null,
+      "required": false,
+      "description": "Qué pasa al pulsarlo (con el ratón, Enter o Espacio).",
+      "inherited": true
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "default": "",
+      "required": false,
+      "description": "Clases extra para colocarlo en la pantalla (margen, posición). No para cambiar su aspecto.",
+      "inherited": true
+    }
+  ],
+  "states": {
+    "intrinsic": [
+      {
+        "name": "hover",
+        "description": "Al pasar el ratón, el fondo se oscurece (o aparece, en ghost) con su token hover."
+      },
+      {
+        "name": "focus-visible",
+        "description": "Al llegar con el teclado aparece el anillo de foco doble: hueco, anillo de color y anillo claro (focus-ring-button)."
+      }
+    ],
+    "authored": [
+      {
+        "name": "disabled",
+        "description": "Fondo, texto e icono en gris (tokens disabled), cursor no permitido; no recibe el foco."
+      }
+    ]
+  },
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "button",
+      "optional": false,
+      "description": "El botón nativo. Recibe el foco y responde a Enter y Espacio sin código extra."
+    },
+    {
+      "part": "icon",
+      "element": "svg",
+      "optional": true,
+      "description": "Icono de Tabler a la izquierda o a la derecha del texto, según iconPosition. Oculto al lector de pantalla."
+    },
+    {
+      "part": "label",
+      "element": "texto (children)",
+      "optional": true,
+      "description": "El texto del botón. Si falta, el nombre lo da aria-label."
+    }
+  ],
+  "tokens": [
+    "component.button.background.brand",
+    "component.button.background.brand.hover",
+    "component.button.background.brand.subtle.hover",
+    "component.button.background.neutral",
+    "component.button.background.neutral.hover",
+    "component.button.background.danger",
+    "component.button.background.danger.hover",
+    "component.button.background.disabled",
+    "component.button.text.brand",
+    "component.button.text.brand.inverted",
+    "component.button.text.neutral",
+    "component.button.text.danger.inverted",
+    "component.button.text.disabled",
+    "component.button.icon.brand",
+    "component.button.icon.brand.inverted",
+    "component.button.icon.neutral",
+    "component.button.icon.danger.inverted",
+    "component.button.icon.disabled",
+    "component.button.border.neutral",
+    "component.button.border.focus",
+    "component.button.border.focus.inverted",
+    "component.button.border-width",
+    "component.button.border-width.focus",
+    "component.button.radius",
+    "component.button.padding-x.sm",
+    "component.button.padding-x.md",
+    "component.button.padding-x.lg",
+    "component.button.gap.sm",
+    "component.button.gap.md",
+    "component.button.font-size.sm",
+    "component.button.font-size.md",
+    "component.button.font-size.lg",
+    "component.button.line-height.sm",
+    "component.button.line-height.md",
+    "component.button.line-height.lg",
+    "component.button.font-weight",
+    "component.button.padding-y.sm",
+    "component.button.padding-y.md",
+    "component.button.padding-y.lg",
+    "component.button.focus-offset"
+  ],
+  "a11y": {
+    "role": "button",
+    "keyboard": [
+      {
+        "key": "Tab",
+        "action": "Lleva el foco al botón (y Mayús + Tab, al anterior). Los desactivados se saltan."
+      },
+      {
+        "key": "Enter",
+        "action": "Activa el botón."
+      },
+      {
+        "key": "Espacio",
+        "action": "Activa el botón."
+      }
+    ],
+    "notes": [
+      "Nombre accesible (regla 3): su texto; si solo tiene icono, aria-label o aria-labelledby. Sin nombre no compila.",
+      "Teclado (regla 2): es un <button> nativo; su historia Teclado de Storybook pasa (Tab en orden, salta el desactivado, Enter y Espacio lo activan, anillo de foco visible).",
+      "Foco (regla 2): anillo doble focus-ring-button; pasa 3:1 sobre fondos claros y oscuros.",
+      "Lector de pantalla (regla 4): el icono es decorativo y está oculto (aria-hidden).",
+      "Sus colores pasan el contraste de docs/accesibilidad.md (regla 1): todos sus tokens apuntan a semánticos que cumplen en docs/contraste.md (npm run contrast: 156 de 156 parejas).",
+      "El panel Accessibility de Storybook no marca fallos en ninguna de sus historias."
+    ]
+  },
+  "usage": {
+    "scope": "general"
+  },
+  "governance": {
+    "mayExtendLocally": [
+      "Su posición y margen en la pantalla, con className.",
+      "Ocupar todo el ancho con fullWidth.",
+      "El texto y el icono."
+    ],
+    "mustEscalateToDS": [
+      "Variantes, tamaños o colores nuevos.",
+      "Cambiar sus tokens, su radio o su anillo de foco.",
+      "Un botón de solo icono con otra forma (cuadrado o circular)."
+    ]
+  },
+  "guidelines": {},
+  "content": {}
+}

@@ -1,0 +1,133 @@
+{
+  "$schema": "./contract.schema.json",
+  "name": "Badge",
+  "file": "src/components/Badge.tsx",
+  "import": "import { Badge } from './components'",
+  "purpose": "Etiqueta corta que comunica un estado o una categoría (Tomada, Pendiente, Fuera de rango) con color, icono opcional y texto.",
+  "neverUseFor": [
+    "Acciones que se pulsan: usa Button.",
+    "Textos largos o frases: usa texto normal.",
+    "Comunicar un estado solo con color (un punto sin texto): el texto es obligatorio."
+  ],
+  "props": [
+    {
+      "name": "tone",
+      "type": "'neutral' | 'info' | 'success' | 'warning' | 'danger'",
+      "default": "neutral",
+      "required": false,
+      "description": "Significado del estado: neutral, información, éxito, aviso o peligro.",
+      "inherited": false
+    },
+    {
+      "name": "size",
+      "type": "'sm' | 'md'",
+      "default": "md",
+      "required": false,
+      "description": "Tamaño.",
+      "inherited": false
+    },
+    {
+      "name": "icon",
+      "type": "Icon (de @tabler/icons-react)",
+      "default": null,
+      "required": false,
+      "description": "Icono opcional a la izquierda del texto. Es decorativo.",
+      "inherited": false
+    },
+    {
+      "name": "children",
+      "type": "ReactNode",
+      "default": null,
+      "required": true,
+      "description": "Texto de la etiqueta. Obligatorio: el color nunca va solo.",
+      "inherited": false
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "default": "",
+      "required": false,
+      "description": "Clases extra para colocarlo (margen). No para cambiar su aspecto.",
+      "inherited": true
+    }
+  ],
+  "states": {
+    "intrinsic": [],
+    "authored": []
+  },
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "span",
+      "optional": false,
+      "description": "La etiqueta."
+    },
+    {
+      "part": "icon",
+      "element": "svg",
+      "optional": true,
+      "description": "Icono a la izquierda; oculto al lector."
+    },
+    {
+      "part": "label",
+      "element": "texto (children)",
+      "optional": false,
+      "description": "El texto: dice el estado sin depender del color."
+    }
+  ],
+  "tokens": [
+    "component.badge.background.neutral",
+    "component.badge.background.info",
+    "component.badge.background.success",
+    "component.badge.background.warning",
+    "component.badge.background.danger",
+    "component.badge.text.neutral",
+    "component.badge.text.info",
+    "component.badge.text.success",
+    "component.badge.text.warning",
+    "component.badge.text.danger",
+    "component.badge.icon.neutral",
+    "component.badge.icon.info",
+    "component.badge.icon.success",
+    "component.badge.icon.warning",
+    "component.badge.icon.danger",
+    "component.badge.border",
+    "component.badge.border-width",
+    "component.badge.radius",
+    "component.badge.padding-x.sm",
+    "component.badge.padding-x.md",
+    "component.badge.padding-y.sm",
+    "component.badge.padding-y.md",
+    "component.badge.gap",
+    "component.badge.font-size.sm",
+    "component.badge.font-size.md",
+    "component.badge.font-weight"
+  ],
+  "a11y": {
+    "role": "none",
+    "keyboard": [],
+    "notes": [
+      "No es interactivo: no recibe el foco; su historia Teclado comprueba que Tab no se para en él.",
+      "El color nunca va solo (regla 1): children es obligatorio, así que siempre hay texto; el icono es decorativo y está oculto.",
+      "Se lee como texto normal dentro de la frase o de la tarjeta en la que está.",
+      "Sus colores pasan el contraste de docs/accesibilidad.md (regla 1): todos sus tokens apuntan a semánticos que cumplen en docs/contraste.md (npm run contrast: 156 de 156 parejas).",
+      "El panel Accessibility de Storybook no marca fallos en ninguna de sus historias."
+    ]
+  },
+  "usage": {
+    "scope": "general"
+  },
+  "governance": {
+    "mayExtendLocally": [
+      "Su posición y margen, con className.",
+      "El texto y el icono."
+    ],
+    "mustEscalateToDS": [
+      "Tonos o tamaños nuevos.",
+      "Cambiar sus tokens, su borde o su radio.",
+      "Hacerlo interactivo (que se pueda pulsar o quitar)."
+    ]
+  },
+  "guidelines": {},
+  "content": {}
+}

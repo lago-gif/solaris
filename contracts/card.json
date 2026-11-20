@@ -1,0 +1,170 @@
+{
+  "$schema": "./contract.schema.json",
+  "name": "Card",
+  "file": "src/components/Card.tsx",
+  "import": "import { Card } from './components'",
+  "purpose": "Tarjeta que agrupa la información de un elemento (un medicamento, una cita, un análisis) con cabecera opcional (icono, título y descripción), contenido y pie para acciones.",
+  "neverUseFor": [
+    "Hacer clic en toda la tarjeta: no es interactiva; pon un Button en su pie.",
+    "Estados vacíos o avisos: todavía no hay componente; pídelo al design system.",
+    "Solo para dar margen o fondo a una zona de la pantalla: usa la maquetación de la pantalla."
+  ],
+  "props": [
+    {
+      "name": "title",
+      "type": "string",
+      "default": null,
+      "required": false,
+      "description": "Título visible de la tarjeta. Sustituye al atributo title de HTML (no es un tooltip).",
+      "inherited": false
+    },
+    {
+      "name": "headingLevel",
+      "type": "2 | 3 | 4 | 5 | 6",
+      "default": 3,
+      "required": false,
+      "description": "Nivel del encabezado del título (h2, h3…), según dónde esté la tarjeta. Solo cambia la etiqueta, no el aspecto.",
+      "inherited": false
+    },
+    {
+      "name": "description",
+      "type": "string",
+      "default": null,
+      "required": false,
+      "description": "Texto corto bajo el título.",
+      "inherited": false
+    },
+    {
+      "name": "icon",
+      "type": "Icon (de @tabler/icons-react)",
+      "default": null,
+      "required": false,
+      "description": "Icono opcional en un cuadrado junto al título. Es decorativo.",
+      "inherited": false
+    },
+    {
+      "name": "children",
+      "type": "ReactNode",
+      "default": null,
+      "required": false,
+      "description": "Contenido principal.",
+      "inherited": false
+    },
+    {
+      "name": "footer",
+      "type": "ReactNode",
+      "default": null,
+      "required": false,
+      "description": "Zona inferior separada por una línea, normalmente con botones ya montados.",
+      "inherited": false
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "default": "",
+      "required": false,
+      "description": "Clases extra para colocarla (margen, ancho). No para cambiar su aspecto.",
+      "inherited": true
+    }
+  ],
+  "states": {
+    "intrinsic": [],
+    "authored": []
+  },
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "article",
+      "optional": false,
+      "description": "La tarjeta."
+    },
+    {
+      "part": "header",
+      "element": "header",
+      "optional": true,
+      "description": "Cabecera; aparece si hay icono, título o descripción."
+    },
+    {
+      "part": "icon",
+      "element": "span + svg",
+      "optional": true,
+      "description": "Cuadrado con el icono; oculto al lector."
+    },
+    {
+      "part": "title",
+      "element": "h2–h6 (h3 por defecto)",
+      "optional": true,
+      "description": "Título, con el nivel de headingLevel."
+    },
+    {
+      "part": "description",
+      "element": "p",
+      "optional": true,
+      "description": "Texto bajo el título."
+    },
+    {
+      "part": "body",
+      "element": "div",
+      "optional": true,
+      "description": "Contenido principal (children)."
+    },
+    {
+      "part": "footer",
+      "element": "footer",
+      "optional": true,
+      "description": "Pie con acciones, separado por una línea."
+    }
+  ],
+  "tokens": [
+    "component.card.background",
+    "component.card.border",
+    "component.card.border-width",
+    "component.card.radius",
+    "component.card.padding",
+    "component.card.gap",
+    "component.card.header.gap",
+    "component.card.header.text-gap",
+    "component.card.elevation",
+    "component.card.title.text",
+    "component.card.title.font-size",
+    "component.card.title.line-height",
+    "component.card.title.font-weight",
+    "component.card.description.text",
+    "component.card.description.font-size",
+    "component.card.body.text",
+    "component.card.body.font-size",
+    "component.card.icon",
+    "component.card.icon.background",
+    "component.card.icon.radius",
+    "component.card.icon.padding",
+    "component.card.footer.gap",
+    "component.card.footer.padding-top"
+  ],
+  "a11y": {
+    "role": "article",
+    "keyboard": [],
+    "notes": [
+      "No es interactiva: no recibe el foco. Sus acciones van en el pie con Button; su historia Teclado comprueba que Tab salta la tarjeta y recorre esos botones en orden.",
+      "Lector de pantalla (regla 4): usa headingLevel para que el título siga el orden de encabezados de la pantalla (h3 por defecto). El icono es decorativo y está oculto.",
+      "Sus colores pasan el contraste de docs/accesibilidad.md (regla 1): todos sus tokens apuntan a semánticos que cumplen en docs/contraste.md (npm run contrast: 156 de 156 parejas).",
+      "El panel Accessibility de Storybook no marca fallos en ninguna de sus historias."
+    ]
+  },
+  "usage": {
+    "scope": "general"
+  },
+  "governance": {
+    "mayExtendLocally": [
+      "Su posición, margen y ancho en la pantalla, con className.",
+      "El nivel del título con headingLevel.",
+      "El contenido y los botones del pie."
+    ],
+    "mustEscalateToDS": [
+      "Variantes nuevas (por ejemplo, una tarjeta destacada o interactiva).",
+      "Cambiar sus tokens, su sombra o su radio.",
+      "Partes nuevas (imagen, menú…)."
+    ]
+  },
+  "guidelines": {},
+  "content": {}
+}
