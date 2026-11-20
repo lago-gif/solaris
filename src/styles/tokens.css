@@ -274,6 +274,7 @@
   --component-input-line-height: var(--semantic-typography-body-line-height);
   --component-input-padding-y: var(--semantic-space-sm);
   --component-input-icon-gap: var(--semantic-space-sm);
+  --component-input-focus-offset: var(--semantic-space-2xs);
   --component-card-background: var(--semantic-color-background-neutral);
   --component-card-border: var(--semantic-color-border-neutral);
   --component-card-border-width: var(--semantic-border-width-default);

@@ -1,4 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { expect, userEvent } from 'storybook/test'
+import { Button } from './Button'
+import { active } from '../stories/a11y/keyboard'
 import { IconAlertTriangle, IconCheck, IconInfoCircle, IconX } from '@tabler/icons-react'
 import { Badge } from './Badge'
 
@@ -53,4 +56,27 @@ export const Tamaños: Story = {
       <Badge {...args} size="md">Mediano (md)</Badge>
     </div>
   ),
+}
+
+/**
+ * Prueba de teclado (docs/accesibilidad.md, regla 2).
+ * El badge no es interactivo: Tab pasa del botón de antes al de después sin pararse en los badges.
+ */
+export const Teclado: Story = {
+  render: (args) => (
+    <div className="flex flex-wrap items-center gap-space-sm">
+      <Button size="sm" variant="secondary">Antes</Button>
+      <Badge {...args} tone="success" icon={IconCheck}>Tomada</Badge>
+      <Badge {...args} tone="danger" icon={IconX}>Fuera de rango</Badge>
+      <Button size="sm" variant="secondary">Después</Button>
+    </div>
+  ),
+  play: async ({ canvasElement, step }) => {
+    await step('Tab no se para en los badges', async () => {
+      await userEvent.tab()
+      await expect(active(canvasElement)).toHaveTextContent('Antes')
+      await userEvent.tab()
+      await expect(active(canvasElement)).toHaveTextContent('Después')
+    })
+  },
 }

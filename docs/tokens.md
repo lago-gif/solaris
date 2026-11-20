@@ -166,6 +166,7 @@ Solo para su componente.
 | `input.line-height` | `typography.body.line-height` | `leading-input-line-height` | `--component-input-line-height` | Interlineado del texto que se escribe. |
 | `input.padding-y` | `space.sm` | `py-input-padding-y` | `--component-input-padding-y` | Relleno vertical dentro del campo. Con el interlineado y el borde, da una altura de 42px. |
 | `input.icon-gap` | `space.sm` | `gap-input-icon-gap` | `--component-input-icon-gap` | Separación entre el icono del campo y el texto. |
+| `input.focus-offset` | `space.2xs` | `outline-offset-input-focus-offset` | `--component-input-focus-offset` | Separación entre la caja del campo y su anillo de foco. Igual que en el botón, para que todos los componentes tengan el mismo anillo. |
 | `card.background` | `color.background.neutral` | `bg-card-background` | `--component-card-background` | Fondo de la tarjeta. |
 | `card.border` | `color.border.neutral` | `border-card-border` | `--component-card-border` | Borde de la tarjeta y línea que separa el pie. |
 | `card.border-width` | `border-width.default` | `border-width-card-border-width` · `outline-width-card-border-width` | `--component-card-border-width` | Grosor del borde de la tarjeta. |

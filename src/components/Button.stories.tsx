@@ -1,4 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { expect, fn, userEvent } from 'storybook/test'
+import { active, expectFocusRingVisible } from '../stories/a11y/keyboard'
 import { IconArrowRight, IconCheck, IconPlus, IconTrash } from '@tabler/icons-react'
 import { Button } from './Button'
 
@@ -65,4 +67,35 @@ export const Desactivado: Story = {
 
 export const AnchoCompleto: Story = {
   args: { fullWidth: true },
+}
+
+/**
+ * Prueba de teclado (docs/accesibilidad.md, regla 2).
+ * Tab recorre los botones en orden, se salta el desactivado y cada uno muestra el anillo doble.
+ * Enter y Espacio activan el botón.
+ */
+export const Teclado: Story = {
+  args: { onClick: fn() },
+  render: (args) => (
+    <div className="flex flex-wrap gap-3">
+      <Button {...args} variant="primary">Primary</Button>
+      <Button {...args} variant="secondary">Secondary</Button>
+      <Button {...args} variant="danger" disabled>Desactivado</Button>
+      <Button {...args} variant="ghost">Ghost</Button>
+    </div>
+  ),
+  play: async ({ args, canvasElement, step }) => {
+    await step('Tab recorre los botones en orden y cada uno muestra el anillo de foco', async () => {
+      for (const label of ['Primary', 'Secondary', 'Ghost']) {
+        await userEvent.tab()
+        await expect(active(canvasElement)).toHaveTextContent(label)
+        await expectFocusRingVisible(active(canvasElement))
+      }
+    })
+    await step('Enter y Espacio activan el botón con el foco', async () => {
+      await userEvent.keyboard('{Enter}')
+      await userEvent.keyboard(' ')
+      await expect(args.onClick).toHaveBeenCalledTimes(2)
+    })
+  },
 }

@@ -107,6 +107,7 @@ button:focus { outline: none; }
 - [ ] Enter y Espacio activan botones; Esc cierra lo que se abre encima (ventanas, menús).
 - [ ] Ningún elemento atrapa el foco (puedo salir de él con el teclado).
 - [ ] Uso elementos nativos (`button`, `a`, `input`) en lugar de `div` con `onClick`.
+- [ ] La historia **Teclado** del componente pasa en Storybook (panel **Interactions**, en verde). Recorre sus partes interactivas con Tab y comprueba que el anillo doble se ve. Un componente nuevo con partes interactivas añade la suya.
 
 ---
 
