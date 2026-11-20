@@ -1,0 +1,66 @@
+{
+  "$description": "Reglas de contraste de solaris-ds (docs/accesibilidad.md, regla 1). Se escriben por grupos, no pareja a pareja: un token de texto, icono o borde nuevo entra solo en su regla por su nombre, y un fondo nuevo solo hay que añadirlo a su grupo. npm run contrast genera todas las parejas, calcula su contraste y lo guarda en docs/contraste.md.",
+  "groups": {
+    "light": {
+      "$description": "Fondos claros: llevan encima texto, iconos y bordes normales (los que no terminan en inverted).",
+      "tokens": [
+        "color.background.neutral",
+        "color.background.neutral.subtle",
+        "color.background.neutral.strong",
+        "color.background.brand.subtle",
+        "color.background.info.subtle",
+        "color.background.success.subtle",
+        "color.background.warning.subtle",
+        "color.background.danger.subtle"
+      ]
+    },
+    "strong": {
+      "$description": "Fondos fuertes: llevan encima texto e iconos inverted.",
+      "tokens": [
+        "color.background.brand",
+        "color.background.brand.hover",
+        "color.background.danger",
+        "color.background.danger.hover",
+        "color.background.neutral.inverted"
+      ]
+    }
+  },
+  "rules": [
+    {
+      "id": "texto-sobre-claros",
+      "$description": "Todo color.text que no sea inverted, sobre todos los fondos claros.",
+      "kind": "text",
+      "min": 4.5,
+      "apply": [{ "foreground": { "prefix": "color.text", "inverted": false }, "backgrounds": "light" }]
+    },
+    {
+      "id": "texto-inverted-sobre-fuertes",
+      "$description": "Todo color.text que termine en inverted, sobre todos los fondos fuertes.",
+      "kind": "text",
+      "min": 4.5,
+      "apply": [{ "foreground": { "prefix": "color.text", "inverted": true }, "backgrounds": "strong" }]
+    },
+    {
+      "id": "bordes-sobre-claros",
+      "$description": "Bordes con los que se interactúa (campos, foco, error), sobre todos los fondos claros. color.border.neutral queda fuera porque es decorativo y no tiene mínimo; los inverted, porque van sobre fondos oscuros.",
+      "kind": "ui",
+      "min": 3,
+      "apply": [
+        {
+          "foreground": { "prefix": "color.border", "inverted": false, "exclude": ["color.border.neutral"] },
+          "backgrounds": "light"
+        }
+      ]
+    },
+    {
+      "id": "iconos",
+      "$description": "Los iconos, como el texto: todo color.icon que no sea inverted sobre los fondos claros y todo color.icon que termine en inverted sobre los fuertes.",
+      "kind": "ui",
+      "min": 3,
+      "apply": [
+        { "foreground": { "prefix": "color.icon", "inverted": false }, "backgrounds": "light" },
+        { "foreground": { "prefix": "color.icon", "inverted": true }, "backgrounds": "strong" }
+      ]
+    }
+  ]
+}
