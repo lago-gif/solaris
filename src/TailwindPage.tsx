@@ -109,7 +109,13 @@ export default function TailwindPage() {
       </header>
 
       <Section title="Color" description="Paleta por defecto: una fila por color, de 50 (más claro) a 950 (más oscuro).">
-        <div className="overflow-x-auto">
+        {/* En pantallas estrechas la tabla se desplaza en horizontal: es una región con nombre que se enfoca con Tab. */}
+        <div
+          className="overflow-x-auto focus-visible:outline-width-focus focus-visible:outline-border-focus"
+          tabIndex={0}
+          role="region"
+          aria-label="Paleta de color de Tailwind"
+        >
           <table className="border-separate border-spacing-1">
             <thead>
               <tr>
