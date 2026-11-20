@@ -1,0 +1,259 @@
+{
+  "$schema": "./contract.schema.json",
+  "name": "Input",
+  "file": "src/components/Input.tsx",
+  "import": "import { Input } from './components'",
+  "purpose": "Campo de texto de una línea con su etiqueta, una ayuda opcional, un mensaje de error y un icono opcional dentro.",
+  "neverUseFor": [
+    "Textos de varias líneas, como una nota de consulta: todavía no hay un componente para eso; pídelo al design system.",
+    "Elegir entre opciones cerradas (fechas, listas, sí/no): todavía no hay selector, casilla ni interruptor; pídelos al design system.",
+    "Mostrar un dato que no se edita: usa texto normal."
+  ],
+  "props": [
+    {
+      "name": "label",
+      "type": "string",
+      "default": null,
+      "required": true,
+      "description": "Nombre del campo, siempre visible encima. Obligatorio: es su nombre accesible.",
+      "inherited": false
+    },
+    {
+      "name": "hint",
+      "type": "string",
+      "default": null,
+      "required": false,
+      "description": "Ayuda opcional debajo del campo. El lector de pantalla la lee al entrar en el campo.",
+      "inherited": false
+    },
+    {
+      "name": "error",
+      "type": "string",
+      "default": null,
+      "required": false,
+      "description": "Mensaje de error. Si existe, el borde se pinta en rojo, aparece el mensaje con icono y el campo se anuncia como no válido. Es el texto, no un true/false.",
+      "inherited": false
+    },
+    {
+      "name": "icon",
+      "type": "Icon (de @tabler/icons-react)",
+      "default": null,
+      "required": false,
+      "description": "Icono opcional dentro del campo, a la izquierda, por ejemplo una lupa. Es decorativo: se oculta al lector de pantalla.",
+      "inherited": false
+    },
+    {
+      "name": "required",
+      "type": "boolean",
+      "default": false,
+      "required": false,
+      "description": "Campo obligatorio: añade un asterisco a la etiqueta (oculto al lector, que ya lo anuncia por el atributo).",
+      "inherited": true
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "default": false,
+      "required": false,
+      "description": "Desactiva el campo: no recibe el foco y se pinta en gris.",
+      "inherited": true
+    },
+    {
+      "name": "type",
+      "type": "string",
+      "default": "text",
+      "required": false,
+      "description": "Tipo de campo HTML: text, email, tel, search…",
+      "inherited": true
+    },
+    {
+      "name": "value",
+      "type": "string",
+      "default": null,
+      "required": false,
+      "description": "Valor del campo, si lo controla quien usa el componente (junto con onChange).",
+      "inherited": true
+    },
+    {
+      "name": "defaultValue",
+      "type": "string",
+      "default": null,
+      "required": false,
+      "description": "Valor inicial del campo, si no se controla.",
+      "inherited": true
+    },
+    {
+      "name": "onChange",
+      "type": "(event) => void",
+      "default": null,
+      "required": false,
+      "description": "Qué pasa al escribir.",
+      "inherited": true
+    },
+    {
+      "name": "placeholder",
+      "type": "string",
+      "default": null,
+      "required": false,
+      "description": "Ejemplo de lo que se escribe. Nunca sustituye a label.",
+      "inherited": true
+    },
+    {
+      "name": "id",
+      "type": "string",
+      "default": "generado",
+      "required": false,
+      "description": "Identificador del campo. Si no se pasa, se genera uno para conectar etiqueta, ayuda y error.",
+      "inherited": true
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "default": "",
+      "required": false,
+      "description": "Clases extra para colocarlo. Se aplican al contenedor (etiqueta, campo y ayuda), no a la caja de texto.",
+      "inherited": true
+    }
+  ],
+  "states": {
+    "intrinsic": [
+      {
+        "name": "focus",
+        "description": "Al entrar en el campo, su caja muestra el anillo de foco doble (focus-ring-input)."
+      }
+    ],
+    "authored": [
+      {
+        "name": "error",
+        "description": "Borde rojo, mensaje con icono debajo y aria-invalid."
+      },
+      {
+        "name": "disabled",
+        "description": "Fondo y texto en gris, cursor no permitido; no recibe el foco."
+      },
+      {
+        "name": "required",
+        "description": "Asterisco junto a la etiqueta y atributo required."
+      }
+    ]
+  },
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "optional": false,
+      "description": "Contenedor de todo el campo."
+    },
+    {
+      "part": "label",
+      "element": "label",
+      "optional": false,
+      "description": "Etiqueta visible, conectada al campo."
+    },
+    {
+      "part": "required-mark",
+      "element": "span",
+      "optional": true,
+      "description": "Asterisco de obligatorio; oculto al lector de pantalla."
+    },
+    {
+      "part": "box",
+      "element": "div",
+      "optional": false,
+      "description": "La caja del campo: borde, fondo y anillo de foco. Contiene el icono y el texto."
+    },
+    {
+      "part": "icon",
+      "element": "svg",
+      "optional": true,
+      "description": "Icono a la izquierda dentro de la caja; oculto al lector."
+    },
+    {
+      "part": "field",
+      "element": "input",
+      "optional": false,
+      "description": "El campo de texto nativo."
+    },
+    {
+      "part": "hint",
+      "element": "p",
+      "optional": true,
+      "description": "Ayuda debajo del campo, conectada con aria-describedby."
+    },
+    {
+      "part": "error",
+      "element": "p",
+      "optional": true,
+      "description": "Mensaje de error con su icono, conectado con aria-describedby."
+    }
+  ],
+  "tokens": [
+    "component.input.background",
+    "component.input.background.disabled",
+    "component.input.text",
+    "component.input.text.placeholder",
+    "component.input.text.disabled",
+    "component.input.label.text",
+    "component.input.label.required",
+    "component.input.label.font-size",
+    "component.input.label.font-weight",
+    "component.input.hint.text",
+    "component.input.hint.font-size",
+    "component.input.error.text",
+    "component.input.error.icon",
+    "component.input.icon",
+    "component.input.border",
+    "component.input.border.danger",
+    "component.input.border.focus",
+    "component.input.border.focus.inverted",
+    "component.input.border-width",
+    "component.input.border-width.focus",
+    "component.input.radius",
+    "component.input.padding-x",
+    "component.input.gap",
+    "component.input.font-size",
+    "component.input.line-height",
+    "component.input.padding-y",
+    "component.input.icon-gap",
+    "component.input.focus-offset"
+  ],
+  "a11y": {
+    "role": "textbox",
+    "keyboard": [
+      {
+        "key": "Tab",
+        "action": "Lleva el foco al campo (y Mayús + Tab, al anterior). Los desactivados se saltan."
+      },
+      {
+        "key": "Letras y números",
+        "action": "Escriben en el campo."
+      }
+    ],
+    "notes": [
+      "Nombre accesible (regla 3): label es obligatoria y está conectada al campo; el placeholder nunca la sustituye.",
+      "La ayuda y el error se leen al entrar en el campo (aria-describedby); con error, el campo se anuncia como no válido (aria-invalid).",
+      "Teclado (regla 2): es un <input> nativo; su historia Teclado pasa (Tab en orden, salta el desactivado, anillo de foco visible también con error, se puede escribir).",
+      "El color nunca va solo (regla 1): el error lleva borde rojo, icono y mensaje.",
+      "Lector de pantalla (regla 4): el icono del campo y el del error son decorativos y están ocultos.",
+      "Sus colores pasan el contraste de docs/accesibilidad.md (regla 1): todos sus tokens apuntan a semánticos que cumplen en docs/contraste.md (npm run contrast: 156 de 156 parejas).",
+      "El panel Accessibility de Storybook no marca fallos en ninguna de sus historias."
+    ]
+  },
+  "usage": {
+    "scope": "general"
+  },
+  "governance": {
+    "mayExtendLocally": [
+      "Su posición, margen y ancho en la pantalla, con className.",
+      "El texto de la etiqueta, la ayuda, el error y el placeholder.",
+      "El tipo de campo (email, tel, search…)."
+    ],
+    "mustEscalateToDS": [
+      "Tamaños o estilos nuevos del campo.",
+      "Un campo de varias líneas, un selector o cualquier otro control.",
+      "Cambiar sus tokens, su borde o su anillo de foco."
+    ]
+  },
+  "guidelines": {},
+  "content": {}
+}
