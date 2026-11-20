@@ -144,12 +144,12 @@
   --semantic-color-background-info-subtle: var(--primitive-color-brand-50);
   --semantic-color-text-neutral: var(--primitive-color-gray-900);
   --semantic-color-text-neutral-subtle: var(--primitive-color-gray-600);
-  --semantic-color-text-brand: var(--primitive-color-brand-700);
+  --semantic-color-text-brand: var(--primitive-color-brand-800);
   --semantic-color-text-brand-inverted: var(--primitive-color-gray-50);
   --semantic-color-text-danger: var(--primitive-color-red-700);
   --semantic-color-text-danger-inverted: var(--primitive-color-gray-50);
   --semantic-color-text-success: var(--primitive-color-green-800);
-  --semantic-color-text-info: var(--primitive-color-brand-700);
+  --semantic-color-text-info: var(--primitive-color-brand-800);
   --semantic-color-text-warning: var(--primitive-color-orange-800);
   --semantic-color-icon-neutral: var(--primitive-color-gray-900);
   --semantic-color-icon-neutral-subtle: var(--primitive-color-gray-600);

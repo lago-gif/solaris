@@ -113,7 +113,7 @@ El curso tiene **21 clases en 4 bloques**. Cada bloque se apoya en el anterior:
     ['4', 'Decidir tu DS con ADRs', '1. Prepara y audita', 'Fijar alcance y principios', '✅ Hecha'],
     ['5', 'Primitivos', '2. Construye la base', 'Tu marca sobre la paleta de Tailwind, en DTCG', '✅ Hecha'],
     ['6', 'Semánticos', '2. Construye la base', 'Roles con nombre, tokens de componente y componentes conectados a ellos', '✅ Hecha'],
-    ['7', 'Accesibilidad', '2. Construye la base', 'Contraste, teclado y nombres accesibles, medidos y arreglados', '⏳ Pendiente'],
+    ['7', 'Accesibilidad', '2. Construye la base', 'Contraste, teclado y nombres accesibles, medidos y arreglados', '✅ Hecha'],
     ['8', 'Contratos', '2. Construye la base', 'Crear el molde de los contratos, describir con él cada componente y ver con qué se conecta', '⏳ Pendiente'],
     ['9', 'Prop map', '2. Construye la base', 'Un solo vocabulario de props', '⏳ Pendiente'],
     ['10', 'Alinear los componentes', '2. Construye la base', 'Cero valores a mano y la librería completa', '⏳ Pendiente'],
@@ -140,7 +140,7 @@ Qué se construyó en cada clase, **qué concepto enseña** y **dónde encaja en
 **El hilo hasta ahora:**
 - **Clases 1 a 3:** se vio el problema.
 - **Clase 4:** se decidió cómo resolverlo.
-- **Clases 5 y 6:** se construyó la solución.
+- **Clases 5 a 7:** se construyó la solución: tokens y accesibilidad.
 
 ### 1 · Repo desde cero · *Prepara y audita*
 
@@ -194,6 +194,16 @@ Qué se construyó en cada clase, **qué concepto enseña** y **dónde encaja en
   - El script traduce el JSON al código sin copiar valores a mano.
   - Los componentes ya no tienen ningún valor suelto: justo lo contrario de lo que encontró la auditoría.
 - **En el mapa:** pasos 2, 3 y 4 · Definir, traducir y usar. Con esta clase la cadena queda completa.
+
+### 7 · Accesibilidad · *Construye la base*
+
+- **Qué se hizo:** `docs/accesibilidad.md` con 4 reglas (contraste, teclado, nombre accesible y lector de pantalla); el anillo de foco doble en Button e Input; la prop `headingLevel` en Card; `tokens/contrast-pairs.json` con reglas de contraste por grupos; y `npm run contrast`, que comprueba todas las parejas y escribe `docs/contraste.md`.
+- **Concepto:** **la accesibilidad se mide.** "Cumplir WCAG" son más de 80 criterios; 4 reglas con ejemplos y checklist se pueden auditar en cada PR, y el contraste lo comprueba un script.
+- **Por qué importa:**
+  - Las reglas de contraste van **por grupos**, no pareja a pareja: un token nuevo entra solo en su regla por su nombre. Así sirven aunque el sistema llegue a cientos de tokens.
+  - El script encontró 4 parejas que no pasaban (el texto de marca sobre grises suaves) y se arreglaron cambiando **un solo alias**: `color.text.brand` y `color.text.info` pasaron a brand.800. Es la cadena de tokens funcionando.
+  - El anillo de foco doble y el nivel de encabezado son ejemplos de reglas que pasan del documento al código.
+- **En el mapa:** pasos 1 y 2 · Decidir (las reglas) y Definir (los tokens que las cumplen), con una comprobación automática.
 
 ## Glosario
 
