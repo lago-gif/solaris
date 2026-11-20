@@ -9,12 +9,12 @@ Las parejas no se escriben a mano: salen de **reglas por grupos**. Un token de t
 ## Resumen
 
 - **156 parejas** comprobadas.
-- ✅ **152** pasan.
-- ❌ **4** no pasan.
+- ✅ **156** pasan.
+- ✅ **0** no pasan.
 
 | Regla | Tipo | Mínimo | Parejas | No pasan |
 |---|---|---|---|---|
-| `texto-sobre-claros` | Texto | 4,50:1 | 56 | 4 |
+| `texto-sobre-claros` | Texto | 4,50:1 | 56 | 0 |
 | `texto-inverted-sobre-fuertes` | Texto | 4,50:1 | 10 | 0 |
 | `bordes-sobre-claros` | Interfaz (iconos y bordes) | 3,00:1 | 24 | 0 |
 | `iconos` | Interfaz (iconos y bordes) | 3,00:1 | 66 | 0 |
@@ -23,15 +23,6 @@ Las parejas no se escriben a mano: salen de **reglas por grupos**. Un token de t
 
 - **light**: Fondos claros: llevan encima texto, iconos y bordes normales (los que no terminan en inverted). `color.background.neutral`, `color.background.neutral.subtle`, `color.background.neutral.strong`, `color.background.brand.subtle`, `color.background.info.subtle`, `color.background.success.subtle`, `color.background.warning.subtle`, `color.background.danger.subtle`.
 - **strong**: Fondos fuertes: llevan encima texto e iconos inverted. `color.background.brand`, `color.background.brand.hover`, `color.background.danger`, `color.background.danger.hover`, `color.background.neutral.inverted`.
-
-## ❌ Parejas que no pasan
-
-| Delante | Fondo | Contraste | Mínimo | Regla |
-|---|---|---|---|---|
-| `color.text.brand` (color.brand.700) | `color.background.neutral.subtle` (color.gray.100) | **4,49:1** | 4,50:1 | `texto-sobre-claros` |
-| `color.text.brand` (color.brand.700) | `color.background.neutral.strong` (color.gray.200) | **3,99:1** | 4,50:1 | `texto-sobre-claros` |
-| `color.text.info` (color.brand.700) | `color.background.neutral.subtle` (color.gray.100) | **4,49:1** | 4,50:1 | `texto-sobre-claros` |
-| `color.text.info` (color.brand.700) | `color.background.neutral.strong` (color.gray.200) | **3,99:1** | 4,50:1 | `texto-sobre-claros` |
 
 ## `texto-sobre-claros`
 
@@ -55,14 +46,14 @@ Todo color.text que no sea inverted, sobre todos los fondos claros. Tipo **text*
 | `color.text.neutral.subtle` · #4a5565 | `color.background.success.subtle` · #f0fdf4 | 7,22:1 | ✅ |
 | `color.text.neutral.subtle` · #4a5565 | `color.background.warning.subtle` · #fff7ed | 7,12:1 | ✅ |
 | `color.text.neutral.subtle` · #4a5565 | `color.background.danger.subtle` · #fef2f2 | 6,91:1 | ✅ |
-| `color.text.brand` · #0e7c86 | `color.background.neutral` · #f9fafb | 4,73:1 | ✅ |
-| `color.text.brand` · #0e7c86 | `color.background.neutral.subtle` · #f3f4f6 | 4,49:1 | ❌ |
-| `color.text.brand` · #0e7c86 | `color.background.neutral.strong` · #e5e7eb | 3,99:1 | ❌ |
-| `color.text.brand` · #0e7c86 | `color.background.brand.subtle` · #f4fbfc | 4,72:1 | ✅ |
-| `color.text.brand` · #0e7c86 | `color.background.info.subtle` · #f4fbfc | 4,72:1 | ✅ |
-| `color.text.brand` · #0e7c86 | `color.background.success.subtle` · #f0fdf4 | 4,72:1 | ✅ |
-| `color.text.brand` · #0e7c86 | `color.background.warning.subtle` · #fff7ed | 4,66:1 | ✅ |
-| `color.text.brand` · #0e7c86 | `color.background.danger.subtle` · #fef2f2 | 4,52:1 | ✅ |
+| `color.text.brand` · #095d65 | `color.background.neutral` · #f9fafb | 7,27:1 | ✅ |
+| `color.text.brand` · #095d65 | `color.background.neutral.subtle` · #f3f4f6 | 6,90:1 | ✅ |
+| `color.text.brand` · #095d65 | `color.background.neutral.strong` · #e5e7eb | 6,13:1 | ✅ |
+| `color.text.brand` · #095d65 | `color.background.brand.subtle` · #f4fbfc | 7,25:1 | ✅ |
+| `color.text.brand` · #095d65 | `color.background.info.subtle` · #f4fbfc | 7,25:1 | ✅ |
+| `color.text.brand` · #095d65 | `color.background.success.subtle` · #f0fdf4 | 7,25:1 | ✅ |
+| `color.text.brand` · #095d65 | `color.background.warning.subtle` · #fff7ed | 7,15:1 | ✅ |
+| `color.text.brand` · #095d65 | `color.background.danger.subtle` · #fef2f2 | 6,94:1 | ✅ |
 | `color.text.danger` · #c10007 | `color.background.neutral` · #f9fafb | 6,14:1 | ✅ |
 | `color.text.danger` · #c10007 | `color.background.neutral.subtle` · #f3f4f6 | 5,83:1 | ✅ |
 | `color.text.danger` · #c10007 | `color.background.neutral.strong` · #e5e7eb | 5,19:1 | ✅ |
@@ -79,14 +70,14 @@ Todo color.text que no sea inverted, sobre todos los fondos claros. Tipo **text*
 | `color.text.success` · #016630 | `color.background.success.subtle` · #f0fdf4 | 6,81:1 | ✅ |
 | `color.text.success` · #016630 | `color.background.warning.subtle` · #fff7ed | 6,72:1 | ✅ |
 | `color.text.success` · #016630 | `color.background.danger.subtle` · #fef2f2 | 6,52:1 | ✅ |
-| `color.text.info` · #0e7c86 | `color.background.neutral` · #f9fafb | 4,73:1 | ✅ |
-| `color.text.info` · #0e7c86 | `color.background.neutral.subtle` · #f3f4f6 | 4,49:1 | ❌ |
-| `color.text.info` · #0e7c86 | `color.background.neutral.strong` · #e5e7eb | 3,99:1 | ❌ |
-| `color.text.info` · #0e7c86 | `color.background.brand.subtle` · #f4fbfc | 4,72:1 | ✅ |
-| `color.text.info` · #0e7c86 | `color.background.info.subtle` · #f4fbfc | 4,72:1 | ✅ |
-| `color.text.info` · #0e7c86 | `color.background.success.subtle` · #f0fdf4 | 4,72:1 | ✅ |
-| `color.text.info` · #0e7c86 | `color.background.warning.subtle` · #fff7ed | 4,66:1 | ✅ |
-| `color.text.info` · #0e7c86 | `color.background.danger.subtle` · #fef2f2 | 4,52:1 | ✅ |
+| `color.text.info` · #095d65 | `color.background.neutral` · #f9fafb | 7,27:1 | ✅ |
+| `color.text.info` · #095d65 | `color.background.neutral.subtle` · #f3f4f6 | 6,90:1 | ✅ |
+| `color.text.info` · #095d65 | `color.background.neutral.strong` · #e5e7eb | 6,13:1 | ✅ |
+| `color.text.info` · #095d65 | `color.background.brand.subtle` · #f4fbfc | 7,25:1 | ✅ |
+| `color.text.info` · #095d65 | `color.background.info.subtle` · #f4fbfc | 7,25:1 | ✅ |
+| `color.text.info` · #095d65 | `color.background.success.subtle` · #f0fdf4 | 7,25:1 | ✅ |
+| `color.text.info` · #095d65 | `color.background.warning.subtle` · #fff7ed | 7,15:1 | ✅ |
+| `color.text.info` · #095d65 | `color.background.danger.subtle` · #fef2f2 | 6,94:1 | ✅ |
 | `color.text.warning` · #9f2d00 | `color.background.neutral` · #f9fafb | 7,05:1 | ✅ |
 | `color.text.warning` · #9f2d00 | `color.background.neutral.subtle` · #f3f4f6 | 6,70:1 | ✅ |
 | `color.text.warning` · #9f2d00 | `color.background.neutral.strong` · #e5e7eb | 5,95:1 | ✅ |

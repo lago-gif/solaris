@@ -31,12 +31,12 @@ Para pantallas y para definir los tokens de componente.
 | `color.background.info.subtle` | `color.brand.50` | `bg-background-info-subtle` | `--semantic-color-background-info-subtle` | Fondo suave de información, por ejemplo un badge informativo. |
 | `color.text.neutral` | `color.gray.900` | `text-text-neutral` | `--semantic-color-text-neutral` | Texto principal sobre fondos neutros. |
 | `color.text.neutral.subtle` | `color.gray.600` | `text-text-neutral-subtle` | `--semantic-color-text-neutral-subtle` | Texto secundario: ayudas, descripciones y datos de menor importancia. |
-| `color.text.brand` | `color.brand.700` | `text-text-brand` | `--semantic-color-text-brand` | Texto de marca sobre fondos neutros, como el botón ghost o un enlace. |
+| `color.text.brand` | `color.brand.800` | `text-text-brand` | `--semantic-color-text-brand` | Texto de marca sobre fondos neutros, como el botón ghost o un enlace. |
 | `color.text.brand.inverted` | `color.gray.50` | `text-text-brand-inverted` | `--semantic-color-text-brand-inverted` | Texto sobre el fondo brand, por ejemplo en el botón primary. |
 | `color.text.danger` | `color.red.700` | `text-text-danger` | `--semantic-color-text-danger` | Texto de error o peligro sobre fondos neutros, como el mensaje de error de un campo. |
 | `color.text.danger.inverted` | `color.gray.50` | `text-text-danger-inverted` | `--semantic-color-text-danger-inverted` | Texto sobre el fondo danger, por ejemplo en el botón danger. |
 | `color.text.success` | `color.green.800` | `text-text-success` | `--semantic-color-text-success` | Texto de éxito o confirmación, como "Medicación tomada". |
-| `color.text.info` | `color.brand.700` | `text-text-info` | `--semantic-color-text-info` | Texto informativo sobre fondos neutros o sobre background.info.subtle. |
+| `color.text.info` | `color.brand.800` | `text-text-info` | `--semantic-color-text-info` | Texto informativo sobre fondos neutros o sobre background.info.subtle. |
 | `color.text.warning` | `color.orange.800` | `text-text-warning` | `--semantic-color-text-warning` | Texto de aviso sobre fondos neutros o sobre background.warning.subtle. |
 | `color.icon.neutral` | `color.gray.900` | `text-icon-neutral` | `--semantic-color-icon-neutral` | Icono principal sobre fondos neutros. |
 | `color.icon.neutral.subtle` | `color.gray.600` | `text-icon-neutral-subtle` | `--semantic-color-icon-neutral-subtle` | Icono secundario: ayudas, descripciones y datos de menor importancia. |
