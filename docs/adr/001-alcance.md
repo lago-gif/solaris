@@ -13,6 +13,8 @@
 
 Esta decisión se aplica a todo el trabajo nuevo en solaris-ds. Para cambiarla, se escribe un ADR nuevo que la sustituya; este archivo no se edita para cambiar lo decidido.
 
+> **Sustituido en parte (22 de noviembre de 2026):** el [ADR-002](./002-api.md) sustituye la prop `tone` (todo es `variant`), la prop `error` de los campos (ahora `invalid` + `errorMessage`) y el principio 3. El resto de este ADR sigue vigente.
+
 > **Corrección puntual (15 de noviembre de 2026):** al crear `tokens/tokens.json`, se actualiza este ADR para nombrarlo como la fuente de los tokens, en lugar de `@theme` (`src/index.css`). Es una excepción a la regla anterior, aprobada por lago-gif, porque no cambia ninguna decisión: solo dice dónde viven los tokens. Cualquier otro cambio requiere un ADR nuevo.
 
 ## Contexto

@@ -49,8 +49,9 @@ Las decisiones del design system viven en `docs/adr/`, una por archivo (ADR: reg
 
 - **Léelas antes de proponer cualquier cambio que afecte al alcance o a los principios**: qué entra en solaris-ds, tokens, nombres de props, accesibilidad o reglas de salud.
 - **Nunca las contradigas sin escribir un ADR nuevo.** Si una tarea choca con un ADR, no la hagas por tu cuenta. Explica el conflicto y propón un ADR nuevo que sustituya al anterior.
-- **Cada ADR nuevo se apunta en esta lista en la misma PR** en la que se crea.
+- **Cada ADR nuevo se apunta en esta tabla en la misma PR** en la que se crea.
 
 | ADR | Decisión | Estado |
 |---|---|---|
-| [ADR-001 · Alcance y principios](docs/adr/001-alcance.md) | Alcance (web React, una marca, tema claro), tokens semánticos, nombres `variant`/`tone`/`size` y 5 principios comprobables | Aceptado |
+| [ADR-001 · Alcance y principios](docs/adr/001-alcance.md) | Alcance (web React, una marca, tema claro), tokens semánticos, nombres `variant`/`tone`/`size` y 5 principios comprobables | Aceptado. Sustituido en parte por ADR-002 (`tone`, `error` y principio 3) |
+| [ADR-002 · API de los componentes](docs/adr/002-api.md) | Nombres de props y variantes según `docs/prop-map.md`, el nombre que un agente usaría por defecto, atributos de HTML que no se renombran y quién decide un nombre nuevo | Aceptado |

@@ -40,7 +40,7 @@ primitive   color.brand.700  =  #0e7c86       ← cómo es
 
 **Solo los primitive tienen valores literales.** Si ves un hex o una medida en un token semantic o component, es un error.
 
-> **Pendiente de decisión:** el ADR-001 habla de **dos niveles** (primitivo y semántico) y dice que los componentes usan los semánticos. El nivel **component** de este manual se formalizará en el **ADR-002**. Hasta entonces, este manual describe la estructura a la que vamos.
+> **Pendiente de decisión:** el ADR-001 habla de **dos niveles** (primitivo y semántico) y dice que los componentes usan los semánticos. El nivel **component** de este manual se formalizará en un **ADR posterior**. Hasta entonces, este manual describe la estructura a la que vamos.
 
 ---
 
@@ -213,7 +213,7 @@ Todos los tokens de componente están en `tokens.json` (capa `component`) y se v
 |---|---|
 | **primitive** | ✅ Dentro del grupo `primitive`. La mayoría de tokens tiene la explicación en su grupo y no una `$description` propia; se añadirá token a token |
 | **semantic** | ✅ Dentro del grupo `semantic`: color, tipografía, espaciado (`space`), radio, grosor de borde y elevación. Todos son alias a primitivos y tienen su `$description` |
-| **component** | ✅ Dentro del grupo `component`: Button, Input, Card y Badge. Todos son alias a semánticos y tienen su `$description`. Su existencia como nivel está pendiente de formalizar en el ADR-002 |
+| **component** | ✅ Dentro del grupo `component`: Button, Input, Card y Badge. Todos son alias a semánticos y tienen su `$description`. Su existencia como nivel está pendiente de formalizar en un ADR posterior |
 
 ---
 
