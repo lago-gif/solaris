@@ -4,7 +4,7 @@ Los nombres que pueden usar las props de los componentes de solaris-ds y los que
 
 **Cómo se eligió cada nombre:** siempre el que un agente de IA escribiría por defecto, sin haber leído nada del sistema. Es el que más se repite en React y en HTML. Si el nombre ya es el habitual, no hay que enseñárselo a nadie.
 
-> **Propuesta.** Este mapa aún no es una decisión firmada: se convierte en norma con el ADR-002. Cambia dos cosas que hoy dice el [ADR-001](./adr/001-alcance.md): la prop `tone` desaparece (todo es `variant`) y el error de un campo pasa a ser `invalid` + `errorMessage`.
+> **Es norma.** El [ADR-002](./adr/002-api.md) lo convierte en la regla para nombrar props y variantes, y dice quién decide un nombre nuevo. Sustituye dos cosas del [ADR-001](./adr/001-alcance.md): la prop `tone` desaparece (todo es `variant`) y el error de un campo pasa a ser `invalid` + `errorMessage`.
 
 Fuente: los props de `src/components/*.tsx` y sus contratos en `contracts/*.json`, y los nombres que salieron en la [auditoría](./audit.md).
 
@@ -62,7 +62,7 @@ Reglas de los valores:
 |---|---|
 | `type` | En Button es el tipo de HTML (`button`, `submit`), no un estilo. Por eso `type` nunca puede ser el nombre del aspecto. |
 | `name`, `value`, `defaultValue` | Los usa el formulario al enviarse. |
-| `title` | Tooltip nativo de HTML. Ojo: hoy Card usa `title` para su encabezado (ver la PR). |
+| `title` | Tooltip nativo de HTML. Excepción (ADR-002): en los componentes con encabezado visible, como Card, `title` es el texto del encabezado. |
 | `id`, `htmlFor`, `className`, `style` | Los de React para HTML. |
 | `placeholder`, `required`, `readOnly`, `autoComplete`, `inputMode` | Comportamiento nativo de los campos. |
 | `disabled`, `onClick`, `onChange`, `onSubmit` | Ya están en el vocabulario precisamente porque son de HTML. |
