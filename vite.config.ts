@@ -1,3 +1,4 @@
+/// <reference types="vitest/config" />
 import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
@@ -20,5 +21,11 @@ export default defineConfig({
   preview: {
     port: 3000,
     strictPort: true,
+  },
+  // Tests de lógica (npm test): un archivo *.test.tsx junto a cada componente, en un navegador simulado (jsdom).
+  test: {
+    environment: 'jsdom',
+    include: ['src/**/*.test.{ts,tsx}'],
+    setupFiles: ['./src/test/setup.ts'],
   },
 })
