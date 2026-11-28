@@ -1,7 +1,8 @@
 import { useEffect, useId, useRef } from 'react'
 import type { DialogHTMLAttributes, KeyboardEvent, ReactNode } from 'react'
 import { IconX } from '@tabler/icons-react'
-import { Button } from './Button'
+// Directo al archivo (no a '@/components'): este archivo está dentro de ese índice y se crearía un bucle.
+import { Button } from '@/components/Button'
 
 export type DialogProps = Omit<DialogHTMLAttributes<HTMLDialogElement>, 'title' | 'open' | 'onClose' | 'children'> & {
   /** Si está abierto. Al pasar a `true` se abre como ventana modal; al pasar a `false`, se cierra. */

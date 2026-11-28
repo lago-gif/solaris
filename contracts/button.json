@@ -2,7 +2,7 @@
   "$schema": "./contract.schema.json",
   "name": "Button",
   "file": "src/components/Button.tsx",
-  "import": "import { Button } from './components'",
+  "import": "import { Button } from '@/components'",
   "purpose": "Botón para lanzar una acción en la misma pantalla: guardar, añadir, enviar, borrar. Tiene cuatro variantes según la importancia y el riesgo de la acción, tres tamaños y un icono opcional.",
   "neverUseFor": [
     "Navegar a otra página o a una dirección: usa un enlace (<a>).",

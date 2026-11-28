@@ -1,3 +1,7 @@
+// Punto de entrada de los componentes de solaris-ds.
+// Todo el proyecto importa de aquí, con el alias: import { Button, Dialog } from '@/components'.
+// Cada componente nuevo se añade a esta lista, con su tipo de props.
+
 export { Button } from './Button'
 export type { ButtonProps } from './Button'
 export { Input } from './Input'

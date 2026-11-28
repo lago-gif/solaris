@@ -2,7 +2,7 @@
   "$schema": "./contract.schema.json",
   "name": "Dialog",
   "file": "src/components/Dialog.tsx",
-  "import": "import { Dialog } from './components'",
+  "import": "import { Dialog } from '@/components'",
   "purpose": "Ventana que se abre encima de la pantalla y bloquea el resto hasta cerrarla. Sirve para confirmar antes de grabar, compartir o borrar datos de salud, o para una tarea corta que no merece otra pantalla.",
   "neverUseFor": [
     "Avisar de que algo ya ha pasado (\"Nota guardada\"): usa Toast.",

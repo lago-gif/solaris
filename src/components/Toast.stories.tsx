@@ -2,8 +2,7 @@ import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { expect, fn, userEvent } from 'storybook/test'
 import { active, expectFocusRingVisible } from '../stories/a11y/keyboard'
-import { Button } from './Button'
-import { Toast } from './Toast'
+import { Button, Toast } from '@/components'
 
 const meta = {
   title: 'Componentes/Toast',

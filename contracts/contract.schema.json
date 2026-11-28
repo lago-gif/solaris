@@ -22,7 +22,7 @@
       "pattern": "^src/components/[A-Za-z0-9/]+\\.tsx$"
     },
     "import": {
-      "description": "Cómo se importa el componente en el código. Por ejemplo, import { Button } from './components'.",
+      "description": "Cómo se importa el componente en el código. Por ejemplo, import { Button } from '@/components'.",
       "type": "string",
       "minLength": 1
     },

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { expect, userEvent } from 'storybook/test'
 import { active, expectFocusRingVisible } from '../stories/a11y/keyboard'
 import { IconMail, IconSearch } from '@tabler/icons-react'
-import { Input } from './Input'
+import { Input } from '@/components'
 
 const meta = {
   title: 'Componentes/Input',

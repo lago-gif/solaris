@@ -1,3 +1,4 @@
+import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
@@ -7,6 +8,11 @@ import tailwindcss from '@tailwindcss/vite'
 // en lugar de cambiar a otro puerto.
 export default defineConfig({
   plugins: [react(), tailwindcss()],
+  // Alias: "@/" es la carpeta src. Así se importa siempre igual: import { Button } from '@/components'.
+  // Si cambias el alias, cámbialo también en tsconfig.app.json y en .storybook/main.ts.
+  resolve: {
+    alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) },
+  },
   server: {
     port: 3000,
     strictPort: true,
