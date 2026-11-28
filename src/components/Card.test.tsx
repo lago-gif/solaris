@@ -16,7 +16,7 @@ describe('Card', () => {
     expect(screen.getByRole('heading', { level: 3, name: 'Ibuprofeno 600 mg' })).toBeInTheDocument()
   })
 
-  it.each([2, 3, 4, 5, 6] as const)('headingLevel=%i: el título es un h%i', (level) => {
+  it.each([2, 3, 4, 5, 6] as const)('headingLevel=$0: el título es un h$0', (level) => {
     render(<Card title="Ibuprofeno" headingLevel={level} />)
     expect(screen.getByRole('heading', { level, name: 'Ibuprofeno' })).toBeInTheDocument()
   })

@@ -22,6 +22,11 @@ export type DialogProps = Omit<DialogHTMLAttributes<HTMLDialogElement>, 'title' 
   footer?: ReactNode
 }
 
+/** Cierra el <dialog> nativo: su evento close es el que avisa a onClose, una sola vez. */
+function dialogClose(dialog: HTMLDialogElement | null) {
+  dialog?.close()
+}
+
 /**
  * Ventana modal sobre el `<dialog>` nativo (`showModal`): el navegador lleva el foco dentro,
  * deja el resto de la pantalla sin poder usarse, cierra con Esc y devuelve el foco al cerrar.
@@ -53,7 +58,8 @@ export function Dialog({ open, onClose, title, description, children, footer, cl
       ref={ref}
       aria-labelledby={titleId}
       aria-describedby={description ? descriptionId : undefined}
-      onClose={onClose}
+      // onClose no recibe nada (contracts/dialog.json): ni el evento del navegador ni el del clic.
+      onClose={() => onClose()}
       onKeyDown={handleKeyDown}
       className={[
         'm-auto w-dialog-width rounded-dialog-radius bg-dialog-background p-dialog-padding text-dialog-body-text shadow-dialog-elevation',
@@ -78,7 +84,7 @@ export function Dialog({ open, onClose, title, description, children, footer, cl
               </p>
             )}
           </div>
-          <Button variant="ghost" size="sm" iconStart={IconX} aria-label="Cerrar" onClick={onClose} />
+          <Button variant="ghost" size="sm" iconStart={IconX} aria-label="Cerrar" onClick={() => dialogClose(ref.current)} />
         </header>
 
         {children && <div className="text-dialog-body-font-size">{children}</div>}

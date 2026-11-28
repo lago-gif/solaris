@@ -114,9 +114,9 @@ El curso tiene **21 clases en 4 bloques**. Cada bloque se apoya en el anterior:
     ['5', 'Primitivos', '2. Construye la base', 'Tu marca sobre la paleta de Tailwind, en DTCG', '✅ Hecha'],
     ['6', 'Semánticos', '2. Construye la base', 'Roles con nombre, tokens de componente y componentes conectados a ellos', '✅ Hecha'],
     ['7', 'Accesibilidad', '2. Construye la base', 'Contraste, teclado y nombres accesibles, medidos y arreglados', '✅ Hecha'],
-    ['8', 'Contratos', '2. Construye la base', 'Crear el molde de los contratos, describir con él cada componente y ver con qué se conecta', '⏳ Pendiente'],
-    ['9', 'Prop map', '2. Construye la base', 'Un solo vocabulario de props', '⏳ Pendiente'],
-    ['10', 'Alinear los componentes', '2. Construye la base', 'Cero valores a mano y la librería completa', '⏳ Pendiente'],
+    ['8', 'Contratos', '2. Construye la base', 'Crear el molde de los contratos, describir con él cada componente y ver con qué se conecta', '✅ Hecha'],
+    ['9', 'Prop map', '2. Construye la base', 'Un solo vocabulario de props', '✅ Hecha'],
+    ['10', 'Alinear los componentes', '2. Construye la base', 'Cero valores a mano y la librería completa', '✅ Hecha'],
     ['11', 'Reglas críticas', '3. Enseña a Claude', 'AGENTS.md al día y corto, reglas comprobables, quién decide qué y cómo se mantiene', '⏳ Pendiente'],
     ['12', 'Tokens a Figma', '3. Enseña a Claude', 'Qué es una skill, y tus variables y su documentación en Figma', '⏳ Pendiente'],
     ['13', 'Componentes a Figma', '3. Enseña a Claude', 'Tus componentes en Figma con las mismas propiedades que en el código', '⏳ Pendiente'],
@@ -141,6 +141,7 @@ Qué se construyó en cada clase, **qué concepto enseña** y **dónde encaja en
 - **Clases 1 a 3:** se vio el problema.
 - **Clase 4:** se decidió cómo resolverlo.
 - **Clases 5 a 7:** se construyó la solución: tokens y accesibilidad.
+- **Clases 8 a 10:** se describió cada componente para que una persona o un agente lo use sin adivinar, y la librería quedó alineada y completa.
 
 ### 1 · Repo desde cero · *Prepara y audita*
 
@@ -210,6 +211,38 @@ Qué se construyó en cada clase, **qué concepto enseña** y **dónde encaja en
   - Cada regla tiene su comprobación: el contraste, un script; el teclado, una prueba que recorre el componente con Tab; el nombre y la lectura, el panel Accessibility. Si alguien rompe una regla, algo se pone en rojo.
   - **El mejor fallo es el que no se puede cometer:** un botón sin nombre ya no compila, igual que un campo sin `label` o un badge sin texto.
 - **En el mapa:** las cuatro reglas recorren toda la cadena: decidir (`docs/accesibilidad.md`) → definir (tokens que las cumplen) → usar (componentes) → ver y **comprobar** (Storybook y scripts).
+
+### 8 · Contratos · *Construye la base*
+
+- **Qué se hizo:** el molde `contracts/contract.schema.json` y un contrato por componente en `contracts/` (para qué sirve y para qué no, props, estados, partes, tokens, accesibilidad y qué se puede cambiar en una pantalla), y la columna **Contrato** en `docs/componentes.md`.
+- **Concepto:** **un contrato es la ficha técnica de un componente**, escrita para que la lea una máquina. Es como la descripción de un componente en Figma, pero con reglas que se pueden comprobar.
+- **Por qué importa:**
+  - Un agente que lee el contrato sabe qué props existen, qué tokens usa y para qué **no** debe usarlo, sin abrir el código.
+  - El molde obliga a que todos los contratos tengan las mismas partes: si falta una, el contrato no es válido.
+- **En el mapa:** une el paso 1 (Decidir) con el 4 (Usar): las decisiones, escritas componente a componente.
+
+### 9 · Prop map · *Construye la base*
+
+- **Qué se hizo:** `docs/prop-map.md` (los nombres de props correctos, los prohibidos y las excepciones de HTML y Figma) y el ADR-002, que lo convierte en norma y dice quién aprueba un nombre nuevo.
+- **Concepto:** **un solo vocabulario**, con el nombre que un agente usaría por defecto: `variant`, `size`, `iconStart`, `isLoading`, `invalid` + `errorMessage`…
+- **Por qué importa:**
+  - Si el nombre es el que el agente ya espera, acierta a la primera y no hay que enseñárselo.
+  - Cambiar `tone` por `variant` contradecía el ADR-001, así que se escribió un ADR nuevo en lugar de cambiarlo sin más: las decisiones se sustituyen, no se borran.
+- **En el mapa:** paso 1 · Decidir, aplicado a la API de los componentes.
+
+### 10 · Alinear los componentes · *Construye la base*
+
+- **Qué se hizo:**
+  - Cero valores a mano en `src/components`: tamaños y grosores de icono, fondos transparentes y selectores entre corchetes pasaron a tokens.
+  - Las props renombradas según el prop map, con sus contratos al día.
+  - Tres componentes nuevos hechos ya con las reglas, en orden contrato → tokens → código → historias: **Textarea**, **Dialog** (con el `<dialog>` nativo) y **Toast**.
+  - Un único punto de entrada con el alias `@/components`.
+  - Un test de lógica por componente (`npm test`): lo que hace cada prop y cada estado del contrato.
+- **Concepto:** **la librería completa y verificada.** Cada componente tiene contrato, solo usa sus tokens, habla el vocabulario común y tiene dos tipos de prueba: Storybook (teclado y accesibilidad, en un navegador real) y `npm test` (la lógica de cada prop).
+- **Por qué importa:**
+  - Crear un componente nuevo siguiendo las reglas desde el principio es más rápido que arreglarlo después: Textarea, Dialog y Toast no necesitaron auditoría.
+  - Los tests encuentran fallos que no se ven a simple vista: por ejemplo, que el botón de cerrar del Dialog avisaba dos veces.
+- **En el mapa:** pasos 4 y 5 · Usar y ver, ahora con todas las piezas comprobadas.
 
 ## Glosario
 

@@ -92,17 +92,20 @@ export const AnchoCompleto: Story = {
  * Tab recorre los botones en orden, se salta el desactivado y cada uno muestra el anillo doble.
  * Enter y Espacio activan el botón.
  */
+// Cuenta las pulsaciones sin guardar el evento del clic (Storybook no sabe guardarlo y avisa en la consola).
+const pressed = fn()
+
 export const Teclado: Story = {
-  args: { onClick: fn() },
   render: (args) => (
     <div className="flex flex-wrap gap-3">
-      <Button {...args} variant="primary">Primary</Button>
-      <Button {...args} variant="secondary">Secondary</Button>
-      <Button {...args} variant="danger" disabled>Desactivado</Button>
-      <Button {...args} variant="ghost">Ghost</Button>
+      <Button {...args} onClick={() => pressed()} variant="primary">Primary</Button>
+      <Button {...args} onClick={() => pressed()} variant="secondary">Secondary</Button>
+      <Button {...args} onClick={() => pressed()} variant="danger" disabled>Desactivado</Button>
+      <Button {...args} onClick={() => pressed()} variant="ghost">Ghost</Button>
     </div>
   ),
-  play: async ({ args, canvasElement, step }) => {
+  play: async ({ canvasElement, step }) => {
+    pressed.mockClear()
     await step('Tab recorre los botones en orden y cada uno muestra el anillo de foco', async () => {
       for (const label of ['Primary', 'Secondary', 'Ghost']) {
         await userEvent.tab()
@@ -113,7 +116,7 @@ export const Teclado: Story = {
     await step('Enter y Espacio activan el botón con el foco', async () => {
       await userEvent.keyboard('{Enter}')
       await userEvent.keyboard(' ')
-      await expect(args.onClick).toHaveBeenCalledTimes(2)
+      await expect(pressed).toHaveBeenCalledTimes(2)
     })
   },
 }

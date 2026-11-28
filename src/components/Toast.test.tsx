@@ -53,6 +53,7 @@ describe('Toast', () => {
     render(<Toast onClose={onClose}>Nota guardada</Toast>)
     await userEvent.click(screen.getByRole('button', { name: 'Cerrar aviso' }))
     expect(onClose).toHaveBeenCalledOnce()
+    expect(onClose).toHaveBeenCalledWith() // sin argumentos, como dice el contrato
   })
 
   it('className: se añade a sus clases sin quitarlas', () => {
