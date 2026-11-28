@@ -1,0 +1,163 @@
+{
+  "$schema": "./contract.schema.json",
+  "name": "Toast",
+  "file": "src/components/Toast.tsx",
+  "import": "import { Toast } from './components'",
+  "purpose": "Aviso breve de que algo ha pasado: una nota guardada, una cita confirmada, un error al enviar. Siempre lleva icono y texto, y se anuncia al lector de pantalla.",
+  "neverUseFor": [
+    "Preguntar o pedir una confirmación: usa Dialog.",
+    "Mostrar un estado que forma parte de un dato (Tomada, Fuera de rango): usa Badge.",
+    "Información que la persona necesita para seguir y no puede perder: déjala en la pantalla."
+  ],
+  "props": [
+    {
+      "name": "variant",
+      "type": "'neutral' | 'info' | 'success' | 'warning' | 'danger'",
+      "default": "neutral",
+      "required": false,
+      "description": "Significado del aviso. Elige el icono y el fondo; danger se anuncia en el momento (role alert) y el resto, cuando el lector termina lo que está leyendo (role status).",
+      "inherited": false
+    },
+    {
+      "name": "title",
+      "type": "string",
+      "default": null,
+      "required": false,
+      "description": "Primera línea en negrita, por ejemplo \"Nota guardada\". Excepción del ADR-002: es el encabezado visible.",
+      "inherited": false
+    },
+    {
+      "name": "children",
+      "type": "ReactNode",
+      "default": null,
+      "required": true,
+      "description": "Mensaje del aviso. Obligatorio: el color y el icono nunca van solos.",
+      "inherited": false
+    },
+    {
+      "name": "onClose",
+      "type": "() => void",
+      "default": null,
+      "required": false,
+      "description": "Si se pasa, aparece un botón de cerrar (IconX, \"Cerrar aviso\") que la llama.",
+      "inherited": false
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "default": null,
+      "required": false,
+      "description": "Clases extra, por ejemplo para su ancho.",
+      "inherited": true
+    }
+  ],
+  "states": {
+    "intrinsic": [],
+    "authored": [
+      {
+        "name": "variant",
+        "description": "Fondo suave e icono según el significado: info, success, warning o danger. neutral, sin significado."
+      }
+    ]
+  },
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "optional": false,
+      "description": "Caja del aviso, con role status o alert."
+    },
+    {
+      "part": "icon",
+      "element": "svg",
+      "optional": false,
+      "description": "Icono de Tabler según variant; decorativo y oculto."
+    },
+    {
+      "part": "title",
+      "element": "p",
+      "optional": true,
+      "description": "Primera línea en negrita."
+    },
+    {
+      "part": "message",
+      "element": "div",
+      "optional": false,
+      "description": "El mensaje."
+    },
+    {
+      "part": "close",
+      "element": "Button",
+      "optional": true,
+      "description": "Botón ghost de solo icono con aria-label \"Cerrar aviso\"; aparece con onClose."
+    }
+  ],
+  "tokens": [
+    "component.toast.background.neutral",
+    "component.toast.background.info",
+    "component.toast.background.success",
+    "component.toast.background.warning",
+    "component.toast.background.danger",
+    "component.toast.icon.neutral",
+    "component.toast.icon.info",
+    "component.toast.icon.success",
+    "component.toast.icon.warning",
+    "component.toast.icon.danger",
+    "component.toast.text",
+    "component.toast.border",
+    "component.toast.border-width",
+    "component.toast.radius",
+    "component.toast.padding",
+    "component.toast.gap",
+    "component.toast.text-gap",
+    "component.toast.font-size",
+    "component.toast.line-height",
+    "component.toast.title.font-weight",
+    "component.toast.icon-size",
+    "component.toast.icon-stroke",
+    "component.toast.elevation"
+  ],
+  "a11y": {
+    "role": "status (alert si variant es danger)",
+    "keyboard": [
+      {
+        "key": "Tab",
+        "action": "Llega al botón de cerrar, si lo hay."
+      },
+      {
+        "key": "Enter o Espacio",
+        "action": "Cierran el aviso."
+      }
+    ],
+    "notes": [
+      "El aviso se anuncia solo: role status espera a que el lector termine; role alert (danger) interrumpe.",
+      "Para que se anuncie, la región donde aparece el aviso debe estar ya en la pantalla antes de que llegue el aviso.",
+      "Tiempo (WCAG 2.2.1): el componente no se cierra solo. Si una pantalla lo cierra con un temporizador, que no sea un aviso danger y que dure al menos 5 segundos.",
+      "El color nunca va solo (regla 1): cada variant lleva su icono y el mensaje es obligatorio.",
+      "Teclado (regla 2): su historia Teclado pasa (Tab llega al botón de cerrar con anillo de foco y Enter cierra).",
+      "Lector de pantalla (regla 4): el icono es decorativo y está oculto; el botón de cerrar tiene nombre.",
+      "Sus colores pasan el contraste de docs/accesibilidad.md (regla 1): todos sus tokens apuntan a semánticos que cumplen en docs/contraste.md (npm run contrast).",
+      "El panel Accessibility de Storybook no marca fallos en ninguna de sus historias."
+    ]
+  },
+  "usage": {
+    "scope": "general"
+  },
+  "governance": {
+    "mayExtendLocally": [
+      "Dónde aparece en la pantalla (por ejemplo, abajo y centrado) y su ancho, con className.",
+      "El título y el mensaje.",
+      "Si se cierra solo y cuándo, siguiendo la nota de tiempo de a11y."
+    ],
+    "mustEscalateToDS": [
+      "Una región que apile varios avisos.",
+      "Botones de acción dentro del aviso (Deshacer…).",
+      "Variantes o iconos nuevos, o cambiar sus tokens."
+    ]
+  },
+  "composedOf": [
+    "Button"
+  ],
+  "guidelines": {},
+  "content": {}
+}

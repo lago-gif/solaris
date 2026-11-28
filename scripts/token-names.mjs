@@ -69,6 +69,8 @@ export function tailwindFor(path, type) {
       classes: [cls, outline],
     }
   }
+  // Ancho (no de borde): w-dialog-width.
+  if (/(^|-)width(-|$)/.test(name)) return { theme: [[`--spacing-${name}`, ref]], utility: null, classes: [`w-${name}`] }
   if (/focus-offset$/.test(name)) {
     return { theme: [], utility: [[`outline-offset-${name}`, `outline-offset: ${ref};`]], classes: [`outline-offset-${name}`] }
   }

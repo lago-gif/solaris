@@ -58,6 +58,7 @@
   --primitive-color-brand-900: oklch(0.386 0.0582 205.032);
   --primitive-color-brand-950: oklch(0.277 0.0425 205.032);
   --primitive-color-transparent: oklch(0 0 0 / 0);
+  --primitive-color-overlay: oklch(0.21 0.034 264.665 / 0.6);
   --primitive-spacing-0: 0rem;
   --primitive-spacing-100: 0.25rem;
   --primitive-spacing-150: 0.375rem;
@@ -129,6 +130,7 @@
   --primitive-breakpoint-400: 1280px;
   --primitive-breakpoint-500: 1536px;
   --primitive-stroke-width-2: 2;
+  --primitive-container-md: 28rem;
 
   /* semantic */
   --semantic-color-background-neutral: var(--primitive-color-gray-50);
@@ -145,6 +147,7 @@
   --semantic-color-background-warning-subtle: var(--primitive-color-orange-50);
   --semantic-color-background-info-subtle: var(--primitive-color-brand-50);
   --semantic-color-background-transparent: var(--primitive-color-transparent);
+  --semantic-color-background-overlay: var(--primitive-color-overlay);
   --semantic-color-text-neutral: var(--primitive-color-gray-900);
   --semantic-color-text-neutral-subtle: var(--primitive-color-gray-600);
   --semantic-color-text-brand: var(--primitive-color-brand-800);
@@ -212,6 +215,7 @@
   --semantic-icon-size-md: var(--primitive-spacing-500);
   --semantic-icon-size-lg: var(--primitive-spacing-600);
   --semantic-icon-stroke: var(--primitive-stroke-width-2);
+  --semantic-width-narrow: var(--primitive-container-md);
 
   /* component */
   --component-button-background-brand: var(--semantic-color-background-brand);
@@ -344,4 +348,73 @@
   --component-badge-font-weight: var(--semantic-typography-label-font-weight);
   --component-badge-icon-size: var(--semantic-icon-size-sm);
   --component-badge-icon-stroke: var(--semantic-icon-stroke);
+  --component-textarea-background: var(--semantic-color-background-neutral);
+  --component-textarea-background-disabled: var(--semantic-color-background-neutral-subtle);
+  --component-textarea-text: var(--semantic-color-text-neutral);
+  --component-textarea-text-placeholder: var(--semantic-color-text-neutral-subtle);
+  --component-textarea-text-disabled: var(--semantic-color-text-neutral-subtle);
+  --component-textarea-label-text: var(--semantic-color-text-neutral);
+  --component-textarea-label-required: var(--semantic-color-text-danger);
+  --component-textarea-label-font-size: var(--semantic-typography-label-font-size);
+  --component-textarea-label-font-weight: var(--semantic-typography-label-font-weight);
+  --component-textarea-hint-text: var(--semantic-color-text-neutral-subtle);
+  --component-textarea-hint-font-size: var(--semantic-typography-label-font-size);
+  --component-textarea-error-text: var(--semantic-color-text-danger);
+  --component-textarea-error-icon: var(--semantic-color-icon-danger);
+  --component-textarea-error-icon-size: var(--semantic-icon-size-sm);
+  --component-textarea-icon-stroke: var(--semantic-icon-stroke);
+  --component-textarea-border: var(--semantic-color-border-neutral-strong);
+  --component-textarea-border-danger: var(--semantic-color-border-danger);
+  --component-textarea-border-focus: var(--semantic-color-border-focus);
+  --component-textarea-border-focus-inverted: var(--semantic-color-border-focus-inverted);
+  --component-textarea-border-width: var(--semantic-border-width-default);
+  --component-textarea-border-width-focus: var(--semantic-border-width-focus);
+  --component-textarea-radius: var(--semantic-radius-md);
+  --component-textarea-padding-x: var(--semantic-space-md);
+  --component-textarea-padding-y: var(--semantic-space-sm);
+  --component-textarea-gap: var(--semantic-space-xs);
+  --component-textarea-font-size: var(--semantic-typography-body-font-size);
+  --component-textarea-line-height: var(--semantic-typography-body-line-height);
+  --component-textarea-focus-offset: var(--semantic-space-2xs);
+  --component-dialog-background: var(--semantic-color-background-neutral);
+  --component-dialog-background-overlay: var(--semantic-color-background-overlay);
+  --component-dialog-title-text: var(--semantic-color-text-neutral);
+  --component-dialog-title-font-size: var(--semantic-typography-title-font-size);
+  --component-dialog-title-line-height: var(--semantic-typography-title-line-height);
+  --component-dialog-title-font-weight: var(--semantic-typography-title-font-weight);
+  --component-dialog-description-text: var(--semantic-color-text-neutral-subtle);
+  --component-dialog-description-font-size: var(--semantic-typography-body-font-size);
+  --component-dialog-body-text: var(--semantic-color-text-neutral);
+  --component-dialog-body-font-size: var(--semantic-typography-body-font-size);
+  --component-dialog-radius: var(--semantic-radius-lg);
+  --component-dialog-padding: var(--semantic-space-xl);
+  --component-dialog-gap: var(--semantic-space-lg);
+  --component-dialog-header-gap: var(--semantic-space-md);
+  --component-dialog-header-text-gap: var(--semantic-space-xs);
+  --component-dialog-footer-gap: var(--semantic-space-sm);
+  --component-dialog-width: var(--semantic-width-narrow);
+  --component-dialog-elevation: var(--semantic-elevation-lg);
+  --component-toast-background-neutral: var(--semantic-color-background-neutral);
+  --component-toast-background-info: var(--semantic-color-background-info-subtle);
+  --component-toast-background-success: var(--semantic-color-background-success-subtle);
+  --component-toast-background-warning: var(--semantic-color-background-warning-subtle);
+  --component-toast-background-danger: var(--semantic-color-background-danger-subtle);
+  --component-toast-icon-neutral: var(--semantic-color-icon-neutral);
+  --component-toast-icon-info: var(--semantic-color-icon-info);
+  --component-toast-icon-success: var(--semantic-color-icon-success);
+  --component-toast-icon-warning: var(--semantic-color-icon-warning);
+  --component-toast-icon-danger: var(--semantic-color-icon-danger);
+  --component-toast-text: var(--semantic-color-text-neutral);
+  --component-toast-border: var(--semantic-color-border-neutral);
+  --component-toast-border-width: var(--semantic-border-width-default);
+  --component-toast-radius: var(--semantic-radius-md);
+  --component-toast-padding: var(--semantic-space-md);
+  --component-toast-gap: var(--semantic-space-sm);
+  --component-toast-text-gap: var(--semantic-space-2xs);
+  --component-toast-font-size: var(--semantic-typography-label-font-size);
+  --component-toast-line-height: var(--semantic-typography-label-line-height);
+  --component-toast-title-font-weight: var(--semantic-typography-title-font-weight);
+  --component-toast-icon-size: var(--semantic-icon-size-md);
+  --component-toast-icon-stroke: var(--semantic-icon-stroke);
+  --component-toast-elevation: var(--semantic-elevation-md);
 }
