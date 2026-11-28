@@ -25,6 +25,9 @@ Fuente: los props de `src/components/*.tsx` y sus contratos en `contracts/*.json
 | `children` | `text`, `content`, `label` (en botones y etiquetas) | Lo que va dentro: el texto de Button y de Badge, el contenido de Card. |
 | `iconStart` | `iconPosition`, `leftIcon`, `startIcon`, `iconLeft`, `icon` + `iconPosition="left"` | Icono **delante** del texto. `start` y no `left`: en idiomas que se leen de derecha a izquierda, delante está a la derecha. Recibe un icono de Tabler. |
 | `iconEnd` | `iconPosition`, `rightIcon`, `endIcon`, `iconRight`, `icon` + `iconPosition="right"` | Icono **detrás** del texto. Un componente puede llevar `iconStart` e `iconEnd` a la vez. |
+| `open` | `isOpen`, `visible`, `show`, `isVisible` | Booleana: si un Dialog está abierto. Sin `is`, porque es el atributo de HTML del `<dialog>`. |
+| `onClose` | `onDismiss`, `onHide`, `onCancel`, `onRequestClose` | Se llama al cerrarse un Dialog o un Toast, por cualquier vía. Es el evento de HTML del `<dialog>`. |
+| `footer` | `actions`, `buttons`, `bottom` | Zona inferior libre, normalmente con botones ya montados (Card y Dialog). |
 
 ## 2. Valores de `variant`
 

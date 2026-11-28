@@ -20,6 +20,7 @@
   --color-background-warning-subtle: var(--semantic-color-background-warning-subtle);
   --color-background-info-subtle: var(--semantic-color-background-info-subtle);
   --color-background-transparent: var(--semantic-color-background-transparent);
+  --color-background-overlay: var(--semantic-color-background-overlay);
   --color-text-neutral: var(--semantic-color-text-neutral);
   --color-text-neutral-subtle: var(--semantic-color-text-neutral-subtle);
   --color-text-brand: var(--semantic-color-text-brand);
@@ -83,6 +84,7 @@
   --spacing-icon-size-sm: var(--semantic-icon-size-sm);
   --spacing-icon-size-md: var(--semantic-icon-size-md);
   --spacing-icon-size-lg: var(--semantic-icon-size-lg);
+  --spacing-width-narrow: var(--semantic-width-narrow);
   --color-button-background-brand: var(--component-button-background-brand);
   --color-button-background-brand-hover: var(--component-button-background-brand-hover);
   --color-button-background-brand-subtle-hover: var(--component-button-background-brand-subtle-hover);
@@ -201,6 +203,69 @@
   --text-badge-font-size-md: var(--component-badge-font-size-md);
   --font-weight-badge-font-weight: var(--component-badge-font-weight);
   --spacing-badge-icon-size: var(--component-badge-icon-size);
+  --color-textarea-background: var(--component-textarea-background);
+  --color-textarea-background-disabled: var(--component-textarea-background-disabled);
+  --color-textarea-text: var(--component-textarea-text);
+  --color-textarea-text-placeholder: var(--component-textarea-text-placeholder);
+  --color-textarea-text-disabled: var(--component-textarea-text-disabled);
+  --color-textarea-label-text: var(--component-textarea-label-text);
+  --color-textarea-label-required: var(--component-textarea-label-required);
+  --text-textarea-label-font-size: var(--component-textarea-label-font-size);
+  --font-weight-textarea-label-font-weight: var(--component-textarea-label-font-weight);
+  --color-textarea-hint-text: var(--component-textarea-hint-text);
+  --text-textarea-hint-font-size: var(--component-textarea-hint-font-size);
+  --color-textarea-error-text: var(--component-textarea-error-text);
+  --color-textarea-error-icon: var(--component-textarea-error-icon);
+  --spacing-textarea-error-icon-size: var(--component-textarea-error-icon-size);
+  --color-textarea-border: var(--component-textarea-border);
+  --color-textarea-border-danger: var(--component-textarea-border-danger);
+  --color-textarea-border-focus: var(--component-textarea-border-focus);
+  --color-textarea-border-focus-inverted: var(--component-textarea-border-focus-inverted);
+  --radius-textarea-radius: var(--component-textarea-radius);
+  --spacing-textarea-padding-x: var(--component-textarea-padding-x);
+  --spacing-textarea-padding-y: var(--component-textarea-padding-y);
+  --spacing-textarea-gap: var(--component-textarea-gap);
+  --text-textarea-font-size: var(--component-textarea-font-size);
+  --leading-textarea-line-height: var(--component-textarea-line-height);
+  --color-dialog-background: var(--component-dialog-background);
+  --color-dialog-background-overlay: var(--component-dialog-background-overlay);
+  --color-dialog-title-text: var(--component-dialog-title-text);
+  --text-dialog-title-font-size: var(--component-dialog-title-font-size);
+  --leading-dialog-title-line-height: var(--component-dialog-title-line-height);
+  --font-weight-dialog-title-font-weight: var(--component-dialog-title-font-weight);
+  --color-dialog-description-text: var(--component-dialog-description-text);
+  --text-dialog-description-font-size: var(--component-dialog-description-font-size);
+  --color-dialog-body-text: var(--component-dialog-body-text);
+  --text-dialog-body-font-size: var(--component-dialog-body-font-size);
+  --radius-dialog-radius: var(--component-dialog-radius);
+  --spacing-dialog-padding: var(--component-dialog-padding);
+  --spacing-dialog-gap: var(--component-dialog-gap);
+  --spacing-dialog-header-gap: var(--component-dialog-header-gap);
+  --spacing-dialog-header-text-gap: var(--component-dialog-header-text-gap);
+  --spacing-dialog-footer-gap: var(--component-dialog-footer-gap);
+  --spacing-dialog-width: var(--component-dialog-width);
+  --shadow-dialog-elevation: var(--component-dialog-elevation);
+  --color-toast-background-neutral: var(--component-toast-background-neutral);
+  --color-toast-background-info: var(--component-toast-background-info);
+  --color-toast-background-success: var(--component-toast-background-success);
+  --color-toast-background-warning: var(--component-toast-background-warning);
+  --color-toast-background-danger: var(--component-toast-background-danger);
+  --color-toast-icon-neutral: var(--component-toast-icon-neutral);
+  --color-toast-icon-info: var(--component-toast-icon-info);
+  --color-toast-icon-success: var(--component-toast-icon-success);
+  --color-toast-icon-warning: var(--component-toast-icon-warning);
+  --color-toast-icon-danger: var(--component-toast-icon-danger);
+  --color-toast-text: var(--component-toast-text);
+  --color-toast-border: var(--component-toast-border);
+  --radius-toast-radius: var(--component-toast-radius);
+  --spacing-toast-padding: var(--component-toast-padding);
+  --spacing-toast-gap: var(--component-toast-gap);
+  --spacing-toast-text-gap: var(--component-toast-text-gap);
+  --text-toast-font-size: var(--component-toast-font-size);
+  --leading-toast-line-height: var(--component-toast-line-height);
+  --font-weight-toast-title-font-weight: var(--component-toast-title-font-weight);
+  --spacing-toast-icon-size: var(--component-toast-icon-size);
+  --shadow-toast-elevation: var(--component-toast-elevation);
 }
 
 /* Grosores de borde y de trazo, separación del foco y anillo de foco doble: Tailwind no tiene variables de tema para ellos. */
@@ -306,6 +371,42 @@
 @utility stroke-badge-icon-stroke {
   stroke-width: var(--component-badge-icon-stroke);
 }
+@utility stroke-textarea-icon-stroke {
+  stroke-width: var(--component-textarea-icon-stroke);
+}
+@utility border-width-textarea-border-width {
+  border-style: solid; border-width: var(--component-textarea-border-width);
+}
+@utility border-t-width-textarea-border-width {
+  border-top-style: solid; border-top-width: var(--component-textarea-border-width);
+}
+@utility outline-width-textarea-border-width {
+  outline-style: solid; outline-width: var(--component-textarea-border-width);
+}
+@utility border-width-textarea-border-width-focus {
+  border-style: solid; border-width: var(--component-textarea-border-width-focus);
+}
+@utility border-t-width-textarea-border-width-focus {
+  border-top-style: solid; border-top-width: var(--component-textarea-border-width-focus);
+}
+@utility outline-width-textarea-border-width-focus {
+  outline-style: solid; outline-width: var(--component-textarea-border-width-focus);
+}
+@utility outline-offset-textarea-focus-offset {
+  outline-offset: var(--component-textarea-focus-offset);
+}
+@utility border-width-toast-border-width {
+  border-style: solid; border-width: var(--component-toast-border-width);
+}
+@utility border-t-width-toast-border-width {
+  border-top-style: solid; border-top-width: var(--component-toast-border-width);
+}
+@utility outline-width-toast-border-width {
+  outline-style: solid; outline-width: var(--component-toast-border-width);
+}
+@utility stroke-toast-icon-stroke {
+  stroke-width: var(--component-toast-icon-stroke);
+}
 @utility focus-ring-button {
   outline: 2px solid transparent;
   box-shadow: 0 0 0 var(--component-button-focus-offset) var(--component-button-border-focus-inverted), 0 0 0 calc(var(--component-button-focus-offset) + var(--component-button-border-width-focus)) var(--component-button-border-focus), 0 0 0 calc(var(--component-button-focus-offset) + var(--component-button-border-width-focus) * 2) var(--component-button-border-focus-inverted);
@@ -313,4 +414,8 @@
 @utility focus-ring-input {
   outline: 2px solid transparent;
   box-shadow: 0 0 0 var(--component-input-focus-offset) var(--component-input-border-focus-inverted), 0 0 0 calc(var(--component-input-focus-offset) + var(--component-input-border-width-focus)) var(--component-input-border-focus), 0 0 0 calc(var(--component-input-focus-offset) + var(--component-input-border-width-focus) * 2) var(--component-input-border-focus-inverted);
+}
+@utility focus-ring-textarea {
+  outline: 2px solid transparent;
+  box-shadow: 0 0 0 var(--component-textarea-focus-offset) var(--component-textarea-border-focus-inverted), 0 0 0 calc(var(--component-textarea-focus-offset) + var(--component-textarea-border-width-focus)) var(--component-textarea-border-focus), 0 0 0 calc(var(--component-textarea-focus-offset) + var(--component-textarea-border-width-focus) * 2) var(--component-textarea-border-focus-inverted);
 }

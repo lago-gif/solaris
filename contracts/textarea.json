@@ -1,0 +1,260 @@
+{
+  "$schema": "./contract.schema.json",
+  "name": "Textarea",
+  "file": "src/components/Textarea.tsx",
+  "import": "import { Textarea } from './components'",
+  "purpose": "Campo de texto de varias líneas con su etiqueta, una ayuda opcional y un mensaje de error: notas de una consulta, cómo te sientes, una pregunta para el médico.",
+  "neverUseFor": [
+    "Datos de una sola línea (nombre, correo, número de tarjeta): usa Input.",
+    "Mostrar un texto largo que no se edita: usa texto normal o Card.",
+    "Escribir al asistente de IA con envío al pulsar Enter: pide al design system un compositor de mensajes."
+  ],
+  "props": [
+    {
+      "name": "label",
+      "type": "string",
+      "default": null,
+      "required": true,
+      "description": "Texto visible que nombra el campo. Obligatorio: es su nombre accesible.",
+      "inherited": false
+    },
+    {
+      "name": "hint",
+      "type": "string",
+      "default": null,
+      "required": false,
+      "description": "Ayuda bajo el campo, por ejemplo \"Puedes incluir síntomas y desde cuándo\".",
+      "inherited": false
+    },
+    {
+      "name": "invalid",
+      "type": "boolean",
+      "default": false,
+      "required": false,
+      "description": "El valor no es válido: borde de peligro y aria-invalid. Sin mensaje, úsalo solo si el error se explica en otro sitio.",
+      "inherited": false
+    },
+    {
+      "name": "errorMessage",
+      "type": "string",
+      "default": null,
+      "required": false,
+      "description": "Texto que explica el error, con icono, bajo el campo. Si existe, el campo se marca también como invalid.",
+      "inherited": false
+    },
+    {
+      "name": "rows",
+      "type": "number",
+      "default": 4,
+      "required": false,
+      "description": "Líneas visibles al empezar. La persona puede hacer el campo más alto arrastrando la esquina.",
+      "inherited": true
+    },
+    {
+      "name": "required",
+      "type": "boolean",
+      "default": false,
+      "required": false,
+      "description": "Campo obligatorio: añade el asterisco junto a la etiqueta y el atributo required.",
+      "inherited": true
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "default": false,
+      "required": false,
+      "description": "Desactiva el campo: no se puede escribir ni recibe el foco.",
+      "inherited": true
+    },
+    {
+      "name": "value",
+      "type": "string",
+      "default": null,
+      "required": false,
+      "description": "Texto del campo, si lo controla la pantalla.",
+      "inherited": true
+    },
+    {
+      "name": "defaultValue",
+      "type": "string",
+      "default": null,
+      "required": false,
+      "description": "Texto inicial, si no lo controla la pantalla.",
+      "inherited": true
+    },
+    {
+      "name": "onChange",
+      "type": "(event: ChangeEvent<HTMLTextAreaElement>) => void",
+      "default": null,
+      "required": false,
+      "description": "Se llama cada vez que cambia el texto.",
+      "inherited": true
+    },
+    {
+      "name": "placeholder",
+      "type": "string",
+      "default": null,
+      "required": false,
+      "description": "Ejemplo dentro del campo vacío. Nunca sustituye a label.",
+      "inherited": true
+    },
+    {
+      "name": "maxLength",
+      "type": "number",
+      "default": null,
+      "required": false,
+      "description": "Número máximo de caracteres.",
+      "inherited": true
+    },
+    {
+      "name": "id",
+      "type": "string",
+      "default": null,
+      "required": false,
+      "description": "Identificador del campo. Si no se pasa, se genera uno para conectar etiqueta, ayuda y error.",
+      "inherited": true
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "default": null,
+      "required": false,
+      "description": "Clases del contenedor, para su posición o ancho en la pantalla.",
+      "inherited": true
+    }
+  ],
+  "states": {
+    "intrinsic": [
+      {
+        "name": "focus",
+        "description": "Al entrar en el campo, muestra el anillo de foco doble (focus-ring-textarea)."
+      }
+    ],
+    "authored": [
+      {
+        "name": "invalid",
+        "description": "Borde de peligro y aria-invalid. Con errorMessage, además el mensaje con icono debajo."
+      },
+      {
+        "name": "disabled",
+        "description": "Fondo y texto en gris, cursor no permitido; no recibe el foco."
+      },
+      {
+        "name": "required",
+        "description": "Asterisco junto a la etiqueta y atributo required."
+      }
+    ]
+  },
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div",
+      "optional": false,
+      "description": "Contenedor de todo el campo."
+    },
+    {
+      "part": "label",
+      "element": "label",
+      "optional": false,
+      "description": "Etiqueta visible, conectada al campo."
+    },
+    {
+      "part": "required-mark",
+      "element": "span",
+      "optional": true,
+      "description": "Asterisco de obligatorio; oculto al lector de pantalla."
+    },
+    {
+      "part": "field",
+      "element": "textarea",
+      "optional": false,
+      "description": "El campo nativo de varias líneas, con borde, fondo y anillo de foco. Se puede estirar en vertical."
+    },
+    {
+      "part": "hint",
+      "element": "p",
+      "optional": true,
+      "description": "Ayuda debajo del campo, conectada con aria-describedby."
+    },
+    {
+      "part": "errorMessage",
+      "element": "p",
+      "optional": true,
+      "description": "Mensaje de error con su icono, conectado con aria-describedby."
+    }
+  ],
+  "tokens": [
+    "component.textarea.background",
+    "component.textarea.background.disabled",
+    "component.textarea.text",
+    "component.textarea.text.placeholder",
+    "component.textarea.text.disabled",
+    "component.textarea.label.text",
+    "component.textarea.label.required",
+    "component.textarea.label.font-size",
+    "component.textarea.label.font-weight",
+    "component.textarea.hint.text",
+    "component.textarea.hint.font-size",
+    "component.textarea.error.text",
+    "component.textarea.error.icon",
+    "component.textarea.error.icon-size",
+    "component.textarea.icon-stroke",
+    "component.textarea.border",
+    "component.textarea.border.danger",
+    "component.textarea.border.focus",
+    "component.textarea.border.focus.inverted",
+    "component.textarea.border-width",
+    "component.textarea.border-width.focus",
+    "component.textarea.radius",
+    "component.textarea.padding-x",
+    "component.textarea.padding-y",
+    "component.textarea.gap",
+    "component.textarea.font-size",
+    "component.textarea.line-height",
+    "component.textarea.focus-offset"
+  ],
+  "a11y": {
+    "role": "textbox",
+    "keyboard": [
+      {
+        "key": "Tab",
+        "action": "Lleva el foco al campo (y Mayús + Tab, al anterior). Los desactivados se saltan. Tab no escribe tabulaciones: sale del campo."
+      },
+      {
+        "key": "Letras y números",
+        "action": "Escriben en el campo."
+      },
+      {
+        "key": "Enter",
+        "action": "Empieza una línea nueva; no envía el formulario."
+      }
+    ],
+    "notes": [
+      "Nombre accesible (regla 3): label es obligatoria y está conectada al campo; el placeholder nunca la sustituye.",
+      "La ayuda y el error se leen al entrar en el campo (aria-describedby); con invalid o errorMessage, el campo se anuncia como no válido (aria-invalid).",
+      "Teclado (regla 2): es un <textarea> nativo; su historia Teclado pasa (Tab en orden, salta el desactivado, anillo de foco visible también con error, Enter hace salto de línea).",
+      "El color nunca va solo (regla 1): el error lleva borde rojo, icono y mensaje.",
+      "Texto ampliado (regla 1): la altura sale de rows y del interlineado, así que crece con el tamaño de letra; la persona puede estirarlo.",
+      "Lector de pantalla (regla 4): el icono del error es decorativo y está oculto.",
+      "Sus colores pasan el contraste de docs/accesibilidad.md (regla 1): todos sus tokens apuntan a semánticos que cumplen en docs/contraste.md (npm run contrast).",
+      "El panel Accessibility de Storybook no marca fallos en ninguna de sus historias."
+    ]
+  },
+  "usage": {
+    "scope": "general"
+  },
+  "governance": {
+    "mayExtendLocally": [
+      "Su posición, margen y ancho en la pantalla, con className.",
+      "El número de líneas visibles (rows) y el máximo de caracteres (maxLength).",
+      "El texto de la etiqueta, la ayuda, el error y el placeholder."
+    ],
+    "mustEscalateToDS": [
+      "Un contador de caracteres, un campo que crece solo o cualquier otro comportamiento nuevo.",
+      "Cambiar sus tokens, su borde o su anillo de foco.",
+      "Enviar el texto con Enter (por ejemplo, para el asistente de IA)."
+    ]
+  },
+  "guidelines": {},
+  "content": {}
+}

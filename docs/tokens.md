@@ -8,7 +8,7 @@ Cada token semantic y component tiene una **clase de Tailwind** con su nombre. S
 - **Variable CSS:** el valor real, definido en `src/styles/tokens.css`.
 - **Los estilos de texto** (`typography.*`) se usan con una sola clase que aplica tamaño, interlineado y peso a la vez: `text-heading`.
 - **Los primitivos no tienen clase:** solo los usan los semánticos (ADR-001).
-- **Anillo de foco doble:** `focus-ring-button`, `focus-ring-input`. Junta el color del foco, el anillo claro exterior y el grosor del componente (docs/accesibilidad.md, regla 2).
+- **Anillo de foco doble:** `focus-ring-button`, `focus-ring-input`, `focus-ring-textarea`. Junta el color del foco, el anillo claro exterior y el grosor del componente (docs/accesibilidad.md, regla 2).
 
 ## Semánticos
 
@@ -30,6 +30,7 @@ Para pantallas y para definir los tokens de componente.
 | `color.background.warning.subtle` | `color.orange.50` | `bg-background-warning-subtle` | `--semantic-color-background-warning-subtle` | Fondo suave de aviso, por ejemplo un badge de "Pendiente". |
 | `color.background.info.subtle` | `color.brand.50` | `bg-background-info-subtle` | `--semantic-color-background-info-subtle` | Fondo suave de información, por ejemplo un badge informativo. |
 | `color.background.transparent` | `color.transparent` | `bg-background-transparent` | `--semantic-color-background-transparent` | Sin fondo: deja ver la superficie de debajo. Para acciones de poco peso, como el botón ghost. |
+| `color.background.overlay` | `color.overlay` | `bg-background-overlay` | `--semantic-color-background-overlay` | Velo detrás de un diálogo: indica que el resto de la pantalla no se puede usar mientras está abierto. |
 | `color.text.neutral` | `color.gray.900` | `text-text-neutral` | `--semantic-color-text-neutral` | Texto principal sobre fondos neutros. |
 | `color.text.neutral.subtle` | `color.gray.600` | `text-text-neutral-subtle` | `--semantic-color-text-neutral-subtle` | Texto secundario: ayudas, descripciones y datos de menor importancia. |
 | `color.text.brand` | `color.brand.800` | `text-text-brand` | `--semantic-color-text-brand` | Texto de marca sobre fondos neutros, como el botón ghost o un enlace. |
@@ -97,6 +98,7 @@ Para pantallas y para definir los tokens de componente.
 | `icon.size.md` | `spacing.500` | `size-icon-size-md` | `--semantic-icon-size-md` | Icono normal, 20px: botones y campos. |
 | `icon.size.lg` | `spacing.600` | `size-icon-size-lg` | `--semantic-icon-size-lg` | Icono grande, 24px: cabeceras de tarjeta y botones grandes. |
 | `icon.stroke` | `stroke-width.2` | `stroke-icon-stroke` | `--semantic-icon-stroke` | Grosor del trazo de todos los iconos. |
+| `width.narrow` | `container.md` | `w-width-narrow` | `--semantic-width-narrow` | Ancho de piezas estrechas que flotan sobre la pantalla, como un diálogo (448px). En pantallas pequeñas se ajusta al espacio disponible. |
 
 ## De componente
 
@@ -234,3 +236,72 @@ Solo para su componente.
 | `badge.font-weight` | `typography.label.font-weight` | `font-badge-font-weight` | `--component-badge-font-weight` | Peso del texto del badge. |
 | `badge.icon-size` | `icon.size.sm` | `size-badge-icon-size` | `--component-badge-icon-size` | Icono del badge, en los dos tamaños. |
 | `badge.icon-stroke` | `icon.stroke` | `stroke-badge-icon-stroke` | `--component-badge-icon-stroke` | Grosor del trazo del icono del badge. |
+| `textarea.background` | `color.background.neutral` | `bg-textarea-background` | `--component-textarea-background` | Fondo del campo. |
+| `textarea.background.disabled` | `color.background.neutral.subtle` | `bg-textarea-background-disabled` | `--component-textarea-background-disabled` | Fondo del campo desactivado. |
+| `textarea.text` | `color.text.neutral` | `text-textarea-text` | `--component-textarea-text` | Texto que escribe la persona. |
+| `textarea.text.placeholder` | `color.text.neutral.subtle` | `text-textarea-text-placeholder` | `--component-textarea-text-placeholder` | Texto de ejemplo dentro del campo vacío. |
+| `textarea.text.disabled` | `color.text.neutral.subtle` | `text-textarea-text-disabled` | `--component-textarea-text-disabled` | Texto del campo desactivado. |
+| `textarea.label.text` | `color.text.neutral` | `text-textarea-label-text` | `--component-textarea-label-text` | Texto de la etiqueta encima del campo. |
+| `textarea.label.required` | `color.text.danger` | `text-textarea-label-required` | `--component-textarea-label-required` | Asterisco de campo obligatorio. |
+| `textarea.label.font-size` | `typography.label.font-size` | `text-textarea-label-font-size` | `--component-textarea-label-font-size` | Tamaño de la etiqueta. |
+| `textarea.label.font-weight` | `typography.label.font-weight` | `font-textarea-label-font-weight` | `--component-textarea-label-font-weight` | Peso de la etiqueta. |
+| `textarea.hint.text` | `color.text.neutral.subtle` | `text-textarea-hint-text` | `--component-textarea-hint-text` | Texto de ayuda debajo del campo. |
+| `textarea.hint.font-size` | `typography.label.font-size` | `text-textarea-hint-font-size` | `--component-textarea-hint-font-size` | Tamaño de la ayuda y del mensaje de error. |
+| `textarea.error.text` | `color.text.danger` | `text-textarea-error-text` | `--component-textarea-error-text` | Mensaje de error debajo del campo. |
+| `textarea.error.icon` | `color.icon.danger` | `text-textarea-error-icon` | `--component-textarea-error-icon` | Icono del mensaje de error. |
+| `textarea.error.icon-size` | `icon.size.sm` | `size-textarea-error-icon-size` | `--component-textarea-error-icon-size` | Icono del mensaje de error. |
+| `textarea.icon-stroke` | `icon.stroke` | `stroke-textarea-icon-stroke` | `--component-textarea-icon-stroke` | Grosor del trazo del icono del mensaje de error. |
+| `textarea.border` | `color.border.neutral.strong` | `border-textarea-border` | `--component-textarea-border` | Borde del campo en reposo. |
+| `textarea.border.danger` | `color.border.danger` | `border-textarea-border-danger` | `--component-textarea-border-danger` | Borde del campo con error. |
+| `textarea.border.focus` | `color.border.focus` | `outline-textarea-border-focus` | `--component-textarea-border-focus` | Contorno del campo al recibir el foco del teclado. |
+| `textarea.border.focus.inverted` | `color.border.focus.inverted` | `outline-textarea-border-focus-inverted` | `--component-textarea-border-focus-inverted` | Anillo exterior claro del foco del campo. |
+| `textarea.border-width` | `border-width.default` | `border-width-textarea-border-width` · `outline-width-textarea-border-width` | `--component-textarea-border-width` | Grosor del borde del campo. |
+| `textarea.border-width.focus` | `border-width.focus` | `border-width-textarea-border-width-focus` · `outline-width-textarea-border-width-focus` | `--component-textarea-border-width-focus` | Grosor del contorno de foco del campo. |
+| `textarea.radius` | `radius.md` | `rounded-textarea-radius` | `--component-textarea-radius` | Esquinas del campo. |
+| `textarea.padding-x` | `space.md` | `px-textarea-padding-x` | `--component-textarea-padding-x` | Relleno horizontal dentro del campo. |
+| `textarea.padding-y` | `space.sm` | `py-textarea-padding-y` | `--component-textarea-padding-y` | Relleno vertical dentro del campo. |
+| `textarea.gap` | `space.xs` | `gap-textarea-gap` | `--component-textarea-gap` | Separación entre etiqueta, campo y textos de ayuda o error. |
+| `textarea.font-size` | `typography.body.font-size` | `text-textarea-font-size` | `--component-textarea-font-size` | Tamaño del texto que se escribe. |
+| `textarea.line-height` | `typography.body.line-height` | `leading-textarea-line-height` | `--component-textarea-line-height` | Interlineado del texto que se escribe. |
+| `textarea.focus-offset` | `space.2xs` | `outline-offset-textarea-focus-offset` | `--component-textarea-focus-offset` | Separación clara entre el campo y su anillo de foco. |
+| `dialog.background` | `color.background.neutral` | `bg-dialog-background` | `--component-dialog-background` | Fondo del diálogo. |
+| `dialog.background.overlay` | `color.background.overlay` | `bg-dialog-background-overlay` | `--component-dialog-background-overlay` | Velo que oscurece la pantalla detrás del diálogo. |
+| `dialog.title.text` | `color.text.neutral` | `text-dialog-title-text` | `--component-dialog-title-text` | Texto del título. |
+| `dialog.title.font-size` | `typography.title.font-size` | `text-dialog-title-font-size` | `--component-dialog-title-font-size` | Tamaño del título. |
+| `dialog.title.line-height` | `typography.title.line-height` | `leading-dialog-title-line-height` | `--component-dialog-title-line-height` | Interlineado del título. |
+| `dialog.title.font-weight` | `typography.title.font-weight` | `font-dialog-title-font-weight` | `--component-dialog-title-font-weight` | Peso del título. |
+| `dialog.description.text` | `color.text.neutral.subtle` | `text-dialog-description-text` | `--component-dialog-description-text` | Texto de la descripción bajo el título. |
+| `dialog.description.font-size` | `typography.body.font-size` | `text-dialog-description-font-size` | `--component-dialog-description-font-size` | Tamaño de la descripción. |
+| `dialog.body.text` | `color.text.neutral` | `text-dialog-body-text` | `--component-dialog-body-text` | Texto del contenido. |
+| `dialog.body.font-size` | `typography.body.font-size` | `text-dialog-body-font-size` | `--component-dialog-body-font-size` | Tamaño del texto del contenido. |
+| `dialog.radius` | `radius.lg` | `rounded-dialog-radius` | `--component-dialog-radius` | Esquinas del diálogo. |
+| `dialog.padding` | `space.xl` | `p-dialog-padding` | `--component-dialog-padding` | Relleno interior del diálogo. |
+| `dialog.gap` | `space.lg` | `gap-dialog-gap` | `--component-dialog-gap` | Separación entre cabecera, contenido y pie. |
+| `dialog.header.gap` | `space.md` | `gap-dialog-header-gap` | `--component-dialog-header-gap` | Separación entre el título y el botón de cerrar. |
+| `dialog.header.text-gap` | `space.xs` | `gap-dialog-header-text-gap` | `--component-dialog-header-text-gap` | Separación entre el título y la descripción. |
+| `dialog.footer.gap` | `space.sm` | `gap-dialog-footer-gap` | `--component-dialog-footer-gap` | Separación entre los botones del pie. |
+| `dialog.width` | `width.narrow` | `w-dialog-width` | `--component-dialog-width` | Ancho del diálogo. En pantallas pequeñas se ajusta al espacio disponible. |
+| `dialog.elevation` | `elevation.lg` | `shadow-dialog-elevation` | `--component-dialog-elevation` | Sombra que separa el diálogo del velo. |
+| `toast.background.neutral` | `color.background.neutral` | `bg-toast-background-neutral` | `--component-toast-background-neutral` | Fondo del aviso con variant neutral (sin significado). |
+| `toast.background.info` | `color.background.info.subtle` | `bg-toast-background-info` | `--component-toast-background-info` | Fondo del aviso con variant info (información). |
+| `toast.background.success` | `color.background.success.subtle` | `bg-toast-background-success` | `--component-toast-background-success` | Fondo del aviso con variant success (éxito). |
+| `toast.background.warning` | `color.background.warning.subtle` | `bg-toast-background-warning` | `--component-toast-background-warning` | Fondo del aviso con variant warning (aviso). |
+| `toast.background.danger` | `color.background.danger.subtle` | `bg-toast-background-danger` | `--component-toast-background-danger` | Fondo del aviso con variant danger (peligro). |
+| `toast.icon.neutral` | `color.icon.neutral` | `text-toast-icon-neutral` | `--component-toast-icon-neutral` | Icono del aviso con variant neutral (sin significado). |
+| `toast.icon.info` | `color.icon.info` | `text-toast-icon-info` | `--component-toast-icon-info` | Icono del aviso con variant info (información). |
+| `toast.icon.success` | `color.icon.success` | `text-toast-icon-success` | `--component-toast-icon-success` | Icono del aviso con variant success (éxito). |
+| `toast.icon.warning` | `color.icon.warning` | `text-toast-icon-warning` | `--component-toast-icon-warning` | Icono del aviso con variant warning (aviso). |
+| `toast.icon.danger` | `color.icon.danger` | `text-toast-icon-danger` | `--component-toast-icon-danger` | Icono del aviso con variant danger (peligro). |
+| `toast.text` | `color.text.neutral` | `text-toast-text` | `--component-toast-text` | Texto del aviso, igual en todas las variantes: el significado lo dan el icono y el texto. |
+| `toast.border` | `color.border.neutral` | `border-toast-border` | `--component-toast-border` | Borde del aviso. |
+| `toast.border-width` | `border-width.default` | `border-width-toast-border-width` · `outline-width-toast-border-width` | `--component-toast-border-width` | Grosor del borde del aviso. |
+| `toast.radius` | `radius.md` | `rounded-toast-radius` | `--component-toast-radius` | Esquinas del aviso. |
+| `toast.padding` | `space.md` | `p-toast-padding` | `--component-toast-padding` | Relleno interior del aviso. |
+| `toast.gap` | `space.sm` | `gap-toast-gap` | `--component-toast-gap` | Separación entre el icono, el texto y el botón de cerrar. |
+| `toast.text-gap` | `space.2xs` | `gap-toast-text-gap` | `--component-toast-text-gap` | Separación entre el título y el mensaje. |
+| `toast.font-size` | `typography.label.font-size` | `text-toast-font-size` | `--component-toast-font-size` | Tamaño del texto del aviso. |
+| `toast.line-height` | `typography.label.line-height` | `leading-toast-line-height` | `--component-toast-line-height` | Interlineado del texto del aviso. |
+| `toast.title.font-weight` | `typography.title.font-weight` | `font-toast-title-font-weight` | `--component-toast-title-font-weight` | Peso del título del aviso. |
+| `toast.icon-size` | `icon.size.md` | `size-toast-icon-size` | `--component-toast-icon-size` | Icono del aviso. |
+| `toast.icon-stroke` | `icon.stroke` | `stroke-toast-icon-stroke` | `--component-toast-icon-stroke` | Grosor del trazo del icono del aviso. |
+| `toast.elevation` | `elevation.md` | `shadow-toast-elevation` | `--component-toast-elevation` | Sombra que separa el aviso del contenido de debajo. |

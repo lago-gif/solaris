@@ -5,7 +5,7 @@
   "import": "import { Input } from './components'",
   "purpose": "Campo de texto de una línea con su etiqueta, una ayuda opcional, un mensaje de error y un icono opcional dentro.",
   "neverUseFor": [
-    "Textos de varias líneas, como una nota de consulta: todavía no hay un componente para eso; pídelo al design system.",
+    "Textos de varias líneas, como una nota de consulta: usa Textarea.",
     "Elegir entre opciones cerradas (fechas, listas, sí/no): todavía no hay selector, casilla ni interruptor; pídelos al design system.",
     "Mostrar un dato que no se edita: usa texto normal."
   ],
@@ -262,7 +262,7 @@
     ],
     "mustEscalateToDS": [
       "Tamaños o estilos nuevos del campo.",
-      "Un campo de varias líneas, un selector o cualquier otro control.",
+      "Un selector o cualquier otro control.",
       "Cambiar sus tokens, su borde o su anillo de foco."
     ]
   },

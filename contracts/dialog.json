@@ -1,0 +1,194 @@
+{
+  "$schema": "./contract.schema.json",
+  "name": "Dialog",
+  "file": "src/components/Dialog.tsx",
+  "import": "import { Dialog } from './components'",
+  "purpose": "Ventana que se abre encima de la pantalla y bloquea el resto hasta cerrarla. Sirve para confirmar antes de grabar, compartir o borrar datos de salud, o para una tarea corta que no merece otra pantalla.",
+  "neverUseFor": [
+    "Avisar de que algo ya ha pasado (\"Nota guardada\"): usa Toast.",
+    "Contenido largo o formularios de muchos pasos: crea una pantalla.",
+    "Mensajes que la persona no tiene que decidir: no interrumpas; usa Toast o texto en la pantalla.",
+    "Abrirse solo, sin que la persona haya hecho nada."
+  ],
+  "props": [
+    {
+      "name": "open",
+      "type": "boolean",
+      "default": null,
+      "required": true,
+      "description": "Si está abierto. Al pasar a true se abre como ventana modal (showModal del <dialog> nativo); al pasar a false se cierra.",
+      "inherited": true
+    },
+    {
+      "name": "onClose",
+      "type": "() => void",
+      "default": null,
+      "required": true,
+      "description": "Se llama al cerrarse por cualquier vía: la tecla Esc, el botón de cerrar o un botón del pie. La pantalla pone open a false.",
+      "inherited": true
+    },
+    {
+      "name": "title",
+      "type": "string",
+      "default": null,
+      "required": true,
+      "description": "Título del diálogo. Obligatorio: es su nombre accesible (aria-labelledby). Excepción del ADR-002: es el encabezado visible, no el tooltip de HTML.",
+      "inherited": false
+    },
+    {
+      "name": "description",
+      "type": "string",
+      "default": null,
+      "required": false,
+      "description": "Texto corto bajo el título, conectado con aria-describedby.",
+      "inherited": false
+    },
+    {
+      "name": "children",
+      "type": "ReactNode",
+      "default": null,
+      "required": false,
+      "description": "Contenido del diálogo, por ejemplo un Textarea.",
+      "inherited": false
+    },
+    {
+      "name": "footer",
+      "type": "ReactNode",
+      "default": null,
+      "required": false,
+      "description": "Botones del pie, en orden: primero el de cancelar y después la acción.",
+      "inherited": false
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "default": null,
+      "required": false,
+      "description": "Clases extra del <dialog>.",
+      "inherited": true
+    }
+  ],
+  "states": {
+    "intrinsic": [
+      {
+        "name": "open",
+        "description": "Visible y centrado sobre un velo oscuro; el resto de la pantalla no se puede usar ni recibe el foco."
+      }
+    ],
+    "authored": [
+      {
+        "name": "open",
+        "description": "Lo decide la pantalla con la prop open."
+      }
+    ]
+  },
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "dialog",
+      "optional": false,
+      "description": "El <dialog> nativo, abierto como modal. Su velo es el ::backdrop."
+    },
+    {
+      "part": "header",
+      "element": "header",
+      "optional": false,
+      "description": "Título, descripción y botón de cerrar."
+    },
+    {
+      "part": "title",
+      "element": "h2",
+      "optional": false,
+      "description": "Título; da nombre al diálogo."
+    },
+    {
+      "part": "description",
+      "element": "p",
+      "optional": true,
+      "description": "Texto bajo el título."
+    },
+    {
+      "part": "close",
+      "element": "Button",
+      "optional": false,
+      "description": "Botón ghost de solo icono (IconX) con aria-label \"Cerrar\"."
+    },
+    {
+      "part": "body",
+      "element": "div",
+      "optional": true,
+      "description": "Contenido."
+    },
+    {
+      "part": "footer",
+      "element": "footer",
+      "optional": true,
+      "description": "Botones del pie."
+    }
+  ],
+  "tokens": [
+    "component.dialog.background",
+    "component.dialog.background.overlay",
+    "component.dialog.title.text",
+    "component.dialog.title.font-size",
+    "component.dialog.title.line-height",
+    "component.dialog.title.font-weight",
+    "component.dialog.description.text",
+    "component.dialog.description.font-size",
+    "component.dialog.body.text",
+    "component.dialog.body.font-size",
+    "component.dialog.radius",
+    "component.dialog.padding",
+    "component.dialog.gap",
+    "component.dialog.header.gap",
+    "component.dialog.header.text-gap",
+    "component.dialog.footer.gap",
+    "component.dialog.width",
+    "component.dialog.elevation"
+  ],
+  "a11y": {
+    "role": "dialog",
+    "keyboard": [
+      {
+        "key": "Esc",
+        "action": "Cierra el diálogo y llama a onClose."
+      },
+      {
+        "key": "Tab",
+        "action": "Recorre solo los elementos del diálogo; el resto de la pantalla queda inerte (no se puede alcanzar)."
+      },
+      {
+        "key": "Enter o Espacio",
+        "action": "Activan el botón con el foco."
+      }
+    ],
+    "notes": [
+      "Usa el <dialog> nativo con showModal: el navegador lleva el foco dentro al abrir, deja inerte el resto de la pantalla y devuelve el foco al botón que lo abrió al cerrar.",
+      "Nombre accesible (regla 3): title es obligatorio y está conectado con aria-labelledby; description, con aria-describedby. El botón de cerrar se llama \"Cerrar\".",
+      "Teclado (regla 2): su historia Teclado pasa (abre con el botón, el foco entra, Esc cierra y el foco vuelve).",
+      "Salud: para confirmar acciones que borran, usa un Button danger en el pie y escribe en el título qué se borra.",
+      "Lector de pantalla (regla 4): el título es un h2; el diálogo se anuncia como diálogo con su nombre al abrirse.",
+      "Sus colores pasan el contraste de docs/accesibilidad.md (regla 1): todos sus tokens apuntan a semánticos que cumplen en docs/contraste.md (npm run contrast).",
+      "El panel Accessibility de Storybook no marca fallos en ninguna de sus historias."
+    ]
+  },
+  "usage": {
+    "scope": "general"
+  },
+  "governance": {
+    "mayExtendLocally": [
+      "El título, la descripción, el contenido y los botones del pie.",
+      "Cuándo se abre y qué pasa al cerrarse."
+    ],
+    "mustEscalateToDS": [
+      "Otros tamaños o diálogos a pantalla completa.",
+      "Cerrar al pulsar fuera del diálogo.",
+      "Cambiar sus tokens, el velo o el botón de cerrar."
+    ]
+  },
+  "composedOf": [
+    "Button"
+  ],
+  "guidelines": {},
+  "content": {}
+}
