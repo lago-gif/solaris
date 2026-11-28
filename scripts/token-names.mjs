@@ -48,6 +48,13 @@ export function tailwindFor(path, type) {
   if (type === 'shadow') return { theme: [[`--shadow-${name}`, ref]], utility: null, classes: [`shadow-${name}`] }
   if (type === 'fontWeight') return { theme: [[`--font-weight-${name}`, ref]], utility: null, classes: [`font-${name}`] }
 
+  // Grosor del trazo de los iconos (número sin unidad): stroke-button-icon-stroke.
+  if (type === 'number' && /(^|-)stroke$/.test(name)) {
+    return { theme: [], utility: [[`stroke-${name}`, `stroke-width: ${ref};`]], classes: [`stroke-${name}`] }
+  }
+  // Tamaño de icono: ancho y alto a la vez, size-button-icon-size-md.
+  if (/(^|-)icon-size(-|$)/.test(name)) return { theme: [[`--spacing-${name}`, ref]], utility: null, classes: [`size-${name}`] }
+
   // dimension
   if (/(^|-)border-width(-|$)/.test(name)) {
     const cls = name.startsWith('border-width') ? name : `border-width-${name}`

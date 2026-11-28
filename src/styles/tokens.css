@@ -57,6 +57,7 @@
   --primitive-color-brand-800: oklch(0.437 0.0721 205.032);
   --primitive-color-brand-900: oklch(0.386 0.0582 205.032);
   --primitive-color-brand-950: oklch(0.277 0.0425 205.032);
+  --primitive-color-transparent: oklch(0 0 0 / 0);
   --primitive-spacing-0: 0rem;
   --primitive-spacing-100: 0.25rem;
   --primitive-spacing-150: 0.375rem;
@@ -127,6 +128,7 @@
   --primitive-breakpoint-300: 1024px;
   --primitive-breakpoint-400: 1280px;
   --primitive-breakpoint-500: 1536px;
+  --primitive-stroke-width-2: 2;
 
   /* semantic */
   --semantic-color-background-neutral: var(--primitive-color-gray-50);
@@ -142,6 +144,7 @@
   --semantic-color-background-success-subtle: var(--primitive-color-green-50);
   --semantic-color-background-warning-subtle: var(--primitive-color-orange-50);
   --semantic-color-background-info-subtle: var(--primitive-color-brand-50);
+  --semantic-color-background-transparent: var(--primitive-color-transparent);
   --semantic-color-text-neutral: var(--primitive-color-gray-900);
   --semantic-color-text-neutral-subtle: var(--primitive-color-gray-600);
   --semantic-color-text-brand: var(--primitive-color-brand-800);
@@ -205,6 +208,10 @@
   --semantic-elevation-sm: var(--primitive-shadow-offset-0) var(--primitive-shadow-offset-100) var(--primitive-shadow-blur-200) var(--primitive-shadow-offset-0) var(--primitive-shadow-color-5);
   --semantic-elevation-md: var(--primitive-shadow-offset-0) var(--primitive-shadow-offset-200) var(--primitive-shadow-blur-400) var(--primitive-shadow-offset-0) var(--primitive-shadow-color-10);
   --semantic-elevation-lg: var(--primitive-shadow-offset-0) var(--primitive-shadow-offset-800) var(--primitive-shadow-blur-1600) var(--primitive-shadow-offset-0) var(--primitive-shadow-color-10);
+  --semantic-icon-size-sm: var(--primitive-spacing-400);
+  --semantic-icon-size-md: var(--primitive-spacing-500);
+  --semantic-icon-size-lg: var(--primitive-spacing-600);
+  --semantic-icon-stroke: var(--primitive-stroke-width-2);
 
   /* component */
   --component-button-background-brand: var(--semantic-color-background-brand);
@@ -215,6 +222,7 @@
   --component-button-background-danger: var(--semantic-color-background-danger);
   --component-button-background-danger-hover: var(--semantic-color-background-danger-hover);
   --component-button-background-disabled: var(--semantic-color-background-neutral-strong);
+  --component-button-background-transparent: var(--semantic-color-background-transparent);
   --component-button-text-brand: var(--semantic-color-text-brand);
   --component-button-text-brand-inverted: var(--semantic-color-text-brand-inverted);
   --component-button-text-neutral: var(--semantic-color-text-neutral);
@@ -247,8 +255,13 @@
   --component-button-padding-y-md: var(--semantic-space-sm);
   --component-button-padding-y-lg: var(--semantic-space-md);
   --component-button-focus-offset: var(--semantic-space-2xs);
+  --component-button-icon-size-sm: var(--semantic-icon-size-sm);
+  --component-button-icon-size-md: var(--semantic-icon-size-md);
+  --component-button-icon-size-lg: var(--semantic-icon-size-lg);
+  --component-button-icon-stroke: var(--semantic-icon-stroke);
   --component-input-background: var(--semantic-color-background-neutral);
   --component-input-background-disabled: var(--semantic-color-background-neutral-subtle);
+  --component-input-background-transparent: var(--semantic-color-background-transparent);
   --component-input-text: var(--semantic-color-text-neutral);
   --component-input-text-placeholder: var(--semantic-color-text-neutral-subtle);
   --component-input-text-disabled: var(--semantic-color-text-neutral-subtle);
@@ -260,6 +273,7 @@
   --component-input-hint-font-size: var(--semantic-typography-label-font-size);
   --component-input-error-text: var(--semantic-color-text-danger);
   --component-input-error-icon: var(--semantic-color-icon-danger);
+  --component-input-error-icon-size: var(--semantic-icon-size-sm);
   --component-input-icon: var(--semantic-color-icon-neutral-subtle);
   --component-input-border: var(--semantic-color-border-neutral-strong);
   --component-input-border-danger: var(--semantic-color-border-danger);
@@ -275,6 +289,8 @@
   --component-input-padding-y: var(--semantic-space-sm);
   --component-input-icon-gap: var(--semantic-space-sm);
   --component-input-focus-offset: var(--semantic-space-2xs);
+  --component-input-icon-size: var(--semantic-icon-size-md);
+  --component-input-icon-stroke: var(--semantic-icon-stroke);
   --component-card-background: var(--semantic-color-background-neutral);
   --component-card-border: var(--semantic-color-border-neutral);
   --component-card-border-width: var(--semantic-border-width-default);
@@ -298,6 +314,8 @@
   --component-card-icon-padding: var(--semantic-space-sm);
   --component-card-footer-gap: var(--semantic-space-sm);
   --component-card-footer-padding-top: var(--semantic-space-lg);
+  --component-card-icon-size: var(--semantic-icon-size-lg);
+  --component-card-icon-stroke: var(--semantic-icon-stroke);
   --component-badge-background-neutral: var(--semantic-color-background-neutral-subtle);
   --component-badge-background-info: var(--semantic-color-background-info-subtle);
   --component-badge-background-success: var(--semantic-color-background-success-subtle);
@@ -324,4 +342,6 @@
   --component-badge-font-size-sm: var(--semantic-typography-caption-font-size);
   --component-badge-font-size-md: var(--semantic-typography-label-font-size);
   --component-badge-font-weight: var(--semantic-typography-label-font-weight);
+  --component-badge-icon-size: var(--semantic-icon-size-sm);
+  --component-badge-icon-stroke: var(--semantic-icon-stroke);
 }

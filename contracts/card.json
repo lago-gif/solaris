@@ -35,11 +35,11 @@
       "inherited": false
     },
     {
-      "name": "icon",
+      "name": "iconStart",
       "type": "Icon (de @tabler/icons-react)",
       "default": null,
       "required": false,
-      "description": "Icono opcional en un cuadrado junto al título. Es decorativo.",
+      "description": "Icono de la cabecera, delante del título, por ejemplo IconPill.",
       "inherited": false
     },
     {
@@ -85,7 +85,7 @@
       "description": "Cabecera; aparece si hay icono, título o descripción."
     },
     {
-      "part": "icon",
+      "part": "iconStart",
       "element": "span + svg",
       "optional": true,
       "description": "Cuadrado con el icono; oculto al lector."
@@ -138,7 +138,9 @@
     "component.card.icon.radius",
     "component.card.icon.padding",
     "component.card.footer.gap",
-    "component.card.footer.padding-top"
+    "component.card.footer.padding-top",
+    "component.card.icon-size",
+    "component.card.icon-stroke"
   ],
   "a11y": {
     "role": "article",

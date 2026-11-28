@@ -27,19 +27,27 @@
       "inherited": false
     },
     {
-      "name": "icon",
+      "name": "iconStart",
       "type": "Icon (de @tabler/icons-react)",
       "default": null,
       "required": false,
-      "description": "Icono opcional, por ejemplo IconPlus. Se pasa el componente, sin < />. Es decorativo: se oculta al lector de pantalla.",
+      "description": "Icono delante del texto, por ejemplo IconPlus. Mientras isLoading es true, lo sustituye el indicador de carga.",
       "inherited": false
     },
     {
-      "name": "iconPosition",
-      "type": "'left' | 'right'",
-      "default": "left",
+      "name": "iconEnd",
+      "type": "Icon (de @tabler/icons-react)",
+      "default": null,
       "required": false,
-      "description": "Lado en el que aparece el icono.",
+      "description": "Icono detrás del texto, por ejemplo IconArrowRight. Puede ir a la vez que iconStart.",
+      "inherited": false
+    },
+    {
+      "name": "isLoading",
+      "type": "boolean",
+      "default": false,
+      "required": false,
+      "description": "La acción está en marcha: muestra un indicador de carga delante del texto, ignora los clics y se anuncia como ocupado (aria-busy). Sigue recibiendo el foco.",
       "inherited": false
     },
     {
@@ -122,6 +130,10 @@
       {
         "name": "disabled",
         "description": "Fondo, texto e icono en gris (tokens disabled), cursor no permitido; no recibe el foco."
+      },
+      {
+        "name": "isLoading",
+        "description": "Indicador de carga girando delante del texto (quieto si la persona pide menos movimiento), cursor de espera, aria-busy y aria-disabled. Los clics no hacen nada, pero el foco se mantiene."
       }
     ]
   },
@@ -133,16 +145,22 @@
       "description": "El botón nativo. Recibe el foco y responde a Enter y Espacio sin código extra."
     },
     {
-      "part": "icon",
+      "part": "iconStart",
       "element": "svg",
       "optional": true,
-      "description": "Icono de Tabler a la izquierda o a la derecha del texto, según iconPosition. Oculto al lector de pantalla."
+      "description": "Icono de Tabler delante del texto, o el indicador de carga si isLoading. Oculto al lector de pantalla."
     },
     {
       "part": "label",
       "element": "texto (children)",
       "optional": true,
       "description": "El texto del botón. Si falta, el nombre lo da aria-label."
+    },
+    {
+      "part": "iconEnd",
+      "element": "svg",
+      "optional": true,
+      "description": "Icono de Tabler detrás del texto. Oculto al lector de pantalla."
     }
   ],
   "tokens": [
@@ -154,6 +172,7 @@
     "component.button.background.danger",
     "component.button.background.danger.hover",
     "component.button.background.disabled",
+    "component.button.background.transparent",
     "component.button.text.brand",
     "component.button.text.brand.inverted",
     "component.button.text.neutral",
@@ -185,7 +204,11 @@
     "component.button.padding-y.sm",
     "component.button.padding-y.md",
     "component.button.padding-y.lg",
-    "component.button.focus-offset"
+    "component.button.focus-offset",
+    "component.button.icon-size.sm",
+    "component.button.icon-size.md",
+    "component.button.icon-size.lg",
+    "component.button.icon-stroke"
   ],
   "a11y": {
     "role": "button",

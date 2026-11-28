@@ -11,9 +11,9 @@ const meta = {
     docs: { description: { component: 'Etiqueta de estado con esquinas ligeramente redondeadas (`badge.radius` → `radius.sm`, 4 px). Siempre lleva texto: el color nunca va solo.' } },
   },
   component: Badge,
-  args: { children: 'Tomada', tone: 'success' },
+  args: { children: 'Tomada', variant: 'success' },
   argTypes: {
-    icon: {
+    iconStart: {
       options: ['Ninguno', 'IconCheck', 'IconAlertTriangle', 'IconInfoCircle', 'IconX'],
       mapping: { Ninguno: undefined, IconCheck, IconAlertTriangle, IconInfoCircle, IconX },
       control: { type: 'select' },
@@ -26,14 +26,14 @@ type Story = StoryObj<typeof meta>
 
 export const PorDefecto: Story = {}
 
-export const Tonos: Story = {
+export const Variantes: Story = {
   render: (args) => (
     <div className="flex flex-wrap gap-2">
-      <Badge {...args} tone="neutral">Neutral</Badge>
-      <Badge {...args} tone="info">Info</Badge>
-      <Badge {...args} tone="success">Tomada</Badge>
-      <Badge {...args} tone="warning">Pendiente</Badge>
-      <Badge {...args} tone="danger">Fuera de rango</Badge>
+      <Badge {...args} variant="neutral">Neutral</Badge>
+      <Badge {...args} variant="info">Info</Badge>
+      <Badge {...args} variant="success">Tomada</Badge>
+      <Badge {...args} variant="warning">Pendiente</Badge>
+      <Badge {...args} variant="danger">Fuera de rango</Badge>
     </div>
   ),
 }
@@ -41,10 +41,10 @@ export const Tonos: Story = {
 export const ConIcono: Story = {
   render: (args) => (
     <div className="flex flex-wrap gap-2">
-      <Badge {...args} tone="info" icon={IconInfoCircle}>Info</Badge>
-      <Badge {...args} tone="success" icon={IconCheck}>Tomada</Badge>
-      <Badge {...args} tone="warning" icon={IconAlertTriangle}>Pendiente</Badge>
-      <Badge {...args} tone="danger" icon={IconX}>Fuera de rango</Badge>
+      <Badge {...args} variant="info" iconStart={IconInfoCircle}>Info</Badge>
+      <Badge {...args} variant="success" iconStart={IconCheck}>Tomada</Badge>
+      <Badge {...args} variant="warning" iconStart={IconAlertTriangle}>Pendiente</Badge>
+      <Badge {...args} variant="danger" iconStart={IconX}>Fuera de rango</Badge>
     </div>
   ),
 }
@@ -66,8 +66,8 @@ export const Teclado: Story = {
   render: (args) => (
     <div className="flex flex-wrap items-center gap-space-sm">
       <Button size="sm" variant="secondary">Antes</Button>
-      <Badge {...args} tone="success" icon={IconCheck}>Tomada</Badge>
-      <Badge {...args} tone="danger" icon={IconX}>Fuera de rango</Badge>
+      <Badge {...args} variant="success" iconStart={IconCheck}>Tomada</Badge>
+      <Badge {...args} variant="danger" iconStart={IconX}>Fuera de rango</Badge>
       <Button size="sm" variant="secondary">Después</Button>
     </div>
   ),

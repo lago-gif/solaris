@@ -75,7 +75,7 @@ Las dos primeras piezas son obligatorias, y casi siempre también la tercera. **
 | **modifier** | ¿Qué intensidad tiene? | `subtle` (más suave), `strong` (más intenso), `inverted` (para usar sobre un fondo de color u oscuro, como `brand` o `danger`). Sin modifier = intensidad normal |
 | **state** | ¿En qué estado de interacción? | `hover` (pasar el ratón), `active` (pulsando), `focus` (seleccionado con teclado), `disabled` (desactivado). Sin state = reposo |
 
-Los roles `info`, `success`, `warning` y `danger` son los mismos valores que la prop `tone` de los componentes (ADR-001). Así, `tone="danger"` usará los tokens `…danger…`.
+Los roles `info`, `success`, `warning` y `danger` son los mismos valores que la prop `variant` de los componentes de estado (ADR-002). Así, `variant="danger"` usa los tokens `…danger…`.
 
 **Ejemplos:**
 
