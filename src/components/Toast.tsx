@@ -1,7 +1,8 @@
 import type { HTMLAttributes, ReactNode } from 'react'
 import { IconAlertCircle, IconAlertTriangle, IconBell, IconCircleCheck, IconInfoCircle, IconX } from '@tabler/icons-react'
 import type { Icon } from '@tabler/icons-react'
-import { Button } from './Button'
+// Directo al archivo (no a '@/components'): este archivo está dentro de ese índice y se crearía un bucle.
+import { Button } from '@/components/Button'
 
 type ToastVariant = 'neutral' | 'info' | 'success' | 'warning' | 'danger'
 

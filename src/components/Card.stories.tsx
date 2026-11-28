@@ -2,9 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { expect, userEvent } from 'storybook/test'
 import { active, expectFocusRingVisible } from '../stories/a11y/keyboard'
 import { IconAlertTriangle, IconCalendarEvent, IconCheck, IconPill } from '@tabler/icons-react'
-import { Badge } from './Badge'
-import { Button } from './Button'
-import { Card } from './Card'
+import { Badge, Button, Card } from '@/components'
 
 const meta = {
   title: 'Componentes/Card',

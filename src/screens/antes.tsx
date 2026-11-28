@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import type { FormEvent } from 'react'
 import { IconInfoCircle, IconMessageChatbot, IconSend, IconSparkles, IconTrash, IconUser } from '@tabler/icons-react'
-import { Badge, Button, Card, Input } from '../components'
+import { Badge, Button, Card, Input } from '@/components'
 
 /** Nombre que aparece en el menú. */
 export const title = 'Asistente (antes)'

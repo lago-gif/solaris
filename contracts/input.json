@@ -2,7 +2,7 @@
   "$schema": "./contract.schema.json",
   "name": "Input",
   "file": "src/components/Input.tsx",
-  "import": "import { Input } from './components'",
+  "import": "import { Input } from '@/components'",
   "purpose": "Campo de texto de una línea con su etiqueta, una ayuda opcional, un mensaje de error y un icono opcional dentro.",
   "neverUseFor": [
     "Textos de varias líneas, como una nota de consulta: usa Textarea.",

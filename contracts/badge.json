@@ -2,7 +2,7 @@
   "$schema": "./contract.schema.json",
   "name": "Badge",
   "file": "src/components/Badge.tsx",
-  "import": "import { Badge } from './components'",
+  "import": "import { Badge } from '@/components'",
   "purpose": "Etiqueta corta que comunica un estado o una categoría (Tomada, Pendiente, Fuera de rango) con color, icono opcional y texto.",
   "neverUseFor": [
     "Acciones que se pulsan: usa Button.",

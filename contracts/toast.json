@@ -2,7 +2,7 @@
   "$schema": "./contract.schema.json",
   "name": "Toast",
   "file": "src/components/Toast.tsx",
-  "import": "import { Toast } from './components'",
+  "import": "import { Toast } from '@/components'",
   "purpose": "Aviso breve de que algo ha pasado: una nota guardada, una cita confirmada, un error al enviar. Siempre lleva icono y texto, y se anuncia al lector de pantalla.",
   "neverUseFor": [
     "Preguntar o pedir una confirmación: usa Dialog.",

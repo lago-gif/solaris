@@ -3,9 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { expect, userEvent, within } from 'storybook/test'
 import { IconShare, IconTrash } from '@tabler/icons-react'
 import { active, expectFocusRingVisible } from '../stories/a11y/keyboard'
-import { Button } from './Button'
-import { Dialog } from './Dialog'
-import { Textarea } from './Textarea'
+import { Button, Dialog, Textarea } from '@/components'
 
 const meta = {
   title: 'Componentes/Dialog',

@@ -2,7 +2,7 @@
   "$schema": "./contract.schema.json",
   "name": "Card",
   "file": "src/components/Card.tsx",
-  "import": "import { Card } from './components'",
+  "import": "import { Card } from '@/components'",
   "purpose": "Tarjeta que agrupa la información de un elemento (un medicamento, una cita, un análisis) con cabecera opcional (icono, título y descripción), contenido y pie para acciones.",
   "neverUseFor": [
     "Hacer clic en toda la tarjeta: no es interactiva; pon un Button en su pie.",
