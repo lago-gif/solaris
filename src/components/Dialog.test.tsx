@@ -53,11 +53,13 @@ describe('Dialog', () => {
     expect(dialog().querySelector('footer')).toBeNull()
   })
 
-  it('botón de cerrar: siempre está y llama a onClose', async () => {
+  it('botón de cerrar: siempre está, cierra el diálogo y llama a onClose una vez, sin argumentos', async () => {
     const onClose = vi.fn()
     render(<Dialog open onClose={onClose} title="¿Borrar?" />)
     await userEvent.click(screen.getByRole('button', { name: 'Cerrar' }))
-    expect(onClose).toHaveBeenCalled()
+    expect(dialog()).not.toHaveAttribute('open')
+    expect(onClose).toHaveBeenCalledOnce()
+    expect(onClose).toHaveBeenCalledWith()
   })
 
   it('onClose: se llama cuando el diálogo se cierra por cualquier vía', () => {
@@ -65,6 +67,7 @@ describe('Dialog', () => {
     render(<Dialog open onClose={onClose} title="¿Borrar?" />)
     dialog().close()
     expect(onClose).toHaveBeenCalledOnce()
+    expect(onClose).toHaveBeenCalledWith()
   })
 
   it('open pasa de true a false: el diálogo se cierra', () => {

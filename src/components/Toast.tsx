@@ -66,7 +66,7 @@ export function Toast({ variant = 'neutral', title, children, onClose, className
         {title && <p className="font-toast-title-font-weight">{title}</p>}
         <div>{children}</div>
       </div>
-      {onClose && <Button variant="ghost" size="sm" iconStart={IconX} aria-label="Cerrar aviso" onClick={onClose} />}
+      {onClose && <Button variant="ghost" size="sm" iconStart={IconX} aria-label="Cerrar aviso" onClick={() => onClose()} />}
     </div>
   )
 }
