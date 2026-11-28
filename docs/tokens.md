@@ -29,6 +29,7 @@ Para pantallas y para definir los tokens de componente.
 | `color.background.success.subtle` | `color.green.50` | `bg-background-success-subtle` | `--semantic-color-background-success-subtle` | Fondo suave de éxito, por ejemplo un badge de "Tomada". |
 | `color.background.warning.subtle` | `color.orange.50` | `bg-background-warning-subtle` | `--semantic-color-background-warning-subtle` | Fondo suave de aviso, por ejemplo un badge de "Pendiente". |
 | `color.background.info.subtle` | `color.brand.50` | `bg-background-info-subtle` | `--semantic-color-background-info-subtle` | Fondo suave de información, por ejemplo un badge informativo. |
+| `color.background.transparent` | `color.transparent` | `bg-background-transparent` | `--semantic-color-background-transparent` | Sin fondo: deja ver la superficie de debajo. Para acciones de poco peso, como el botón ghost. |
 | `color.text.neutral` | `color.gray.900` | `text-text-neutral` | `--semantic-color-text-neutral` | Texto principal sobre fondos neutros. |
 | `color.text.neutral.subtle` | `color.gray.600` | `text-text-neutral-subtle` | `--semantic-color-text-neutral-subtle` | Texto secundario: ayudas, descripciones y datos de menor importancia. |
 | `color.text.brand` | `color.brand.800` | `text-text-brand` | `--semantic-color-text-brand` | Texto de marca sobre fondos neutros, como el botón ghost o un enlace. |
@@ -92,6 +93,10 @@ Para pantallas y para definir los tokens de componente.
 | `elevation.sm` |  | `shadow-elevation-sm` | `--semantic-elevation-sm` | Elevación baja: tarjetas y elementos apenas separados del fondo. |
 | `elevation.md` |  | `shadow-elevation-md` | `--semantic-elevation-md` | Elevación media: menús desplegables y elementos que flotan sobre el contenido. |
 | `elevation.lg` |  | `shadow-elevation-lg` | `--semantic-elevation-lg` | Elevación alta: ventanas modales y paneles. |
+| `icon.size.sm` | `spacing.400` | `size-icon-size-sm` | `--semantic-icon-size-sm` | Icono pequeño, 16px: junto a texto pequeño, como un badge o un mensaje de error. |
+| `icon.size.md` | `spacing.500` | `size-icon-size-md` | `--semantic-icon-size-md` | Icono normal, 20px: botones y campos. |
+| `icon.size.lg` | `spacing.600` | `size-icon-size-lg` | `--semantic-icon-size-lg` | Icono grande, 24px: cabeceras de tarjeta y botones grandes. |
+| `icon.stroke` | `stroke-width.2` | `stroke-icon-stroke` | `--semantic-icon-stroke` | Grosor del trazo de todos los iconos. |
 
 ## De componente
 
@@ -107,6 +112,7 @@ Solo para su componente.
 | `button.background.danger` | `color.background.danger` | `bg-button-background-danger` | `--component-button-background-danger` | Fondo del botón danger. |
 | `button.background.danger.hover` | `color.background.danger.hover` | `bg-button-background-danger-hover` | `--component-button-background-danger-hover` | Fondo del botón danger al pasar el ratón. |
 | `button.background.disabled` | `color.background.neutral.strong` | `bg-button-background-disabled` | `--component-button-background-disabled` | Fondo de cualquier botón desactivado. |
+| `button.background.transparent` | `color.background.transparent` | `bg-button-background-transparent` | `--component-button-background-transparent` | Fondo del botón ghost en reposo. |
 | `button.text.brand` | `color.text.brand` | `text-button-text-brand` | `--component-button-text-brand` | Texto del botón ghost. |
 | `button.text.brand.inverted` | `color.text.brand.inverted` | `text-button-text-brand-inverted` | `--component-button-text-brand-inverted` | Texto del botón primary. |
 | `button.text.neutral` | `color.text.neutral` | `text-button-text-neutral` | `--component-button-text-neutral` | Texto del botón secondary. |
@@ -139,8 +145,13 @@ Solo para su componente.
 | `button.padding-y.md` | `space.sm` | `py-button-padding-y-md` | `--component-button-padding-y-md` | Relleno vertical del botón mediano. Con su interlineado, da una altura de 40px. |
 | `button.padding-y.lg` | `space.md` | `py-button-padding-y-lg` | `--component-button-padding-y-lg` | Relleno vertical del botón grande. Con su interlineado, da una altura de 52px. |
 | `button.focus-offset` | `space.2xs` | `outline-offset-button-focus-offset` | `--component-button-focus-offset` | Separación entre el botón y su contorno de foco. |
+| `button.icon-size.sm` | `icon.size.sm` | `size-button-icon-size-sm` | `--component-button-icon-size-sm` | Icono del botón sm. |
+| `button.icon-size.md` | `icon.size.md` | `size-button-icon-size-md` | `--component-button-icon-size-md` | Icono del botón md. |
+| `button.icon-size.lg` | `icon.size.lg` | `size-button-icon-size-lg` | `--component-button-icon-size-lg` | Icono del botón lg. |
+| `button.icon-stroke` | `icon.stroke` | `stroke-button-icon-stroke` | `--component-button-icon-stroke` | Grosor del trazo del icono del botón. |
 | `input.background` | `color.background.neutral` | `bg-input-background` | `--component-input-background` | Fondo del campo. |
 | `input.background.disabled` | `color.background.neutral.subtle` | `bg-input-background-disabled` | `--component-input-background-disabled` | Fondo del campo desactivado. |
+| `input.background.transparent` | `color.background.transparent` | `bg-input-background-transparent` | `--component-input-background-transparent` | Fondo del texto dentro de la caja: transparente, para que se vea el fondo de la caja. |
 | `input.text` | `color.text.neutral` | `text-input-text` | `--component-input-text` | Texto que escribe la persona. |
 | `input.text.placeholder` | `color.text.neutral.subtle` | `text-input-text-placeholder` | `--component-input-text-placeholder` | Texto de ejemplo dentro del campo vacío. |
 | `input.text.disabled` | `color.text.neutral.subtle` | `text-input-text-disabled` | `--component-input-text-disabled` | Texto del campo desactivado. |
@@ -152,6 +163,7 @@ Solo para su componente.
 | `input.hint.font-size` | `typography.label.font-size` | `text-input-hint-font-size` | `--component-input-hint-font-size` | Tamaño de la ayuda y del mensaje de error. |
 | `input.error.text` | `color.text.danger` | `text-input-error-text` | `--component-input-error-text` | Mensaje de error debajo del campo. |
 | `input.error.icon` | `color.icon.danger` | `text-input-error-icon` | `--component-input-error-icon` | Icono del mensaje de error. |
+| `input.error.icon-size` | `icon.size.sm` | `size-input-error-icon-size` | `--component-input-error-icon-size` | Icono del mensaje de error. |
 | `input.icon` | `color.icon.neutral.subtle` | `text-input-icon` | `--component-input-icon` | Icono dentro del campo, por ejemplo una lupa. |
 | `input.border` | `color.border.neutral.strong` | `border-input-border` | `--component-input-border` | Borde del campo en reposo. |
 | `input.border.danger` | `color.border.danger` | `border-input-border-danger` | `--component-input-border-danger` | Borde del campo con error. |
@@ -167,6 +179,8 @@ Solo para su componente.
 | `input.padding-y` | `space.sm` | `py-input-padding-y` | `--component-input-padding-y` | Relleno vertical dentro del campo. Con el interlineado y el borde, da una altura de 42px. |
 | `input.icon-gap` | `space.sm` | `gap-input-icon-gap` | `--component-input-icon-gap` | Separación entre el icono del campo y el texto. |
 | `input.focus-offset` | `space.2xs` | `outline-offset-input-focus-offset` | `--component-input-focus-offset` | Separación entre la caja del campo y su anillo de foco. Igual que en el botón, para que todos los componentes tengan el mismo anillo. |
+| `input.icon-size` | `icon.size.md` | `size-input-icon-size` | `--component-input-icon-size` | Icono dentro del campo. |
+| `input.icon-stroke` | `icon.stroke` | `stroke-input-icon-stroke` | `--component-input-icon-stroke` | Grosor del trazo de los iconos del campo. |
 | `card.background` | `color.background.neutral` | `bg-card-background` | `--component-card-background` | Fondo de la tarjeta. |
 | `card.border` | `color.border.neutral` | `border-card-border` | `--component-card-border` | Borde de la tarjeta y línea que separa el pie. |
 | `card.border-width` | `border-width.default` | `border-width-card-border-width` · `outline-width-card-border-width` | `--component-card-border-width` | Grosor del borde de la tarjeta. |
@@ -190,21 +204,23 @@ Solo para su componente.
 | `card.icon.padding` | `space.sm` | `p-card-icon-padding` | `--component-card-icon-padding` | Relleno alrededor del icono de la cabecera. Con el icono de 24px, forma un cuadrado de 40px. |
 | `card.footer.gap` | `space.sm` | `gap-card-footer-gap` | `--component-card-footer-gap` | Separación entre los botones del pie. |
 | `card.footer.padding-top` | `space.lg` | `pt-card-footer-padding-top` | `--component-card-footer-padding-top` | Espacio entre la línea del pie y su contenido. |
-| `badge.background.neutral` | `color.background.neutral.subtle` | `bg-badge-background-neutral` | `--component-badge-background-neutral` | Fondo del badge con tone neutral (sin significado). |
-| `badge.background.info` | `color.background.info.subtle` | `bg-badge-background-info` | `--component-badge-background-info` | Fondo del badge con tone info (información). |
-| `badge.background.success` | `color.background.success.subtle` | `bg-badge-background-success` | `--component-badge-background-success` | Fondo del badge con tone success (éxito). |
-| `badge.background.warning` | `color.background.warning.subtle` | `bg-badge-background-warning` | `--component-badge-background-warning` | Fondo del badge con tone warning (aviso). |
-| `badge.background.danger` | `color.background.danger.subtle` | `bg-badge-background-danger` | `--component-badge-background-danger` | Fondo del badge con tone danger (peligro). |
-| `badge.text.neutral` | `color.text.neutral` | `text-badge-text-neutral` | `--component-badge-text-neutral` | Texto del badge con tone neutral (sin significado). |
-| `badge.text.info` | `color.text.info` | `text-badge-text-info` | `--component-badge-text-info` | Texto del badge con tone info (información). |
-| `badge.text.success` | `color.text.success` | `text-badge-text-success` | `--component-badge-text-success` | Texto del badge con tone success (éxito). |
-| `badge.text.warning` | `color.text.warning` | `text-badge-text-warning` | `--component-badge-text-warning` | Texto del badge con tone warning (aviso). |
-| `badge.text.danger` | `color.text.danger` | `text-badge-text-danger` | `--component-badge-text-danger` | Texto del badge con tone danger (peligro). |
-| `badge.icon.neutral` | `color.icon.neutral` | `text-badge-icon-neutral` | `--component-badge-icon-neutral` | Icono del badge con tone neutral (sin significado). |
-| `badge.icon.info` | `color.icon.info` | `text-badge-icon-info` | `--component-badge-icon-info` | Icono del badge con tone info (información). |
-| `badge.icon.success` | `color.icon.success` | `text-badge-icon-success` | `--component-badge-icon-success` | Icono del badge con tone success (éxito). |
-| `badge.icon.warning` | `color.icon.warning` | `text-badge-icon-warning` | `--component-badge-icon-warning` | Icono del badge con tone warning (aviso). |
-| `badge.icon.danger` | `color.icon.danger` | `text-badge-icon-danger` | `--component-badge-icon-danger` | Icono del badge con tone danger (peligro). |
+| `card.icon-size` | `icon.size.lg` | `size-card-icon-size` | `--component-card-icon-size` | Icono de la cabecera. |
+| `card.icon-stroke` | `icon.stroke` | `stroke-card-icon-stroke` | `--component-card-icon-stroke` | Grosor del trazo del icono de la cabecera. |
+| `badge.background.neutral` | `color.background.neutral.subtle` | `bg-badge-background-neutral` | `--component-badge-background-neutral` | Fondo del badge con variant neutral (sin significado). |
+| `badge.background.info` | `color.background.info.subtle` | `bg-badge-background-info` | `--component-badge-background-info` | Fondo del badge con variant info (información). |
+| `badge.background.success` | `color.background.success.subtle` | `bg-badge-background-success` | `--component-badge-background-success` | Fondo del badge con variant success (éxito). |
+| `badge.background.warning` | `color.background.warning.subtle` | `bg-badge-background-warning` | `--component-badge-background-warning` | Fondo del badge con variant warning (aviso). |
+| `badge.background.danger` | `color.background.danger.subtle` | `bg-badge-background-danger` | `--component-badge-background-danger` | Fondo del badge con variant danger (peligro). |
+| `badge.text.neutral` | `color.text.neutral` | `text-badge-text-neutral` | `--component-badge-text-neutral` | Texto del badge con variant neutral (sin significado). |
+| `badge.text.info` | `color.text.info` | `text-badge-text-info` | `--component-badge-text-info` | Texto del badge con variant info (información). |
+| `badge.text.success` | `color.text.success` | `text-badge-text-success` | `--component-badge-text-success` | Texto del badge con variant success (éxito). |
+| `badge.text.warning` | `color.text.warning` | `text-badge-text-warning` | `--component-badge-text-warning` | Texto del badge con variant warning (aviso). |
+| `badge.text.danger` | `color.text.danger` | `text-badge-text-danger` | `--component-badge-text-danger` | Texto del badge con variant danger (peligro). |
+| `badge.icon.neutral` | `color.icon.neutral` | `text-badge-icon-neutral` | `--component-badge-icon-neutral` | Icono del badge con variant neutral (sin significado). |
+| `badge.icon.info` | `color.icon.info` | `text-badge-icon-info` | `--component-badge-icon-info` | Icono del badge con variant info (información). |
+| `badge.icon.success` | `color.icon.success` | `text-badge-icon-success` | `--component-badge-icon-success` | Icono del badge con variant success (éxito). |
+| `badge.icon.warning` | `color.icon.warning` | `text-badge-icon-warning` | `--component-badge-icon-warning` | Icono del badge con variant warning (aviso). |
+| `badge.icon.danger` | `color.icon.danger` | `text-badge-icon-danger` | `--component-badge-icon-danger` | Icono del badge con variant danger (peligro). |
 | `badge.border` | `color.border.neutral` | `border-badge-border` | `--component-badge-border` | Borde fino del badge, igual en todos los tonos. |
 | `badge.border-width` | `border-width.default` | `border-width-badge-border-width` · `outline-width-badge-border-width` | `--component-badge-border-width` | Grosor del borde del badge. |
 | `badge.radius` | `radius.sm` | `rounded-badge-radius` | `--component-badge-radius` | Esquinas del badge: ligeramente redondeadas. |
@@ -216,3 +232,5 @@ Solo para su componente.
 | `badge.font-size.sm` | `typography.caption.font-size` | `text-badge-font-size-sm` | `--component-badge-font-size-sm` | Tamaño de texto del badge pequeño. |
 | `badge.font-size.md` | `typography.label.font-size` | `text-badge-font-size-md` | `--component-badge-font-size-md` | Tamaño de texto del badge mediano. |
 | `badge.font-weight` | `typography.label.font-weight` | `font-badge-font-weight` | `--component-badge-font-weight` | Peso del texto del badge. |
+| `badge.icon-size` | `icon.size.sm` | `size-badge-icon-size` | `--component-badge-icon-size` | Icono del badge, en los dos tamaños. |
+| `badge.icon-stroke` | `icon.stroke` | `stroke-badge-icon-stroke` | `--component-badge-icon-stroke` | Grosor del trazo del icono del badge. |

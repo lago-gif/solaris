@@ -12,8 +12,8 @@ export type CardProps = Omit<HTMLAttributes<HTMLElement>, 'title'> & {
   headingLevel?: 2 | 3 | 4 | 5 | 6
   /** Texto corto bajo el título, por ejemplo "1 comprimido cada 8 horas". */
   description?: string
-  /** Icono de Tabler opcional junto al título. */
-  icon?: Icon
+  /** Icono de Tabler opcional delante del título. */
+  iconStart?: Icon
   /** Zona inferior opcional, normalmente para botones. */
   footer?: ReactNode
   /** Contenido principal de la tarjeta. */
@@ -24,13 +24,13 @@ export function Card({
   title,
   headingLevel = 3,
   description,
-  icon: IconComponent,
+  iconStart: IconStart,
   footer,
   children,
   className = '',
   ...rest
 }: CardProps) {
-  const hasHeader = Boolean(title || description || IconComponent)
+  const hasHeader = Boolean(title || description || IconStart)
   const Heading = `h${headingLevel}` as const
 
   // Cada clase es un token de componente (tokens/tokens.json → component.card).
@@ -41,9 +41,9 @@ export function Card({
     >
       {hasHeader && (
         <header className="flex items-start gap-card-header-gap">
-          {IconComponent && (
+          {IconStart && (
             <span className="flex shrink-0 items-center justify-center rounded-card-icon-radius bg-card-icon-background p-card-icon-padding text-card-icon">
-              <IconComponent size={24} stroke={1.75} aria-hidden="true" />
+              <IconStart aria-hidden="true" className="size-card-icon-size stroke-card-icon-stroke" />
             </span>
           )}
           <div className="flex flex-col gap-card-header-text-gap">

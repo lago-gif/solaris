@@ -19,6 +19,7 @@
   --color-background-success-subtle: var(--semantic-color-background-success-subtle);
   --color-background-warning-subtle: var(--semantic-color-background-warning-subtle);
   --color-background-info-subtle: var(--semantic-color-background-info-subtle);
+  --color-background-transparent: var(--semantic-color-background-transparent);
   --color-text-neutral: var(--semantic-color-text-neutral);
   --color-text-neutral-subtle: var(--semantic-color-text-neutral-subtle);
   --color-text-brand: var(--semantic-color-text-brand);
@@ -79,6 +80,9 @@
   --shadow-elevation-sm: var(--semantic-elevation-sm);
   --shadow-elevation-md: var(--semantic-elevation-md);
   --shadow-elevation-lg: var(--semantic-elevation-lg);
+  --spacing-icon-size-sm: var(--semantic-icon-size-sm);
+  --spacing-icon-size-md: var(--semantic-icon-size-md);
+  --spacing-icon-size-lg: var(--semantic-icon-size-lg);
   --color-button-background-brand: var(--component-button-background-brand);
   --color-button-background-brand-hover: var(--component-button-background-brand-hover);
   --color-button-background-brand-subtle-hover: var(--component-button-background-brand-subtle-hover);
@@ -87,6 +91,7 @@
   --color-button-background-danger: var(--component-button-background-danger);
   --color-button-background-danger-hover: var(--component-button-background-danger-hover);
   --color-button-background-disabled: var(--component-button-background-disabled);
+  --color-button-background-transparent: var(--component-button-background-transparent);
   --color-button-text-brand: var(--component-button-text-brand);
   --color-button-text-brand-inverted: var(--component-button-text-brand-inverted);
   --color-button-text-neutral: var(--component-button-text-neutral);
@@ -116,8 +121,12 @@
   --spacing-button-padding-y-sm: var(--component-button-padding-y-sm);
   --spacing-button-padding-y-md: var(--component-button-padding-y-md);
   --spacing-button-padding-y-lg: var(--component-button-padding-y-lg);
+  --spacing-button-icon-size-sm: var(--component-button-icon-size-sm);
+  --spacing-button-icon-size-md: var(--component-button-icon-size-md);
+  --spacing-button-icon-size-lg: var(--component-button-icon-size-lg);
   --color-input-background: var(--component-input-background);
   --color-input-background-disabled: var(--component-input-background-disabled);
+  --color-input-background-transparent: var(--component-input-background-transparent);
   --color-input-text: var(--component-input-text);
   --color-input-text-placeholder: var(--component-input-text-placeholder);
   --color-input-text-disabled: var(--component-input-text-disabled);
@@ -129,6 +138,7 @@
   --text-input-hint-font-size: var(--component-input-hint-font-size);
   --color-input-error-text: var(--component-input-error-text);
   --color-input-error-icon: var(--component-input-error-icon);
+  --spacing-input-error-icon-size: var(--component-input-error-icon-size);
   --color-input-icon: var(--component-input-icon);
   --color-input-border: var(--component-input-border);
   --color-input-border-danger: var(--component-input-border-danger);
@@ -141,6 +151,7 @@
   --leading-input-line-height: var(--component-input-line-height);
   --spacing-input-padding-y: var(--component-input-padding-y);
   --spacing-input-icon-gap: var(--component-input-icon-gap);
+  --spacing-input-icon-size: var(--component-input-icon-size);
   --color-card-background: var(--component-card-background);
   --color-card-border: var(--component-card-border);
   --radius-card-radius: var(--component-card-radius);
@@ -163,6 +174,7 @@
   --spacing-card-icon-padding: var(--component-card-icon-padding);
   --spacing-card-footer-gap: var(--component-card-footer-gap);
   --spacing-card-footer-padding-top: var(--component-card-footer-padding-top);
+  --spacing-card-icon-size: var(--component-card-icon-size);
   --color-badge-background-neutral: var(--component-badge-background-neutral);
   --color-badge-background-info: var(--component-badge-background-info);
   --color-badge-background-success: var(--component-badge-background-success);
@@ -188,9 +200,10 @@
   --text-badge-font-size-sm: var(--component-badge-font-size-sm);
   --text-badge-font-size-md: var(--component-badge-font-size-md);
   --font-weight-badge-font-weight: var(--component-badge-font-weight);
+  --spacing-badge-icon-size: var(--component-badge-icon-size);
 }
 
-/* Grosores de borde, separación del foco y anillo de foco doble: Tailwind no tiene variables de tema para ellos. */
+/* Grosores de borde y de trazo, separación del foco y anillo de foco doble: Tailwind no tiene variables de tema para ellos. */
 @utility border-width-default {
   border-style: solid; border-width: var(--semantic-border-width-default);
 }
@@ -218,6 +231,9 @@
 @utility outline-width-focus {
   outline-style: solid; outline-width: var(--semantic-border-width-focus);
 }
+@utility stroke-icon-stroke {
+  stroke-width: var(--semantic-icon-stroke);
+}
 @utility border-width-button-border-width {
   border-style: solid; border-width: var(--component-button-border-width);
 }
@@ -238,6 +254,9 @@
 }
 @utility outline-offset-button-focus-offset {
   outline-offset: var(--component-button-focus-offset);
+}
+@utility stroke-button-icon-stroke {
+  stroke-width: var(--component-button-icon-stroke);
 }
 @utility border-width-input-border-width {
   border-style: solid; border-width: var(--component-input-border-width);
@@ -260,6 +279,9 @@
 @utility outline-offset-input-focus-offset {
   outline-offset: var(--component-input-focus-offset);
 }
+@utility stroke-input-icon-stroke {
+  stroke-width: var(--component-input-icon-stroke);
+}
 @utility border-width-card-border-width {
   border-style: solid; border-width: var(--component-card-border-width);
 }
@@ -269,6 +291,9 @@
 @utility outline-width-card-border-width {
   outline-style: solid; outline-width: var(--component-card-border-width);
 }
+@utility stroke-card-icon-stroke {
+  stroke-width: var(--component-card-icon-stroke);
+}
 @utility border-width-badge-border-width {
   border-style: solid; border-width: var(--component-badge-border-width);
 }
@@ -277,6 +302,9 @@
 }
 @utility outline-width-badge-border-width {
   outline-style: solid; outline-width: var(--component-badge-border-width);
+}
+@utility stroke-badge-icon-stroke {
+  stroke-width: var(--component-badge-icon-stroke);
 }
 @utility focus-ring-button {
   outline: 2px solid transparent;

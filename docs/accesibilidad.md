@@ -27,8 +27,8 @@ Las cuatro reglas desarrollan el principio 4 del [ADR-001](./adr/001-alcance.md)
 | Texto del botón primary | `color.text.brand.inverted` (gray.50) sobre `color.background.brand` (brand.700) | 4,7:1 |
 | Borde de un campo | `color.border.neutral.strong` (gray.500) sobre gray.50 | 4,6:1 |
 | Icono de éxito | `color.icon.success` (green.700) sobre gray.50 | 4,7:1 |
-| Un análisis fuera de rango | `<Badge tone="danger" icon={IconX}>Fuera de rango</Badge>` | Color, icono y texto |
-| Un error en un campo | `<Input label="Correo" error="Escribe un correo válido" />` | Borde rojo, icono y mensaje |
+| Un análisis fuera de rango | `<Badge variant="danger" iconStart={IconX}>Fuera de rango</Badge>` | Color, icono y texto |
+| Un error en un campo | `<Input label="Correo" errorMessage="Escribe un correo válido" />` | Borde rojo, icono y mensaje |
 | Altura de un botón | `py-button-padding-y-md leading-button-line-height-md` | Si el texto crece, el botón crece con él |
 
 **❌ Incorrecto**
@@ -123,15 +123,15 @@ button:focus { outline: none; }
 **✅ Correcto**
 
 ```tsx
-<Button icon={IconPlus}>Añadir cita</Button>                // nombre: "Añadir cita"
+<Button iconStart={IconPlus}>Añadir cita</Button>                // nombre: "Añadir cita"
 <Input label="Correo" placeholder="nombre@correo.com" />    // nombre: "Correo"
-<Button icon={IconTrash} variant="danger" aria-label="Borrar nota" />  // solo icono: nombre "Borrar nota"
+<Button iconStart={IconTrash} variant="danger" aria-label="Borrar nota" />  // solo icono: nombre "Borrar nota"
 ```
 
 **❌ Incorrecto**
 
 ```tsx
-<Button icon={IconTrash} variant="danger" />          // solo icono y sin aria-label: el lector dice "botón"
+<Button iconStart={IconTrash} variant="danger" />          // solo icono y sin aria-label: el lector dice "botón"
 <input placeholder="Correo" />                         // el placeholder desaparece al escribir y no es una etiqueta
 <Button>Haz clic aquí</Button>                         // tiene nombre, pero no dice qué hace
 ```
@@ -169,7 +169,7 @@ En `Button`, la regla la impone el propio código: un botón sin texto y sin `ar
 <h1>Mi medicación</h1>
   <Card title="Ibuprofeno 600 mg" headingLevel={2} />    {/* directamente bajo el h1: h2 */}
 
-<Button icon={IconPlus}>Añadir cita</Button>   {/* el icono es decorativo: el componente lo oculta solo */}
+<Button iconStart={IconPlus}>Añadir cita</Button>   {/* el icono es decorativo: el componente lo oculta solo */}
 <img src="radiografia.png" alt="Radiografía de tórax del 12 de marzo, sin hallazgos" />
 <img src="adorno.svg" alt="" />                {/* decorativa */}
 ```

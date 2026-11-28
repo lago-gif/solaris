@@ -55,12 +55,12 @@ export default function Antes() {
       <header className="flex flex-wrap items-center justify-between gap-3 border-b border-gray-200 px-4 py-4">
         <div className="flex items-center gap-3">
           <h1 className="text-xl font-semibold text-gray-900">Asistente</h1>
-          <Badge tone="info" size="sm" icon={IconSparkles}>
+          <Badge variant="info" size="sm" iconStart={IconSparkles}>
             IA
           </Badge>
         </div>
         {messages.length > 0 && (
-          <Button variant="ghost" size="sm" icon={IconTrash} onClick={() => setMessages([])}>
+          <Button variant="ghost" size="sm" iconStart={IconTrash} onClick={() => setMessages([])}>
             Borrar conversación
           </Button>
         )}
@@ -74,7 +74,7 @@ export default function Antes() {
       <section aria-label="Historial de mensajes" className="flex-1 overflow-y-auto px-4 py-6">
         {messages.length === 0 ? (
           <Card
-            icon={IconMessageChatbot}
+            iconStart={IconMessageChatbot}
             title="¿Cómo te encuentras hoy?"
             description="Cuéntame cómo te sientes o pregúntame por tus citas y revisiones."
             className="mx-auto max-w-md"
@@ -126,7 +126,7 @@ export default function Antes() {
           autoComplete="off"
           className="flex-1"
         />
-        <Button type="submit" icon={IconSend} disabled={!draft.trim()}>
+        <Button type="submit" iconStart={IconSend} disabled={!draft.trim()}>
           Enviar
         </Button>
       </form>

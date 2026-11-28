@@ -61,6 +61,7 @@ function cssValue(type, value) {
     case 'fontFamily':
       return value.map((f) => (/\s/.test(f) ? `'${f}'` : f)).join(', ')
     case 'fontWeight':
+    case 'number':
       return String(value)
     case 'shadow': {
       const v = (k) => cssValue(k === 'color' ? 'color' : 'dimension', value[k])
@@ -130,7 +131,7 @@ function buildThemeCss() {
     ...theme.map(([k, v]) => `  ${k}: ${v};`),
     '}',
     '',
-    '/* Grosores de borde, separación del foco y anillo de foco doble: Tailwind no tiene variables de tema para ellos. */',
+    '/* Grosores de borde y de trazo, separación del foco y anillo de foco doble: Tailwind no tiene variables de tema para ellos. */',
     ...utilities.map(([name, css]) => `@utility ${name} {\n  ${css}\n}`),
     '',
   ].join('\n')

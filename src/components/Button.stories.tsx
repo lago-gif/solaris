@@ -12,9 +12,14 @@ const meta = {
   component: Button,
   args: { children: 'Añadir cita' },
   argTypes: {
-    icon: {
+    iconStart: {
       options: ['Ninguno', 'IconPlus', 'IconCheck', 'IconArrowRight', 'IconTrash'],
       mapping: { Ninguno: undefined, IconPlus, IconCheck, IconArrowRight, IconTrash },
+      control: { type: 'select' },
+    },
+    iconEnd: {
+      options: ['Ninguno', 'IconArrowRight', 'IconCheck'],
+      mapping: { Ninguno: undefined, IconArrowRight, IconCheck },
       control: { type: 'select' },
     },
   },
@@ -47,11 +52,19 @@ export const Tamaños: Story = {
 }
 
 export const ConIcono: Story = {
-  args: { icon: IconPlus },
+  args: { iconStart: IconPlus },
 }
 
-export const IconoALaDerecha: Story = {
-  args: { icon: IconArrowRight, iconPosition: 'right', variant: 'ghost', children: 'Ver todo' },
+export const IconoDetras: Story = {
+  args: { iconEnd: IconArrowRight, variant: 'ghost', children: 'Ver todo' },
+}
+
+/**
+ * Mientras se guarda: el icono de delante pasa a ser un indicador de carga, el botón no responde
+ * a los clics y el lector de pantalla lo anuncia como ocupado. Sigue recibiendo el foco.
+ */
+export const Cargando: Story = {
+  args: { isLoading: true, iconStart: IconCheck, children: 'Guardando cita' },
 }
 
 export const Desactivado: Story = {
@@ -67,7 +80,7 @@ export const Desactivado: Story = {
 
 /** Botón de solo icono: lleva `aria-label`, que es lo que lee el lector de pantalla (docs/accesibilidad.md, regla 3). */
 export const SoloIcono: Story = {
-  args: { children: undefined, 'aria-label': 'Borrar nota', icon: IconTrash, variant: 'danger' },
+  args: { children: undefined, 'aria-label': 'Borrar nota', iconStart: IconTrash, variant: 'danger' },
 }
 
 export const AnchoCompleto: Story = {

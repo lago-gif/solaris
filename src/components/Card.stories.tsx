@@ -14,7 +14,7 @@ const meta = {
     description: '1 comprimido cada 8 horas',
   },
   argTypes: {
-    icon: {
+    iconStart: {
       options: ['Ninguno', 'IconPill', 'IconCalendarEvent'],
       mapping: { Ninguno: undefined, IconPill, IconCalendarEvent },
       control: { type: 'select' },
@@ -32,20 +32,20 @@ type Story = StoryObj<typeof meta>
 export const Basica: Story = {}
 
 export const ConIcono: Story = {
-  args: { icon: IconPill },
+  args: { iconStart: IconPill },
 }
 
 export const ConContenidoYPie: Story = {
   args: {
-    icon: IconPill,
+    iconStart: IconPill,
     children: (
-      <Badge tone="warning" icon={IconAlertTriangle}>
+      <Badge variant="warning" iconStart={IconAlertTriangle}>
         Próxima toma: 16:00
       </Badge>
     ),
     footer: (
       <>
-        <Button size="sm" icon={IconCheck}>Marcar tomada</Button>
+        <Button size="sm" iconStart={IconCheck}>Marcar tomada</Button>
         <Button size="sm" variant="secondary">Detalles</Button>
       </>
     ),
@@ -54,7 +54,7 @@ export const ConContenidoYPie: Story = {
 
 export const Cita: Story = {
   args: {
-    icon: IconCalendarEvent,
+    iconStart: IconCalendarEvent,
     title: 'Dentista',
     description: 'Martes 18, 10:30 · Clínica Sol',
     children: 'Revisión anual.',
@@ -63,7 +63,7 @@ export const Cita: Story = {
 
 // El título es un h2 porque la tarjeta va directamente bajo el título de la pantalla (h1).
 export const NivelDeEncabezado: Story = {
-  args: { icon: IconPill, headingLevel: 2 },
+  args: { iconStart: IconPill, headingLevel: 2 },
 }
 
 export const SoloContenido: Story = {
@@ -76,10 +76,10 @@ export const SoloContenido: Story = {
  */
 export const Teclado: Story = {
   args: {
-    icon: IconPill,
+    iconStart: IconPill,
     footer: (
       <>
-        <Button size="sm" icon={IconCheck}>Marcar tomada</Button>
+        <Button size="sm" iconStart={IconCheck}>Marcar tomada</Button>
         <Button size="sm" variant="secondary">Detalles</Button>
       </>
     ),

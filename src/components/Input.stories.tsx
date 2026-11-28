@@ -9,7 +9,7 @@ const meta = {
   component: Input,
   args: { label: 'Nombre', placeholder: 'Tu nombre' },
   argTypes: {
-    icon: {
+    iconStart: {
       options: ['Ninguno', 'IconSearch', 'IconMail'],
       mapping: { Ninguno: undefined, IconSearch, IconMail },
       control: { type: 'select' },
@@ -28,7 +28,7 @@ export const ConAyuda: Story = {
 }
 
 export const ConIcono: Story = {
-  args: { label: 'Buscar medicamento', placeholder: 'Ibuprofeno', icon: IconSearch },
+  args: { label: 'Buscar medicamento', placeholder: 'Ibuprofeno', iconStart: IconSearch },
 }
 
 export const Obligatorio: Story = {
@@ -39,9 +39,9 @@ export const ConError: Story = {
   args: {
     label: 'Correo',
     placeholder: '',
-    icon: IconMail,
+    iconStart: IconMail,
     defaultValue: 'lago@',
-    error: 'Escribe un correo válido, por ejemplo nombre@correo.com',
+    errorMessage: 'Escribe un correo válido, por ejemplo nombre@correo.com',
   },
 }
 
@@ -59,7 +59,7 @@ export const Teclado: Story = {
     <div className="flex flex-col gap-space-lg">
       <Input label="Nombre" />
       <Input label="Desactivado" disabled defaultValue="No editable" />
-      <Input label="Correo" defaultValue="lago@" error="Escribe un correo válido" />
+      <Input label="Correo" defaultValue="lago@" errorMessage="Escribe un correo válido" />
     </div>
   ),
   play: async ({ canvasElement, step }) => {

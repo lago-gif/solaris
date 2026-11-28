@@ -27,19 +27,27 @@
       "inherited": false
     },
     {
-      "name": "error",
-      "type": "string",
-      "default": null,
+      "name": "invalid",
+      "type": "boolean",
+      "default": false,
       "required": false,
-      "description": "Mensaje de error. Si existe, el borde se pinta en rojo, aparece el mensaje con icono y el campo se anuncia como no válido. Es el texto, no un true/false.",
+      "description": "El valor no es válido: el borde se pinta con el color de peligro y el campo se anuncia como no válido (aria-invalid). Sin mensaje, úsalo solo si el error se explica en otro sitio.",
       "inherited": false
     },
     {
-      "name": "icon",
+      "name": "errorMessage",
+      "type": "string",
+      "default": null,
+      "required": false,
+      "description": "Texto que explica el error, con icono, bajo el campo. Si existe, el campo se marca también como invalid.",
+      "inherited": false
+    },
+    {
+      "name": "iconStart",
       "type": "Icon (de @tabler/icons-react)",
       "default": null,
       "required": false,
-      "description": "Icono opcional dentro del campo, a la izquierda, por ejemplo una lupa. Es decorativo: se oculta al lector de pantalla.",
+      "description": "Icono dentro del campo, delante del texto, por ejemplo IconSearch.",
       "inherited": false
     },
     {
@@ -124,8 +132,8 @@
     ],
     "authored": [
       {
-        "name": "error",
-        "description": "Borde rojo, mensaje con icono debajo y aria-invalid."
+        "name": "invalid",
+        "description": "Borde de peligro y aria-invalid. Con errorMessage, además el mensaje con icono debajo."
       },
       {
         "name": "disabled",
@@ -163,7 +171,7 @@
       "description": "La caja del campo: borde, fondo y anillo de foco. Contiene el icono y el texto."
     },
     {
-      "part": "icon",
+      "part": "iconStart",
       "element": "svg",
       "optional": true,
       "description": "Icono a la izquierda dentro de la caja; oculto al lector."
@@ -181,7 +189,7 @@
       "description": "Ayuda debajo del campo, conectada con aria-describedby."
     },
     {
-      "part": "error",
+      "part": "errorMessage",
       "element": "p",
       "optional": true,
       "description": "Mensaje de error con su icono, conectado con aria-describedby."
@@ -190,6 +198,7 @@
   "tokens": [
     "component.input.background",
     "component.input.background.disabled",
+    "component.input.background.transparent",
     "component.input.text",
     "component.input.text.placeholder",
     "component.input.text.disabled",
@@ -201,6 +210,7 @@
     "component.input.hint.font-size",
     "component.input.error.text",
     "component.input.error.icon",
+    "component.input.error.icon-size",
     "component.input.icon",
     "component.input.border",
     "component.input.border.danger",
@@ -215,7 +225,9 @@
     "component.input.line-height",
     "component.input.padding-y",
     "component.input.icon-gap",
-    "component.input.focus-offset"
+    "component.input.focus-offset",
+    "component.input.icon-size",
+    "component.input.icon-stroke"
   ],
   "a11y": {
     "role": "textbox",
@@ -231,7 +243,7 @@
     ],
     "notes": [
       "Nombre accesible (regla 3): label es obligatoria y está conectada al campo; el placeholder nunca la sustituye.",
-      "La ayuda y el error se leen al entrar en el campo (aria-describedby); con error, el campo se anuncia como no válido (aria-invalid).",
+      "La ayuda y el error se leen al entrar en el campo (aria-describedby); con invalid o errorMessage, el campo se anuncia como no válido (aria-invalid).",
       "Teclado (regla 2): es un <input> nativo; su historia Teclado pasa (Tab en orden, salta el desactivado, anillo de foco visible también con error, se puede escribir).",
       "El color nunca va solo (regla 1): el error lleva borde rojo, icono y mensaje.",
       "Lector de pantalla (regla 4): el icono del campo y el del error son decorativos y están ocultos.",

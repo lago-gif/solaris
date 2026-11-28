@@ -11,7 +11,7 @@
   ],
   "props": [
     {
-      "name": "tone",
+      "name": "variant",
       "type": "'neutral' | 'info' | 'success' | 'warning' | 'danger'",
       "default": "neutral",
       "required": false,
@@ -27,11 +27,11 @@
       "inherited": false
     },
     {
-      "name": "icon",
+      "name": "iconStart",
       "type": "Icon (de @tabler/icons-react)",
       "default": null,
       "required": false,
-      "description": "Icono opcional a la izquierda del texto. Es decorativo.",
+      "description": "Icono delante del texto, por ejemplo IconCheck. Decorativo: el texto es lo que da el significado.",
       "inherited": false
     },
     {
@@ -63,7 +63,7 @@
       "description": "La etiqueta."
     },
     {
-      "part": "icon",
+      "part": "iconStart",
       "element": "svg",
       "optional": true,
       "description": "Icono a la izquierda; oculto al lector."
@@ -101,7 +101,9 @@
     "component.badge.gap",
     "component.badge.font-size.sm",
     "component.badge.font-size.md",
-    "component.badge.font-weight"
+    "component.badge.font-weight",
+    "component.badge.icon-size",
+    "component.badge.icon-stroke"
   ],
   "a11y": {
     "role": "none",
